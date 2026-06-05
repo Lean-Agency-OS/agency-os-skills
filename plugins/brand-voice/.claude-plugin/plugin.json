@@ -1,0 +1,9 @@
+{
+  "name": "brand-voice",
+  "description": "Voice-Profile-System: führt einmalig ein Stimm-Setup durch und wendet das Profil danach auf alle Texte an — E-Mails, Posts, Newsletter, Sales-Copy",
+  "version": "1.0.0",
+  "author": {
+    "name": "Markus Vieghofer",
+    "email": "hallo@markusvieghofer.com"
+  }
+}

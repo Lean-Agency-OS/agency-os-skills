@@ -29,6 +29,8 @@ Hinweis: Wer das [Agency-OS-Template](https://github.com/markusvieghofer/agency-
 | Plugin | Version | Inhalt |
 |---|---|---|
 | `agency-os-core` | 1.0.0 | Tages-Workflows: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown |
+| `brand-voice` | 1.0.0 | Voice-Profile-System: einmaliges Stimm-Setup, danach klingen alle Texte nach dir |
+| `github-cowork` | 1.0.0 | GitHub in normaler Sprache: Commit, Push, Pull, Verlauf — ohne Git-Kenntnisse |
 
 Die Skills werden über natürliche Sprache ausgelöst ("guten morgen", "notiere…", "review machen", "feierabend") oder direkt per `/agency-os-core:agency-os-start` etc.
 

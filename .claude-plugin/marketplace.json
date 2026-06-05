@@ -14,6 +14,24 @@
       "author": {
         "name": "Markus Vieghofer"
       }
+    },
+    {
+      "name": "brand-voice",
+      "source": "./plugins/brand-voice",
+      "description": "Voice-Profile-System: einmaliges Stimm-Setup, danach klingen alle Texte nach dir — E-Mails, Posts, Newsletter, Sales-Copy",
+      "category": "content",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
+    },
+    {
+      "name": "github-cowork",
+      "source": "./plugins/github-cowork",
+      "description": "GitHub für Nicht-Techniker: Commit, Push, Pull und Verlauf in normaler Sprache, ohne Git-Kenntnisse",
+      "category": "workflow",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
     }
   ]
 }
