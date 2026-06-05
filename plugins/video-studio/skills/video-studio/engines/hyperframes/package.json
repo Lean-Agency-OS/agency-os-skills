@@ -1,0 +1,17 @@
+{
+  "name": "video-studio-hyperframes",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Motion-Graphics-Engine (hyperframes + Puppeteer). Wird per ../../scripts/setup.sh installiert. Inhalte (house-style.md etc.) kommen aus node_modules, werden NICHT ins Repo kopiert.",
+  "dependencies": {
+    "hyperframes": "^0.5.5",
+    "@hyperframes/core": "^0.5.5",
+    "@hyperframes/shader-transitions": "^0.5.5",
+    "puppeteer-core": "^23.0.0"
+  },
+  "devDependencies": {
+    "@puppeteer/browsers": "^2.4.0"
+  },
+  "engines": { "node": ">=22" }
+}

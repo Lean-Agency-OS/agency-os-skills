@@ -59,6 +59,15 @@
       "author": {
         "name": "Markus Vieghofer"
       }
+    },
+    {
+      "name": "video-studio",
+      "source": "./plugins/video-studio",
+      "description": "KI-Video-Editing: Roh-Video → fertiges Reel/Short mit Transkript, Schnitt, Untertiteln, Motion Graphics und Render — brand-aware",
+      "category": "content",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
     }
   ]
 }
