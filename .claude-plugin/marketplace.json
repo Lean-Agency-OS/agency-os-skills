@@ -63,7 +63,6 @@
     {
       "name": "video-studio",
       "source": "./plugins/video-studio",
-      "version": "1.1.0",
       "description": "KI-Video-Editing: Roh-Video zu fertigem Reel/Short (Transkript, Schnitt, Untertitel, Motion Graphics, Render) plus lokale Schnell-Triage ganzer Video-Ordner ohne API. Brand-aware über das Agency OS",
       "category": "content",
       "author": {
