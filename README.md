@@ -32,7 +32,7 @@ Hinweis: Wer das [Agency-OS-Template](https://github.com/markusvieghofer/agency-
 | `brand-voice` | 1.0.0 | Voice-Profile-System: einmaliges Stimm-Setup, danach klingen alle Texte nach dir |
 | `github-cowork` | 1.0.0 | GitHub in normaler Sprache: Commit, Push, Pull, Verlauf — ohne Git-Kenntnisse |
 | `icp` | 1.0.0 | ICP-System: Profil per Setup-Interview, dann Bewerten / Persona / Qualifizieren |
-| `weekly-content-mining` | 1.0.0 | Content-Mining: 8-Bucket-Wochen-Interview → Dump mit Top Plays + Wildcard |
+| `weekly-content-mining` | 1.1.0 | Content-Mining: 8-Bucket-Wochen-Interview → Dump mit Top Plays + Wildcard |
 | `carousel` | 1.0.0 | Carousel-Posts nach der 4-Bausteine-Formel: Idee → 10 Slides + Caption + Preview |
 | `video-studio` | 1.1.0 | KI-Video-Editing: Roh-Video → Reel/Short (Transkript, Schnitt, Untertitel, Motion Graphics) + lokale Schnell-Triage ganzer Video-Ordner ohne API. Braucht einmalig `setup.sh` + ElevenLabs-Key |
 

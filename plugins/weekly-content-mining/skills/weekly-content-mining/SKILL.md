@@ -2,8 +2,8 @@
 name: weekly-content-mining
 description: >
   Wöchentliches Content-Mining Interview. Führt ein strukturiertes
-  8-Bucket-Interview durch (Calendar, Clients, Creation, Chat, Community,
-  Content, Circumstances, Credit Card) um rohe Wochenerlebnisse in
+  8-Bucket-Interview durch (Kalender, Kunden, Projekte, Nachrichten, Community,
+  Content, Privates, Käufe) um rohe Wochenerlebnisse in
   Content-Gold zu verwandeln und als Content-Mining Dump im Agency OS zu speichern.
   Triggern bei: Goldmine, weekly goldmine, content mining, was kann ich diese
   Woche posten, lass uns die Woche durchgehen, 8 buckets, content ideen aus
@@ -39,8 +39,8 @@ Alright. Starten wir das Content Mining.
 
 8 Buckets — je ~30 Sekunden. Roh reinkippen, ich extrahiere den Rest.
 
-**Bucket 1: Calendar**
-Was war diese Woche in deinem Kalender? Meetings, Calls, Events, Reisen — alles zählt.
+**Bucket 1: Kalender**
+Was war diese Woche in deinem Kalender? Meetings, Calls, Events, Reisen, alles zählt.
 ```
 
 ### 2. Buckets einzeln durcharbeiten
@@ -49,14 +49,14 @@ Nach jeder Antwort: kurz benennen was Content-Gold ist, dann sofort weiter.
 
 | # | Bucket | Kernfrage |
 |---|--------|-----------|
-| 1 | **Calendar** | Was war diese Woche in deinem Kalender? |
-| 2 | **Clients** | Was lief diese Woche mit Kunden? |
-| 3 | **Creation** | Was baust du gerade? |
-| 4 | **Chat** | Was in deinen Chats war interessant? |
+| 1 | **Kalender** | Was war diese Woche in deinem Kalender? |
+| 2 | **Kunden** | Was lief diese Woche mit Kunden? |
+| 3 | **Projekte** | Was baust du gerade? |
+| 4 | **Nachrichten** | Was in deinen Chats/DMs war interessant? |
 | 5 | **Community** | Was bewegt sich in deinen Kreisen? |
-| 6 | **Content** | Was hast du konsumiert — was ist hängengeblieben? |
-| 7 | **Circumstances** | Was war privat oder im Alltag? |
-| 8 | **Credit Card** | Was hast du zuletzt gekauft? |
+| 6 | **Content** | Was hast du konsumiert, was ist hängengeblieben? |
+| 7 | **Privates** | Was war privat oder im Alltag? |
+| 8 | **Käufe** | Was hast du zuletzt gekauft? |
 
 Wenn eine Antwort dünn ist, einmal nachfragen: *"Was war das Konkrete daran?"* Dann weiter.
 
@@ -83,16 +83,16 @@ Nach allen 8 Buckets den Content-Mining Dump schreiben und speichern:
 
 ## Raw Material
 
-### Calendar
+### Kalender
 - **[Titel]:** [Nugget — Beobachtung zuerst, Prinzip danach, konkrete Zahlen wenn vorhanden]
 
-### Clients
-### Creation
-### Chat
+### Kunden
+### Projekte
+### Nachrichten
 ### Community
 ### Content
-### Circumstances
-### Credit Card
+### Privates
+### Käufe
 
 ---
 
@@ -107,7 +107,7 @@ Nach allen 8 Buckets den Content-Mining Dump schreiben und speichern:
 ### 3. [Titel]
 
 ### Wildcard
-**[Titel]:** [Das unerwartete Stück — oft aus Circumstances oder Credit Card. Warum es überraschend performen könnte.]
+**[Titel]:** [Das unerwartete Stück — oft aus Privates oder Käufe. Warum es überraschend performen könnte.]
 
 ---
 
