@@ -29,7 +29,7 @@ Am besten Sonntag abend oder Montag morgen. Jeden Schritt einzeln mit dem User d
 
 1. Frage: "Was hat sich bei den Projekten bewegt?"
 2. Status in den jeweiligen `04-projects/{name}/_index.md` aktualisieren
-3. Abgeschlossene Projekte: nach `08-archive/projects/` verschieben
+3. Abgeschlossene Projekte: in den Archiv-Ordner verschieben (der `*-archive/`-Ordner im OS-Root, Unterordner `projects/`)
 
 ---
 
@@ -47,7 +47,7 @@ Antworten werden im Weekly Log festgehalten.
 
 ## Schritt 5: Weekly Log schreiben
 
-In `07-logs/weekly-{{JAHR}}-W{{KW}}.md` schreiben (oder anhängen falls existiert):
+Im Logs-Ordner (`*-logs/`) als `weekly-{{JAHR}}-W{{KW}}.md` schreiben (oder anhängen falls existiert):
 
 ```markdown
 # KW {{KW}} ({{Datumsbereich}})

@@ -20,7 +20,7 @@ Session starten. Kontext laden, Status zeigen.
 3. Lies `02-strategy/current-priorities.md` (falls vorhanden)
 4. Lies `02-strategy/open-loops.md` (falls vorhanden)
 5. Schaue in `00-inbox/` - wieviele Items?
-6. Lies die letzten 2 Daily Logs aus `07-logs/` (nach Dateiname sortiert, neueste zuerst)
+6. Lies die letzten 2 Daily Logs aus dem Logs-Ordner (der `*-logs/`-Ordner im OS-Root — je nach OS-Layout `07-logs/` oder `08-logs/`; nach Dateiname sortiert, neueste zuerst)
 7. Zeige kompaktes Dashboard (max 20 Zeilen):
 
 ```

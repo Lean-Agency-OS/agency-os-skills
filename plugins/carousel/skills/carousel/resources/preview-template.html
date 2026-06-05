@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Carousel Preview — IG Mobile View</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+<!-- {{CAROUSEL_STYLES}} -->
+<!-- ↑ Hier wird beim Build der <style>-Block aus carousel.html injiziert (Slide-CSS inkl. :root-CI-Vars) -->
+
+<style>
+/* ------- IG-Mobile-View Mockup (brand-neutral) ------- */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #efefef !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #262626;
+  display: block !important;
+  align-items: initial !important;
+  gap: 0 !important;
+  font-size: 14px;
+  line-height: 1.4;
+}
+/* Slides initial verstecken — JS verschiebt sie gleich in den Slider */
+body > section.slide { display: none !important; }
+.snap > section.slide { display: flex !important; }
+
+.ig-frame {
+  max-width: 470px;
+  margin: 0 auto;
+  background: #fff;
+  min-height: 100vh;
+  border-left: 1px solid #dbdbdb;
+  border-right: 1px solid #dbdbdb;
+}
+@media (max-width: 470px) { .ig-frame { border: none; } }
+
+.ig-post-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+}
+.ig-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  padding: 2px; flex-shrink: 0;
+}
+.ig-avatar-inner {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: #1c1c1c;
+  display: flex; align-items: center; justify-content: center;
+}
+.ig-avatar-mark {
+  width: 13px; height: 13px; border-radius: 3px;
+  background: var(--accent, #888);
+}
+.ig-handle-block { flex: 1; line-height: 1.2; }
+.ig-handle { font-weight: 600; font-size: 14px; color: #262626; }
+.ig-meta { font-size: 12px; color: #737373; margin-top: 1px; }
+.ig-follow { font-weight: 600; font-size: 14px; color: #0095f6; cursor: pointer; }
+.ig-more { font-size: 22px; color: #262626; letter-spacing: 1px; padding: 0 4px; cursor: pointer; }
+
+.ig-slider-wrap { position: relative; background: #000; }
+.ig-counter-badge {
+  position: absolute; top: 10px; right: 12px;
+  background: rgba(0,0,0,0.65); color: #fff;
+  font-size: 12px; font-weight: 500;
+  padding: 4px 10px; border-radius: 12px;
+  z-index: 5; font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.slider {
+  display: flex; overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.slider::-webkit-scrollbar { display: none; }
+.snap {
+  flex: 0 0 100%; width: 100%;
+  aspect-ratio: 4 / 5;
+  scroll-snap-align: center;
+  overflow: hidden; position: relative;
+  background: #fff;
+}
+.snap > section.slide {
+  width: 1080px !important; height: 1350px !important;
+  transform-origin: top left;
+  position: absolute !important;
+  top: 0 !important; left: 0 !important; margin: 0 !important;
+  flex-shrink: 0;
+}
+
+.ig-actions {
+  display: flex; align-items: center;
+  padding: 8px 14px 4px; gap: 14px;
+}
+.ig-actions svg { width: 24px; height: 24px; cursor: pointer; stroke: #262626; fill: none; stroke-width: 2; }
+.ig-actions .spacer { flex: 1; }
+
+.ig-dots { display: flex; justify-content: center; gap: 4px; padding: 4px 14px 8px; }
+.ig-dots .dot { width: 5px; height: 5px; border-radius: 50%; background: #c7c7c7; transition: background 0.15s; }
+.ig-dots .dot.active { background: #0095f6; }
+
+.ig-likes { font-weight: 600; padding: 0 14px 6px; font-size: 14px; }
+.ig-caption { padding: 0 14px 6px; font-size: 14px; line-height: 1.4; }
+.ig-caption .ig-cap-handle { font-weight: 600; margin-right: 5px; color: #262626; }
+.ig-cap-block { margin-bottom: 6px; }
+.ig-cap-block:last-of-type { margin-bottom: 0; }
+.ig-hashtags { margin-top: 4px; }
+.hashtag { color: #00376b; margin-right: 4px; }
+.ig-comments-hint { padding: 4px 14px 6px; font-size: 14px; color: #737373; }
+.ig-time { padding: 0 14px 14px; font-size: 10px; color: #737373; text-transform: uppercase; letter-spacing: 0.02em; }
+.ig-bottom-pad { height: 40px; }
+</style>
+</head>
+<body>
+
+<!-- {{SLIDES}} -->
+<!-- ↑ Hier injiziert der Build alle <section class="slide">…</section> 1-zu-1 aus carousel.html.
+     Bilder sind als base64-Data-URI eingebettet (macht render.py automatisch). -->
+
+<div class="ig-frame">
+  <div class="ig-post-header">
+    <div class="ig-avatar"><div class="ig-avatar-inner"><div class="ig-avatar-mark"></div></div></div>
+    <div class="ig-handle-block">
+      <div class="ig-handle">{{HANDLE}}</div>
+      <div class="ig-meta">{{BRAND}}</div>
+    </div>
+    <div class="ig-follow">Folgen</div>
+    <div class="ig-more">⋯</div>
+  </div>
+
+  <div class="ig-slider-wrap">
+    <div class="ig-counter-badge" id="ig-counter">1/{{TOTAL}}</div>
+    <div class="slider" id="ig-slider"></div>
+  </div>
+
+  <div class="ig-actions">
+    <svg viewBox="0 0 24 24"><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"/></svg>
+    <svg viewBox="0 0 24 24"><line x1="22" y1="3" x2="9.218" y2="10.083"/><polygon points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" fill="none"/></svg>
+    <div class="spacer"></div>
+    <svg viewBox="0 0 24 24"><polygon points="20 21 12 13.44 4 21 4 3 20 3 20 21"/></svg>
+  </div>
+
+  <div class="ig-dots" id="ig-dots"></div>
+
+  <div class="ig-likes">Gefällt <strong>vielen</strong></div>
+
+  <div class="ig-caption">
+    <!-- {{CAPTION}} -->
+  </div>
+
+  <div class="ig-comments-hint">Alle Kommentare ansehen</div>
+  <div class="ig-time">Vorschau</div>
+  <div class="ig-bottom-pad"></div>
+</div>
+
+<script>
+(function(){
+  var slider = document.getElementById('ig-slider');
+  var dotsHost = document.getElementById('ig-dots');
+  var counter = document.getElementById('ig-counter');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('body > section.slide'));
+  if (!slider || slides.length === 0) return;
+
+  function applyScale() {
+    slider.querySelectorAll('.snap').forEach(function(snap){
+      var w = snap.offsetWidth;
+      if (!w) return;
+      var slide = snap.querySelector('section.slide');
+      if (slide) slide.style.transform = 'scale(' + (w / 1080) + ')';
+    });
+  }
+
+  slides.forEach(function(s, i){
+    var wrap = document.createElement('div');
+    wrap.className = 'snap';
+    wrap.dataset.idx = i;
+    s.parentNode.removeChild(s);
+    wrap.appendChild(s);
+    slider.appendChild(wrap);
+
+    var dot = document.createElement('span');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.dataset.idx = i;
+    dotsHost.appendChild(dot);
+  });
+
+  var total = slides.length;
+  var dots = Array.prototype.slice.call(dotsHost.querySelectorAll('.dot'));
+
+  function update() {
+    var snap = slider.querySelector('.snap');
+    if (!snap) return;
+    var idx = Math.round(slider.scrollLeft / snap.offsetWidth);
+    if (idx < 0) idx = 0;
+    if (idx >= total) idx = total - 1;
+    counter.textContent = (idx + 1) + '/' + total;
+    dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+  }
+
+  slider.addEventListener('scroll', function(){ window.requestAnimationFrame(update); });
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      var idx = parseInt(d.dataset.idx, 10);
+      var snap = slider.querySelectorAll('.snap')[idx];
+      if (snap) snap.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    });
+  });
+
+  applyScale();
+  update();
+
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(applyScale, 100);
+  });
+})();
+</script>
+</body>
+</html>

@@ -13,7 +13,7 @@ Session beenden. Status sichern.
 2. `02-strategy/current-priorities.md` aktualisieren (Status, neue Items)
 3. Frage: "Offene Gedanken oder Loops?"
 4. `02-strategy/open-loops.md` aktualisieren falls nötig
-5. Daily Log schreiben/ergänzen in `07-logs/{{DATUM}}.md`:
+5. Daily Log schreiben/ergänzen im Logs-Ordner (der `*-logs/`-Ordner im OS-Root, z.B. `07-logs/` oder `08-logs/`) als `{{DATUM}}.md`:
 
 ```markdown
 # {{DATUM}}
