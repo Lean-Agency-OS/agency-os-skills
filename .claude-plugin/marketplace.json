@@ -1,0 +1,19 @@
+{
+  "name": "agency-os",
+  "owner": {
+    "name": "Markus Vieghofer",
+    "email": "hallo@markusvieghofer.com"
+  },
+  "description": "Agency OS Skills — Workflows für Marketing-Agenturen (DACH) von Markus Vieghofer",
+  "plugins": [
+    {
+      "name": "agency-os-core",
+      "source": "./plugins/agency-os-core",
+      "description": "Tages-Workflows fürs Agency OS: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown",
+      "category": "workflow",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
+    }
+  ]
+}
