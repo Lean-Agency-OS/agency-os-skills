@@ -32,6 +32,33 @@
       "author": {
         "name": "Markus Vieghofer"
       }
+    },
+    {
+      "name": "icp",
+      "source": "./plugins/icp",
+      "description": "ICP-System: Wunschkunden-Profil per Setup-Interview, danach 3 Modi — Content bewerten (inkl. simulierter ICP-Reaktion), Personas generieren, Leads qualifizieren",
+      "category": "marketing",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
+    },
+    {
+      "name": "weekly-goldmine",
+      "source": "./plugins/weekly-goldmine",
+      "description": "Wöchentliches Content-Mining: 8-Bucket-Interview macht aus der eigenen Woche Content-Ideen mit Top Plays und Wildcard",
+      "category": "content",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
+    },
+    {
+      "name": "carousel",
+      "source": "./plugins/carousel",
+      "description": "Carousel-Posts nach der 4-Bausteine-Formel: geführter Workflow von der Idee bis zu 10 Slide-Texten, Caption und HTML-Preview",
+      "category": "content",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
     }
   ]
 }

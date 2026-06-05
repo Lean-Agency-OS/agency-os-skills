@@ -31,6 +31,11 @@ Hinweis: Wer das [Agency-OS-Template](https://github.com/markusvieghofer/agency-
 | `agency-os-core` | 1.0.0 | Tages-Workflows: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown |
 | `brand-voice` | 1.0.0 | Voice-Profile-System: einmaliges Stimm-Setup, danach klingen alle Texte nach dir |
 | `github-cowork` | 1.0.0 | GitHub in normaler Sprache: Commit, Push, Pull, Verlauf — ohne Git-Kenntnisse |
+| `icp` | 1.0.0 | ICP-System: Profil per Setup-Interview, dann Bewerten / Persona / Qualifizieren |
+| `weekly-goldmine` | 1.0.0 | Content-Mining: 8-Bucket-Wochen-Interview → Goldmine Dump mit Top Plays |
+| `carousel` | 1.0.0 | Carousel-Posts nach der 4-Bausteine-Formel: Idee → 10 Slides + Caption + Preview |
+
+Die Content-Plugins greifen ineinander: `icp` pflegt das Wunschkunden-Profil in `01-context/zielgruppe.md`, `brand-voice` die Stimme in `01-context/brand/voice.md` — `weekly-goldmine` und `carousel` lesen beides.
 
 Die Skills werden über natürliche Sprache ausgelöst ("guten morgen", "notiere…", "review machen", "feierabend") oder direkt per `/agency-os-core:agency-os-start` etc.
 
