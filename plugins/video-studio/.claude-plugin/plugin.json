@@ -1,7 +1,7 @@
 {
   "name": "video-studio",
   "description": "KI-Video-Editing: schneidet Roh-Videos zu fertigen Reels/Shorts — Transkript, Schnitt, Untertitel, Motion Graphics, Render. Brand-aware über das Agency OS",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Markus Vieghofer",
     "email": "hallo@markusvieghofer.com"

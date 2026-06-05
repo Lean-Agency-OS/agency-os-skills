@@ -18,9 +18,8 @@ description: Schneidet Roh-Videos zu fertigen Reels/Shorts/Clips - Transkript, S
 **Code** (in diesem Skill-Ordner, wird bei Plugin-Updates ersetzt):
 - `engines/video-use/` - Schnitt-Engine-Quellcode (Python, ElevenLabs Scribe, ffmpeg).
 - `engines/hyperframes/` - Motion-Graphics-Engine (package.json; Install landet im Daten-Verzeichnis).
-- `references/cut-standards.md` - **die** Quelle fuer Padding, Silence-Checks, Last-Word-Two-Step, EDL-Format.
+- `references/cut-standards.md` - **die** Quelle fuer Padding, Silence-Checks, Last-Word-Two-Step, EDL-Format und die Render-Hard-Rules (Filter-Chain).
 - `references/motion-style.md` - projekt-eigene Motion-Regeln (Anchor-Word-Sync, Render-Defaults).
-- `engines/video-use/SKILL.md` - die Hard Rules der Schnitt-Engine (Referenz, kein eigener Trigger).
 
 **Daten** (persistent, ueberleben Plugin-Updates — liegen im Plugin-Daten-Verzeichnis):
 - `$DATA/.env` - `ELEVENLABS_API_KEY`
@@ -84,8 +83,7 @@ Transkript ist gecached (kein Re-Transkribieren, ausser Source aenderte sich).
 ## Phase 3: Schnitt planen (LLM-Reasoning)
 
 **Pflicht-Lektuere zuerst:**
-- `$VS/references/cut-standards.md` - Padding-Tabelle, Pre-Cut-Checks, Last-Word-Two-Step, EDL-Format.
-- `$VS/engines/video-use/SKILL.md` - Hard Rules (nie im Wort schneiden, Subtitles zuletzt im Filter, 30ms Audio-Fades, etc.).
+- `$VS/references/cut-standards.md` - Padding-Tabelle, Pre-Cut-Checks, Last-Word-Two-Step, EDL-Format und die Render-Hard-Rules (nie im Wort schneiden, Subtitles zuletzt im Filter, 30ms Audio-Fades, etc.).
 
 Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slices laut cut-standards.md pruefen. EDL als JSON mit `_padding_params`-Block schreiben. Drill-down nur bei Bedarf via `timeline_view.py`.
 
