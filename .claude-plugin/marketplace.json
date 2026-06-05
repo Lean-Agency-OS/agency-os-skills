@@ -54,7 +54,7 @@
     {
       "name": "carousel",
       "source": "./plugins/carousel",
-      "description": "Carousel-Posts nach der 4-Bausteine-Formel: geführter Workflow von der Idee bis zu 10 Slide-Texten, Caption und HTML-Preview",
+      "description": "Carousel-Posts nach der 4-Bausteine-Formel: geführter Workflow von der Idee bis zu 10 gerenderten Slides (PNG), PDF und Caption, im CI der eigenen Agentur",
       "category": "content",
       "author": {
         "name": "Markus Vieghofer"
@@ -63,7 +63,7 @@
     {
       "name": "video-studio",
       "source": "./plugins/video-studio",
-      "description": "KI-Video-Editing: Roh-Video → fertiges Reel/Short mit Transkript, Schnitt, Untertiteln, Motion Graphics und Render — brand-aware",
+      "description": "KI-Video-Editing: Roh-Video zu fertigem Reel/Short (Transkript, Schnitt, Untertitel, Motion Graphics, Render) plus lokale Schnell-Triage ganzer Video-Ordner ohne API. Brand-aware über das Agency OS",
       "category": "content",
       "author": {
         "name": "Markus Vieghofer"
