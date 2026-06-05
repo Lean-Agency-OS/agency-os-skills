@@ -1,6 +1,6 @@
 ---
 name: video-studio
-description: Schneidet Roh-Videos zu fertigen Reels/Shorts/Clips - Transkript, Schnitt, Untertitel, Motion Graphics, Render. Triggert bei "schneid das Video", "mach ein Reel draus", "bau ein Short aus diesem Video", "/video", "/reel", "kuerz das Video", "Untertitel aufs Video", "video-studio". Brand-aware ueber 01-context/brands/{brand}/, nutzt brand-voice + icp. Output in 07-content/reels/{datum-slug}/.
+description: Schneidet Roh-Videos zu fertigen Reels/Shorts/Clips - Transkript, Schnitt, Untertitel, Motion Graphics, Render. Triggert bei "schneid das Video", "mach ein Reel draus", "bau ein Short aus diesem Video", "/video", "/reel", "kuerz das Video", "Untertitel aufs Video", "video-studio". Kann ausserdem einen Ordner Videos lokal & schnell transkribieren (ohne API) zum Sortieren/Ueberblicken - triggert bei "worum geht es in den Videos", "transkribier die lokal", "sortier die Videos", "Ordner Videos transkribieren". Brand-aware ueber 01-context/brands/{brand}/, nutzt brand-voice + icp. Output in 07-content/reels/{datum-slug}/.
 ---
 
 # Skill: video-studio
@@ -13,10 +13,29 @@ description: Schneidet Roh-Videos zu fertigen Reels/Shorts/Clips - Transkript, S
 
 ---
 
+## Schnell-Triage (lokal, ohne API)
+
+Eigener, leichter Modus - **nicht** der Schnitt-Workflow. Wenn der Nutzer nur wissen will, worum es in einem oder mehreren Videos geht (z.B. einen Ordner sortieren/kategorisieren), lokal und ohne ElevenLabs transkribieren. Bewusst grob: keine Wortgenauigkeit, keine Pausen/Diarization. **Niemals** als Transkript-Quelle fuer einen echten Schnitt verwenden - dafuer ist Phase 2 (Scribe) zustaendig.
+
+Setup-Gate (Phase 0) trotzdem einmal laufen lassen (braucht das venv), aber **kein** `ELEVENLABS_API_KEY` noetig.
+
+```bash
+VS={absoluter Pfad dieses Skill-Ordners}
+DATA={Plugin-Daten-Verzeichnis}
+PY=$DATA/venv/bin/python
+$PY $VS/engines/video-use/helpers/transcribe_local.py "{ordner-oder-video}" --model base --lang de
+```
+
+- Engine wird automatisch gewaehlt: `mlx-whisper` auf Apple Silicon, sonst `faster-whisper` (CPU). Beim ersten Lauf laedt das Modell einmalig (~140 MB fuer `base`).
+- Schreibt pro Video `{ordner}/local-transcripts/{name}.txt` (reiner Fließtext), gecached.
+- Danach: die `.txt` lesen und dem Nutzer eine Sortierung/Kategorisierung vorschlagen. Dateien nur nach Bestaetigung verschieben.
+
+---
+
 ## Struktur (alles in diesem Skill, self-contained)
 
 **Code** (in diesem Skill-Ordner, wird bei Plugin-Updates ersetzt):
-- `engines/video-use/` - Schnitt-Engine-Quellcode (Python, ElevenLabs Scribe, ffmpeg).
+- `engines/video-use/` - Schnitt-Engine-Quellcode (Python, ElevenLabs Scribe, ffmpeg). Enthaelt auch `helpers/transcribe_local.py` fuer die lokale Schnell-Triage (ohne API).
 - `engines/hyperframes/` - Motion-Graphics-Engine (package.json; Install landet im Daten-Verzeichnis).
 - `references/cut-standards.md` - **die** Quelle fuer Padding, Silence-Checks, Last-Word-Two-Step, EDL-Format und die Render-Hard-Rules (Filter-Chain).
 - `references/motion-style.md` - projekt-eigene Motion-Regeln (Anchor-Word-Sync, Render-Defaults).

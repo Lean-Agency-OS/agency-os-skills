@@ -10,6 +10,9 @@ dependencies = [
     "matplotlib",
     "pillow",
     "numpy",
+    # Lokale Schnell-Triage (transcribe_local.py, ohne API):
+    "faster-whisper",                                                        # portabel (CPU), Fallback ueberall
+    "mlx-whisper; sys_platform == 'darwin' and platform_machine == 'arm64'", # nur Apple Silicon, schneller
 ]
 
 [build-system]

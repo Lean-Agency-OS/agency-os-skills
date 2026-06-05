@@ -34,7 +34,7 @@ Hinweis: Wer das [Agency-OS-Template](https://github.com/markusvieghofer/agency-
 | `icp` | 1.0.0 | ICP-System: Profil per Setup-Interview, dann Bewerten / Persona / Qualifizieren |
 | `weekly-content-mining` | 1.0.0 | Content-Mining: 8-Bucket-Wochen-Interview → Dump mit Top Plays + Wildcard |
 | `carousel` | 1.0.0 | Carousel-Posts nach der 4-Bausteine-Formel: Idee → 10 Slides + Caption + Preview |
-| `video-studio` | 1.0.1 | KI-Video-Editing: Roh-Video → Reel/Short (Transkript, Schnitt, Untertitel, Motion Graphics). Braucht einmalig `setup.sh` + ElevenLabs-Key |
+| `video-studio` | 1.1.0 | KI-Video-Editing: Roh-Video → Reel/Short (Transkript, Schnitt, Untertitel, Motion Graphics) + lokale Schnell-Triage ganzer Video-Ordner ohne API. Braucht einmalig `setup.sh` + ElevenLabs-Key |
 
 Die Content-Plugins greifen ineinander: `icp` pflegt das Wunschkunden-Profil in `01-context/zielgruppe.md`, `brand-voice` die Stimme in `01-context/brand/voice.md` — `weekly-content-mining` und `carousel` lesen beides.
 
