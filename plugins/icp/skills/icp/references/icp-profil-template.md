@@ -28,6 +28,16 @@
 2. **[X] ↔ [Y]:** [ein Satz]
 3. ...
 
+## Psychografie
+
+**DISG-Typ:** [Dominanter Typ, ggf. mit zweiter Tendenz, z.B. "D mit G-Anteil" — plus ein Satz zum beobachtbaren Verhalten]
+
+**Werte & Motivatoren:** [Was ihn im Kern antreibt: Status, Sicherheit, Freiheit, Anerkennung, Wachstum — der Treiber hinter dem Kaufverhalten]
+
+**Entscheidungs- & Kaufstil:** [Bauch vs. Daten, schnell vs. zögerlich, allein vs. Konsens, Risikoneigung — und was ihn zögern lässt]
+
+**Status & Identität:** [Wie er gesehen werden will, wovor er Angst hat (Gesichtsverlust), welche Identität er kauft — Andockpunkt zur Wunschidentität]
+
 ## Sprache
 
 **Funktioniert (seine eigenen Wörter):** [Begriffe, Phrasen]

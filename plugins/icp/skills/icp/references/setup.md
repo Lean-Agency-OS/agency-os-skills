@@ -20,14 +20,30 @@ Eine Frage nach der anderen. Antworten zusammenfassen und einsortieren, nicht w�
 
 5. *"Wo widerspricht sich dieser Kunde? Was will er gleichzeitig, das sich beißt?"* — 2-4 Spannungspaare herausarbeiten (Format: *X ↔ Y* mit je einem Satz). Beispiele zum Anstoßen: Wachstum vs. Kontrolle, Qualität vs. Tempo, Sichtbarkeit vs. Seriosität.
 
-### Block 4: Sprache
+### Block 4: Psychografie
 
-6. *"Welche Wörter/Phrasen benutzt der Kunde selbst, wenn er sein Problem beschreibt?"* (→ Sprache die funktioniert)
-7. *"Bei welchen Buzzwords steigt er aus?"* (→ Sprache die abprallt)
+6. *"Was treibt diesen Kunden im Kern an? Wenn er stolz auf eine Entscheidung ist — worauf genau? Status, Sicherheit, Freiheit, Anerkennung, Wachstum?"* (→ Werte & Motivatoren)
+7. *"Wie trifft dieser Kunde eine Kaufentscheidung — schnell aus dem Bauch oder erst wenn alle Daten auf dem Tisch liegen? Entscheidet er allein oder will er Konsens? Und was lässt ihn zögern?"* (→ Entscheidungs- & Kaufstil; liefert zugleich die Basis für die DISG-Ableitung)
+8. *"Wie will dieser Kunde von außen gesehen werden — und wovor hat er insgeheim Angst? Wo würde ein Gesichtsverlust am meisten wehtun?"* (→ Status & Identität)
 
-### Block 5: Qualifizierung
+**DISG ableiten und bestätigen:** Erschließe aus Sprache, Spannungen und vor allem dem Entscheidungs-/Kaufstil den dominanten DISG-Typ — und lege ihn dem User zur Bestätigung oder Korrektur vor. Nicht raten lassen, sondern ableiten und spiegeln: *"Klingt für mich nach einem dominanten [Typ] — [ein Satz, woran ich das festmache]. Passt das, oder eher [Alternative]?"*
 
-8. *"Stell dir vor, ich zeige dir ein LinkedIn-Profil. Woran erkennst du in 10 Sekunden: passt / passt nicht?"* — daraus harte KO-Kriterien (Tabelle) und weiche Signale ableiten.
+Mapping zur Orientierung (nur intern, nicht abfragen):
+- **D – Dominanz:** entscheidet schnell, ergebnis- und kontrollorientiert, ungeduldig, will Resultate. Risikofreudig.
+- **I – Initiative:** beziehungs- und begeisterungsgetrieben, entscheidet aus dem Bauch, will gesehen werden, schreckt vor Details zurück.
+- **S – Stetigkeit:** sicherheits- und harmonieorientiert, entscheidet langsam und im Konsens, loyal, scheut Risiko und abrupte Veränderung.
+- **G – Gewissenhaftigkeit:** daten- und qualitätsgetrieben, will alle Fakten, entscheidet erst nach Prüfung, skeptisch gegenüber Versprechen.
+
+Reine Typen sind selten — dokumentiere den dominanten Typ plus ggf. eine zweite Tendenz (z.B. *"D mit G-Anteil"*).
+
+### Block 5: Sprache
+
+9. *"Welche Wörter/Phrasen benutzt der Kunde selbst, wenn er sein Problem beschreibt?"* (→ Sprache die funktioniert)
+10. *"Bei welchen Buzzwords steigt er aus?"* (→ Sprache die abprallt)
+
+### Block 6: Qualifizierung
+
+11. *"Stell dir vor, ich zeige dir ein LinkedIn-Profil. Woran erkennst du in 10 Sekunden: passt / passt nicht?"* — daraus harte KO-Kriterien (Tabelle) und weiche Signale ableiten.
 
 ## Abschluss
 

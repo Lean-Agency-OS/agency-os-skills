@@ -57,7 +57,4 @@ Kein Plugin speichert Keys oder Tokens im Plugin-Ordner — der wird bei Updates
 ## Entwicklung & Release
 
 - **Versions-Schleuse:** Kunden erhalten Updates erst, wenn die `version` im jeweiligen `plugin.json` hochgezählt wird. Commits ohne Version-Bump erreichen keine Kunden.
-- **Zwei Arbeitsmodi:**
-  - *Release-Ziel* (z.B. brand-voice, icp): Die Quelle lebt in Markus' Brain, hier liegt nur das Kunden-Destillat. Hier nie inhaltlich editieren.
-  - *Entwicklungsort* (z.B. video-studio, agency-os-core): Dieses Repo ist die einzige Quelle, Entwicklung passiert direkt hier.
 - **Validierung vor Release:** `claude plugin validate .` im Repo-Root.
