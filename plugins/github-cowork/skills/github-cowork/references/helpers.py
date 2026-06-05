@@ -6,17 +6,34 @@ import re
 import os
 
 
+def data_dir():
+    """Persistentes Plugin-Daten-Verzeichnis (überlebt Plugin-Updates)."""
+    return os.environ.get(
+        "CLAUDE_PLUGIN_DATA",
+        os.path.expanduser("~/.claude/plugins/data/github-cowork"),
+    )
+
+
 def load_config(skill_dir):
-    """Liest resources/github.config und gibt dict zurück."""
-    config_path = os.path.join(skill_dir, "resources", "github.config")
-    config = {}
-    with open(config_path) as f:
-        for line in f:
-            line = line.strip()
-            if "=" in line:
-                key, _, val = line.partition("=")
-                config[key.strip()] = val.strip()
-    return config
+    """Liest github.config — bevorzugt aus dem Daten-Verzeichnis,
+    Fallback: resources/ im Skill-Ordner (Alt-Installationen)."""
+    candidates = [
+        os.path.join(data_dir(), "github.config"),
+        os.path.join(skill_dir, "resources", "github.config"),
+    ]
+    for config_path in candidates:
+        if not os.path.isfile(config_path):
+            continue
+        config = {}
+        with open(config_path) as f:
+            for line in f:
+                line = line.strip()
+                if "=" in line:
+                    key, _, val = line.partition("=")
+                    config[key.strip()] = val.strip()
+        if config.get("TOKEN"):
+            return config
+    return {}
 
 
 def parse_remote(repo_dir):

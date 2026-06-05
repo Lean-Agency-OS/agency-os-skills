@@ -13,12 +13,17 @@ Die Scripts liegen in `references/` neben dieser SKILL.md. Alle Scripts geben JS
 
 ## Schritt 1 — Config prüfen
 
-Lies `resources/github.config` aus dem Skill-Verzeichnis.
+Config-Datei: `github.config` (Zeilen-Format `NAME=` / `EMAIL=` / `TOKEN=`). Suchreihenfolge:
+
+1. `${CLAUDE_PLUGIN_DATA}/github.config` — falls die Variable nicht gesetzt ist: `~/.claude/plugins/data/github-cowork/github.config`. **Standard-Ort, überlebt Plugin-Updates.**
+2. Fallback: `resources/github.config` im Skill-Verzeichnis (Alt-Installationen).
 
 **TOKEN befüllt:** Werte einlesen → weiter zu Schritt 2.
 
-**TOKEN leer:** Fehlermeldung ausgeben:
-> "Der Skill ist noch nicht eingerichtet. Bitte führe zuerst das Setup durch (`github-cowork-setup.md`)."
+**TOKEN leer / Datei fehlt → Setup direkt hier durchführen:**
+1. Nacheinander abfragen: Name (für die Autoren-Anzeige), E-Mail, GitHub Personal Access Token (Hinweis: braucht `repo`-Scope; erstellbar unter github.com → Settings → Developer settings → Personal access tokens).
+2. Daten-Verzeichnis anlegen (falls nötig) und `github.config` dorthin schreiben (Ort 1, nie in den Skill-Ordner).
+3. Token in keiner Ausgabe wiederholen — nur bestätigen: *"Eingerichtet. Deine Änderungen kann ich ab jetzt speichern und synchronisieren."*
 
 ---
 

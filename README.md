@@ -50,6 +50,10 @@ plugins/
     skills/                       ← die Skills
 ```
 
+## Secrets & Environment-Variablen
+
+Kein Plugin speichert Keys oder Tokens im Plugin-Ordner — der wird bei Updates ersetzt. Plugin-eigene Secrets liegen im persistenten Daten-Verzeichnis (`${CLAUDE_PLUGIN_DATA}`, d.h. `~/.claude/plugins/data/{plugin}/`), OS-globale Variablen in der gitignorten `.env` im OS-Root. Details und Regeln für neue Plugins: [docs/secrets-konvention.md](docs/secrets-konvention.md).
+
 ## Entwicklung & Release
 
 - **Versions-Schleuse:** Kunden erhalten Updates erst, wenn die `version` im jeweiligen `plugin.json` hochgezählt wird. Commits ohne Version-Bump erreichen keine Kunden.
