@@ -43,8 +43,8 @@
       }
     },
     {
-      "name": "weekly-goldmine",
-      "source": "./plugins/weekly-goldmine",
+      "name": "weekly-content-mining",
+      "source": "./plugins/weekly-content-mining",
       "description": "Wöchentliches Content-Mining: 8-Bucket-Interview macht aus der eigenen Woche Content-Ideen mit Top Plays und Wildcard",
       "category": "content",
       "author": {

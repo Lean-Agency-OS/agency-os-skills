@@ -1,10 +1,10 @@
 ---
-name: weekly-goldmine
+name: weekly-content-mining
 description: >
   Wöchentliches Content-Mining Interview. Führt ein strukturiertes
   8-Bucket-Interview durch (Calendar, Clients, Creation, Chat, Community,
   Content, Circumstances, Credit Card) um rohe Wochenerlebnisse in
-  Content-Gold zu verwandeln und als Goldmine Dump im Agency OS zu speichern.
+  Content-Gold zu verwandeln und als Content-Mining Dump im Agency OS zu speichern.
   Triggern bei: Goldmine, weekly goldmine, content mining, was kann ich diese
   Woche posten, lass uns die Woche durchgehen, 8 buckets, content ideen aus
   der woche, mining session, meine woche für content, goldmine session starten,
@@ -12,9 +12,9 @@ description: >
   content.
 ---
 
-# Weekly Goldmine — Content Mining Interview
+# Weekly Content Mining — das Wochen-Interview
 
-Du führst das Interview als erfahrener Content-Stratege: direkt, neugierig, tempoorientiert. Ziel: Rohe Wochenerlebnisse → strukturierte Content-Nuggets → Goldmine Dump im Agency OS.
+Du führst das Interview als erfahrener Content-Stratege: direkt, neugierig, tempoorientiert. Ziel: Rohe Wochenerlebnisse → strukturierte Content-Nuggets → Content-Mining Dump im Agency OS.
 
 **Ausgabe-Stil:** Falls ein Voice-Profile existiert (`01-context/brand/voice.md`), wende es auf alle geschriebenen Outputs an (Nuggets, Top Plays, Wildcard).
 
@@ -35,7 +35,7 @@ Fehlen beide: Session trotzdem starten, aber am Ende empfehlen, das ICP-Profil a
 ### 1. Sofort starten
 
 ```
-Alright. Starten wir die Goldmine.
+Alright. Starten wir das Content Mining.
 
 8 Buckets — je ~30 Sekunden. Roh reinkippen, ich extrahiere den Rest.
 
@@ -60,22 +60,22 @@ Nach jeder Antwort: kurz benennen was Content-Gold ist, dann sofort weiter.
 
 Wenn eine Antwort dünn ist, einmal nachfragen: *"Was war das Konkrete daran?"* Dann weiter.
 
-### 3. Goldmine Dump erstellen und speichern
+### 3. Content-Mining Dump erstellen und speichern
 
-Nach allen 8 Buckets den Goldmine Dump schreiben und speichern:
+Nach allen 8 Buckets den Content-Mining Dump schreiben und speichern:
 
 ```
-06-knowledge/content/goldmine/[YYYY]-KW[XX].md
+06-knowledge/content/mining/[YYYY]-KW[XX].md
 ```
 
-**Index-Pflege:** Falls dabei der Ordner `content/` oder `goldmine/` neu entsteht, einen Markdown-Link in der `## Aktuell vorhanden`-Sektion von `06-knowledge/_index.md` ergänzen (erste Zeile `- _(noch leer)_` dabei entfernen).
+**Index-Pflege:** Falls dabei der Ordner `content/` oder `mining/` neu entsteht, einen Markdown-Link in der `## Aktuell vorhanden`-Sektion von `06-knowledge/_index.md` ergänzen (erste Zeile `- _(noch leer)_` dabei entfernen).
 
 ---
 
-## Output-Format: Goldmine Dump
+## Output-Format: Content-Mining Dump
 
 ```markdown
-# Goldmine Dump — KW [XX] / [YYYY]
+# Content-Mining Dump — KW [XX] / [YYYY]
 
 > Mining Session: [Datum]
 

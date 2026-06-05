@@ -1,0 +1,9 @@
+{
+  "name": "weekly-content-mining",
+  "description": "Wöchentliches Content-Mining: 8-Bucket-Interview verwandelt rohe Wochenerlebnisse in Content-Ideen und speichert sie als Dump im Agency OS",
+  "version": "1.0.0",
+  "author": {
+    "name": "Markus Vieghofer",
+    "email": "hallo@markusvieghofer.com"
+  }
+}
