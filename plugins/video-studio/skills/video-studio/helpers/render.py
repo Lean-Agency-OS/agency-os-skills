@@ -28,14 +28,19 @@ import subprocess
 import sys
 from pathlib import Path
 
+from ffmpeg_utils import run as ffrun
+
 try:
-    from grade import get_preset, auto_grade_for_clip  # same directory
+    from grade import get_preset, auto_grade_for_clip, lut_filter  # same directory
 except Exception:
     def get_preset(name: str) -> str:
         return ""
 
     def auto_grade_for_clip(video, start=0.0, duration=None, verbose=False):  # type: ignore
         return "eq=contrast=1.03:saturation=0.98", {}
+
+    def lut_filter(lut_path) -> str:  # type: ignore
+        return f"lut3d='{lut_path}'"
 
 
 # -------- Subtitle style (bold-overlay, proven at 1920×1080 and 1080×1920) --
@@ -61,19 +66,30 @@ SUB_FORCE_STYLE = (
 def run(cmd: list[str], quiet: bool = False) -> None:
     if not quiet:
         print(f"  $ {' '.join(str(c) for c in cmd[:6])}{' …' if len(cmd) > 6 else ''}")
-    subprocess.run(cmd, check=True)
+    ffrun(cmd)
 
 
-def resolve_grade_filter(grade_field: str | None) -> str:
-    """The EDL's 'grade' field can be a preset name, a raw ffmpeg filter, or 'auto'.
+def resolve_grade_filter(grade_field: str | None, edit_dir: Path) -> str:
+    """The EDL's 'grade' field can be a preset name, a .cube LUT, a raw ffmpeg
+    filter, or 'auto'.
+
+    Recognized forms:
+      - "auto"                  -> sentinel "__AUTO__" (resolved per-segment)
+      - "lut:/path/look.cube"   -> lut3d filter (path relative to edit_dir)
+      - "<preset_name>"         -> the preset's filter chain
+      - "<raw ffmpeg filter>"   -> used verbatim
 
     Returns the filter string to embed into the per-segment -vf chain.
-    For 'auto', returns the sentinel "__AUTO__" which is resolved per-segment.
     """
     if not grade_field:
         return ""
     if grade_field == "auto":
         return "__AUTO__"
+    if grade_field.startswith("lut:"):
+        lut_path = Path(grade_field[len("lut:"):].strip())
+        if not lut_path.is_absolute():
+            lut_path = edit_dir / lut_path
+        return lut_filter(lut_path)
     # Preset names are short identifiers, filter strings contain '=' or ','.
     if re.fullmatch(r"[a-zA-Z0-9_\-]+", grade_field):
         try:
@@ -117,8 +133,18 @@ TONEMAP_CHAIN = (
 )
 
 
+# Probes are cached per source path: extract_segment runs once per EDL range,
+# but HDR/orientation are properties of the source file, not the cut. Caching
+# avoids 2 redundant ffprobe calls per segment.
+_HDR_CACHE: dict[str, bool] = {}
+_PORTRAIT_CACHE: dict[str, bool] = {}
+
+
 def is_hdr_source(video: Path) -> bool:
     """Return True if the source uses a PQ or HLG transfer function."""
+    key = str(video)
+    if key in _HDR_CACHE:
+        return _HDR_CACHE[key]
     try:
         out = subprocess.run(
             ["ffprobe", "-v", "error", "-select_streams", "v:0",
@@ -126,13 +152,18 @@ def is_hdr_source(video: Path) -> bool:
              "-of", "default=noprint_wrappers=1:nokey=1", str(video)],
             capture_output=True, text=True, check=True,
         )
-        return out.stdout.strip() in HDR_TRANSFERS
+        result = out.stdout.strip() in HDR_TRANSFERS
     except subprocess.CalledProcessError:
-        return False
+        result = False
+    _HDR_CACHE[key] = result
+    return result
 
 
 def is_portrait_source(video: Path) -> bool:
     """Return True if the video's height > width (portrait / vertical)."""
+    key = str(video)
+    if key in _PORTRAIT_CACHE:
+        return _PORTRAIT_CACHE[key]
     try:
         out = subprocess.run(
             ["ffprobe", "-v", "error", "-select_streams", "v:0",
@@ -141,9 +172,26 @@ def is_portrait_source(video: Path) -> bool:
             capture_output=True, text=True, check=True,
         )
         w, h = map(int, out.stdout.strip().split(","))
-        return h > w
+        # Phones store landscape pixels + a rotation flag; honor it so a
+        # display-portrait clip (e.g. iPhone selfie) is detected as portrait.
+        try:
+            rot_out = subprocess.run(
+                ["ffprobe", "-v", "error", "-select_streams", "v:0",
+                 "-show_entries", "stream_side_data=rotation",
+                 "-of", "default=nk=1:nw=1", str(video)],
+                capture_output=True, text=True,
+            )
+            rot_line = (rot_out.stdout.strip().splitlines() or ["0"])[0]
+            rot_val = int(rot_line) if rot_line.lstrip("-").isdigit() else 0
+        except Exception:
+            rot_val = 0
+        if rot_val % 180 != 0:
+            w, h = h, w
+        result = h > w
     except Exception:
-        return False
+        result = False
+    _PORTRAIT_CACHE[key] = result
+    return result
 
 
 # -------- Per-segment extraction (Rule 2 + Rule 3) --------------------------
@@ -208,7 +256,7 @@ def extract_segment(
         "-movflags", "+faststart",
         str(out_path),
     ]
-    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    ffrun(cmd)
 
 
 def extract_all_segments(
@@ -224,7 +272,7 @@ def extract_all_segments(
     `auto_grade_for_clip` and apply a per-segment subtle correction.
     Otherwise, apply the same preset/raw filter to every segment.
     """
-    resolved = resolve_grade_filter(edl.get("grade"))
+    resolved = resolve_grade_filter(edl.get("grade"), edit_dir)
     is_auto = resolved == "__AUTO__"
     clips_dir = edit_dir / (
         "clips_draft" if draft else ("clips_preview" if preview else "clips_graded")
@@ -279,7 +327,7 @@ def concat_segments(segment_paths: list[Path], out_path: Path, edit_dir: Path) -
         str(out_path),
     ]
     print(f"concat → {out_path.name}")
-    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    ffrun(cmd)
     concat_list.unlink(missing_ok=True)
 
 
@@ -454,7 +502,7 @@ def apply_loudnorm_two_pass(
             str(output_path),
         ]
         print(f"  loudnorm (1-pass preview) → {output_path.name}")
-        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        ffrun(cmd)
         return True
 
     # Full two-pass
@@ -486,7 +534,7 @@ def apply_loudnorm_two_pass(
         str(output_path),
     ]
     print(f"  loudnorm pass 2: normalizing → {output_path.name}")
-    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    ffrun(cmd)
     return True
 
 
@@ -537,7 +585,11 @@ def build_final_composite(
 
     # Subtitles LAST — Rule 1
     if has_subs:
-        subs_abs = str(subtitles_path.resolve()).replace(":", r"\:").replace("'", r"\'")
+        # Escape for the `subtitles` filter inside a filter_complex string.
+        # Backslash first, then the chars libavfilter treats specially.
+        subs_abs = str(subtitles_path.resolve())
+        for ch in ("\\", ":", "'", "[", "]", ","):
+            subs_abs = subs_abs.replace(ch, "\\" + ch)
         filter_parts.append(
             f"{current}subtitles='{subs_abs}':force_style='{SUB_FORCE_STYLE}'[outv]"
         )
@@ -566,7 +618,7 @@ def build_final_composite(
     ]
     print(f"compositing → {out_path.name}")
     print(f"  overlays: {len(overlays)}, subtitles: {'yes' if has_subs else 'no'}")
-    subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    ffrun(cmd)
 
 
 # -------- Main ---------------------------------------------------------------

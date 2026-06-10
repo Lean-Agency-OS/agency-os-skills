@@ -30,6 +30,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
+from ffmpeg_utils import run as ffrun
+
 
 # -------- Frame extraction ---------------------------------------------------
 
@@ -57,7 +59,7 @@ def extract_frames(video: Path, start: float, end: float, n: int, dest_dir: Path
             "-vf", "scale=320:-2",
             str(out),
         ]
-        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        ffrun(cmd)
         paths.append(out)
     return paths
 

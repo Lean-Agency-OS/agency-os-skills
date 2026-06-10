@@ -34,6 +34,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from ffmpeg_utils import run as ffrun
+
 
 PRESETS: dict[str, str] = {
     # Subtle baseline — barely perceptible cleanup. No color shift.
@@ -70,6 +72,27 @@ def get_preset(name: str) -> str:
             f"unknown preset '{name}'. Available: {', '.join(sorted(PRESETS))}"
         )
     return PRESETS[name]
+
+
+def escape_filter_path(p: str) -> str:
+    """Escape a path for embedding inside an ffmpeg filter argument."""
+    out = p
+    for ch in ("\\", ":", "'", "[", "]", ","):
+        out = out.replace(ch, "\\" + ch)
+    return out
+
+
+def lut_filter(lut_path) -> str:
+    """Return an ffmpeg `lut3d` filter for a .cube LUT. Validates existence.
+
+    LUTs assume a known input color space (most looks expect Rec.709 SDR).
+    render.py tone-maps HDR sources to 709 before the grade, so a LUT applied
+    afterwards sits in the right space.
+    """
+    p = Path(lut_path)
+    if not p.exists():
+        raise FileNotFoundError(f"LUT not found: {p}")
+    return f"lut3d='{escape_filter_path(str(p.resolve()))}'"
 
 
 # -------- Auto grade (data-driven, per-clip) --------------------------------
@@ -109,7 +132,7 @@ def _sample_frame_stats(
             "-vf", f"fps={fps:.2f},signalstats,metadata=print:file={metadata_path}",
             "-f", "null", "-",
         ]
-        subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        ffrun(cmd)
 
         # Parse signalstats metadata. Signalstats reports values in the NATIVE
         # bit depth of the decoded frame (8-bit → 0-255, 10-bit → 0-1023). We
@@ -306,7 +329,13 @@ def main() -> None:
         "--filter",
         type=str,
         default=None,
-        help="Raw ffmpeg filter string. Overrides --preset.",
+        help="Raw ffmpeg filter string. Overrides --lut and --preset.",
+    )
+    ap.add_argument(
+        "--lut",
+        type=Path,
+        default=None,
+        help="Apply a 3D LUT (.cube) via lut3d. Overrides --preset.",
     )
     ap.add_argument(
         "--analyze",
@@ -352,9 +381,11 @@ def main() -> None:
     if not args.input.exists():
         sys.exit(f"input not found: {args.input}")
 
-    # Decide filter string
+    # Decide filter string (precedence: --filter > --lut > --preset > auto)
     if args.filter is not None:
         filter_string = args.filter
+    elif args.lut is not None:
+        filter_string = lut_filter(args.lut)
     elif args.preset is not None:
         filter_string = get_preset(args.preset)
     else:

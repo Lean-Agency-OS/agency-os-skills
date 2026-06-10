@@ -10,7 +10,7 @@ Vor dem Schnitt immer diese drei Schritte ausfuehren:
 
 1. **Transkript-Packing:**
    ```bash
-   uv run --project ./video-use python ./video-use/helpers/pack_transcripts.py \
+   .venv/bin/python helpers/pack_transcripts.py \
      --edit-dir "projects/<projektname>" --silence-threshold 0.4
    ```
 
@@ -128,23 +128,6 @@ Vor jedem Cut:
 2. **Warten auf Nutzer-OK** bevor Render startet
 
 3. **Korrektionen:** gleiche Werkzeuge und Workflow nutzen, nicht raten
-
----
-
-## Render-Hard-Rules (Filter-Chain, nicht verhandelbar)
-
-Diese Regeln betreffen die technische Korrektheit beim Render. Abweichung erzeugt **stille Fehler** (kaputter Output ohne Fehlermeldung). `render.py` setzt sie um - bei eigenen ffmpeg-Eingriffen trotzdem einhalten:
-
-1. **Untertitel ganz zuletzt im Filter-Chain** - nach allen Overlays. Sonst verdecken Overlays die Captions.
-2. **Per-Segment-Extract → verlustfreies `-c copy` concat**, kein Single-Pass-Filtergraph. Sonst wird jedes Segment beim Overlay-Hinzufügen doppelt enkodiert.
-3. **30ms Audio-Fades an jeder Segment-Grenze** (`afade=t=in:st=0:d=0.03,afade=t=out:st={dur-0.03}:d=0.03`). Sonst hörbare Knackser an jedem Schnitt.
-4. **Overlays mit `setpts=PTS-STARTPTS+T/TB`** auf den Fenster-Start schieben. Sonst sieht man die Mitte der Animation statt ihres Anfangs.
-5. **Master-SRT mit Output-Timeline-Offsets**: `output_time = word.start - segment_start + segment_offset`. Sonst laufen Untertitel nach dem Concat aus dem Takt.
-6. **Nie im Wort schneiden.** Jede Schnittkante auf eine Wortgrenze aus dem Scribe-Transkript snappen.
-7. **Nur wortgenaues, wörtliches ASR** (Scribe word-level). Nie SRT-/Phrase-Modus (verliert Sub-Sekunden-Pausen), nie normalisierte Füllwörter (verliert Schnitt-Signal).
-8. **Transkripte pro Source cachen.** Nie neu transkribieren, außer die Source-Datei selbst hat sich geändert.
-9. **Mehrere Animationen parallel** über Sub-Agenten (`Agent`-Tool), nie sequenziell.
-10. **Alle Session-Outputs in `_work/edit/`** - nie in den Engine-Ordner schreiben.
 
 ---
 
