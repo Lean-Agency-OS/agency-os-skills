@@ -1,9 +1,0 @@
-{
-  "name": "icp",
-  "description": "ICP-System: baut im Setup ein vollständiges Wunschkunden-Profil und arbeitet danach in 3 Modi — Bewerten (Content/Copy gegen ICP prüfen inkl. simulierter Reaktion), Persona generieren, Leads qualifizieren",
-  "version": "1.0.1",
-  "author": {
-    "name": "Markus Vieghofer",
-    "email": "hallo@markusvieghofer.com"
-  }
-}

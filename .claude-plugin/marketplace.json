@@ -4,61 +4,16 @@
     "name": "Markus Vieghofer",
     "email": "hallo@markusvieghofer.com"
   },
-  "description": "Agency OS Skills — Workflows für Marketing-Agenturen (DACH) von Markus Vieghofer",
+  "metadata": {
+    "description": "Agency OS Skills — Workflows für Marketing-Agenturen (DACH) von Markus Vieghofer",
+    "version": "3.0.0",
+    "repository": "https://github.com/Lean-Agency-OS/agency-os-skills"
+  },
   "plugins": [
     {
-      "name": "agency-os-core",
-      "source": "./plugins/agency-os-core",
-      "description": "Tages-Workflows fürs Agency OS: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown",
-      "category": "workflow",
-      "author": {
-        "name": "Markus Vieghofer"
-      }
-    },
-    {
-      "name": "brand-voice",
-      "source": "./plugins/brand-voice",
-      "description": "Voice-Profile-System: einmaliges Stimm-Setup, danach klingen alle Texte nach dir — E-Mails, Posts, Newsletter, Sales-Copy",
-      "category": "content",
-      "author": {
-        "name": "Markus Vieghofer"
-      }
-    },
-    {
-      "name": "icp",
-      "source": "./plugins/icp",
-      "description": "ICP-System: Wunschkunden-Profil per Setup-Interview, danach 3 Modi — Content bewerten (inkl. simulierter ICP-Reaktion), Personas generieren, Leads qualifizieren",
-      "category": "marketing",
-      "author": {
-        "name": "Markus Vieghofer"
-      }
-    },
-    {
-      "name": "weekly-content-mining",
-      "source": "./plugins/weekly-content-mining",
-      "description": "Wöchentliches Content-Mining: 8-Bucket-Interview macht aus der eigenen Woche Content-Ideen mit Top Plays und Wildcard",
-      "category": "content",
-      "author": {
-        "name": "Markus Vieghofer"
-      }
-    },
-    {
-      "name": "carousel",
-      "source": "./plugins/carousel",
-      "description": "Carousel-Posts nach der 4-Bausteine-Formel: geführter Workflow von der Idee bis zu 10 gerenderten Slides (PNG), PDF und Caption, im CI der eigenen Agentur",
-      "category": "content",
-      "author": {
-        "name": "Markus Vieghofer"
-      }
-    },
-    {
-      "name": "video-studio",
-      "source": "./plugins/video-studio",
-      "description": "KI-Video-Editing: Roh-Video zu fertigem Reel/Short (Transkript, Schnitt, Untertitel, Motion Graphics, Render) plus lokale Schnell-Triage ganzer Video-Ordner ohne API. Brand-aware über das Agency OS",
-      "category": "content",
-      "author": {
-        "name": "Markus Vieghofer"
-      }
+      "name": "agency-os",
+      "description": "Agency OS Skills für Marketing-Agenturen (DACH): Tages-Workflows (Start, Capture, Plan, Review, Shutdown, GitHub-Sicherung), Brand Voice, ICP, Content-Mining, Carousel und Video-Studio",
+      "source": "./"
     }
   ]
 }

@@ -1,9 +1,0 @@
-{
-  "name": "carousel",
-  "description": "Carousel-Posts nach der 4-Bausteine-Formel (Hook → Build → Payoff → CTA): geführter Workflow von der Idee bis zu 10 gerenderten Slides (PNG) + PDF + Caption, im CI der eigenen Agentur",
-  "version": "2.0.0",
-  "author": {
-    "name": "Markus Vieghofer",
-    "email": "hallo@markusvieghofer.com"
-  }
-}
