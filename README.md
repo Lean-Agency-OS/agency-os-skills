@@ -10,10 +10,13 @@ Einmalig in Claude Code oder Cowork:
 /plugin marketplace add Lean-Agency-OS/agency-os-skills
 ```
 
-Dann das Plugin installieren (alle Skills sind in einem Plugin gebündelt):
+Dann die gewünschten Plugins installieren:
 
 ```
-/plugin install agency-os@agency-os
+/plugin install agency-os-core@agency-os
+/plugin install agency-os-brand@agency-os
+/plugin install agency-os-marketing@agency-os
+/plugin install agency-os-video@agency-os
 ```
 
 Updates holen:
@@ -24,25 +27,16 @@ Updates holen:
 
 Hinweis: Wer das [Agency-OS-Template](https://github.com/markusvieghofer/agency-os-brain) nutzt, bekommt den Marketplace beim Öffnen des Repos automatisch vorgeschlagen — die Schritte oben sind dann nicht nötig.
 
-## Enthaltene Skills
+## Plugins & Skills
 
-Alle Skills sind im Plugin `agency-os` gebündelt:
+| Plugin | Skills | Inhalt |
+|---|---|---|
+| `agency-os-core` | `agency-os-start`, `agency-os-capture`, `agency-os-plan`, `agency-os-review`, `agency-os-shutdown`, `agency-os-github` | Tages-Workflows: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown und GitHub-Sicherung in einfacher Sprache |
+| `agency-os-brand` | `brand-voice`, `icp` | Eigenes Stimm-Profil (danach klingen alle Texte nach dir) und Wunschkunden-Profil (Bewerten / Persona / Qualifizieren) |
+| `agency-os-marketing` | `carousel`, `weekly-content-mining` | Carousel-Posts nach der 4-Bausteine-Formel und wöchentliches Content-Mining (8-Bucket-Interview) |
+| `agency-os-video` | `video-studio` | KI-Video-Editing: Roh-Video → Reel/Short + lokale Schnell-Triage ganzer Video-Ordner ohne API. Braucht einmalig `setup.sh` + ElevenLabs-Key |
 
-| Skill | Inhalt |
-|---|---|
-| `agency-os-start` | Morgen-Briefing / Session-Start |
-| `agency-os-capture` | Schnelle Ersterfassung ins Brain |
-| `agency-os-plan` | Implementierungsplan für Projekt/Kampagne |
-| `agency-os-review` | Wöchentliches Lean-Agency-Review |
-| `agency-os-shutdown` | Session-Shutdown + Daily Log |
-| `agency-os-github` | GitHub in normaler Sprache: Commit, Pull mit Rebase, Push, Konfliktlösung — ohne Git-Kenntnisse |
-| `brand-voice` | Voice-Profile-System: einmaliges Stimm-Setup, danach klingen alle Texte nach dir |
-| `icp` | ICP-System: Profil per Setup-Interview, dann Bewerten / Persona / Qualifizieren |
-| `weekly-content-mining` | Content-Mining: 8-Bucket-Wochen-Interview → Dump mit Top Plays + Wildcard |
-| `carousel` | Carousel-Posts nach der 4-Bausteine-Formel: Idee → 10 Slides + Caption + Preview |
-| `video-studio` | KI-Video-Editing: Roh-Video → Reel/Short (Transkript, Schnitt, Untertitel, Motion Graphics) + lokale Schnell-Triage ganzer Video-Ordner ohne API. Braucht einmalig `setup.sh` + ElevenLabs-Key |
-
-Die Content-Plugins greifen ineinander: `icp` pflegt das Wunschkunden-Profil in `01-context/zielgruppe.md`, `brand-voice` die Stimme in `01-context/brand/voice.md` — `weekly-content-mining` und `carousel` lesen beides.
+Die Plugins greifen ineinander: `icp` pflegt das Wunschkunden-Profil in `01-context/zielgruppe.md`, `brand-voice` die Stimme in `01-context/brand/voice.md` — `agency-os-marketing` (Carousel, Content-Mining) liest beides.
 
 Die Skills werden über natürliche Sprache ausgelöst ("guten morgen", "notiere…", "review machen", "feierabend") oder direkt per `/agency-os-core:agency-os-start` etc.
 
@@ -50,12 +44,14 @@ Die Skills werden über natürliche Sprache ausgelöst ("guten morgen", "notiere
 
 ```
 .claude-plugin/
-  marketplace.json   ← Marketplace-Katalog (ein Plugin: agency-os)
-  plugin.json        ← Plugin-Manifest mit Version, zeigt auf ./skills
-skills/
-  <skill-name>/
-    SKILL.md         ← Skill-Definition
-    references/      ← optionale Detail-Docs
+  marketplace.json            ← Marketplace-Katalog (listet alle 4 Plugins)
+plugins/
+  agency-os-core/
+    .claude-plugin/plugin.json  ← Manifest mit Version
+    skills/<skill-name>/SKILL.md
+  agency-os-brand/
+  agency-os-marketing/
+  agency-os-video/
 ```
 
 ## Secrets & Environment-Variablen
@@ -64,5 +60,6 @@ Kein Plugin speichert Keys oder Tokens im Plugin-Ordner — der wird bei Updates
 
 ## Entwicklung & Release
 
-- **Versions-Schleuse:** Kunden erhalten Updates erst, wenn die `version` in `.claude-plugin/plugin.json` (und passend in `marketplace.json` unter `metadata.version`) hochgezählt wird. Commits ohne Version-Bump erreichen keine Kunden.
-- **Validierung vor Release:** `claude plugin validate .` im Repo-Root.
+- **Versions-Schleuse (WICHTIG):** Kunden erhalten Updates eines Plugins nur, wenn die `version` in dessen `plugins/<plugin>/.claude-plugin/plugin.json` hochgezählt wird. Claude Code löst die Version aus `plugin.json` auf; pusht man Commits ohne Bump, sieht der Client dieselbe Version und behält den Cache — das Update kommt nicht an. **Vor jedem Release also: in jedem geänderten Plugin die `version` erhöhen.**
+- **Faustregel:** Hast du Skills nur in einem Plugin geändert, reicht der Bump dort. Mehrere Plugins geändert → jedes einzeln bumpen.
+- **Validierung vor Release:** `claude plugin validate .` im Repo-Root (prüft `marketplace.json`), bzw. `claude plugin validate ./plugins/<plugin>` für ein einzelnes Plugin.

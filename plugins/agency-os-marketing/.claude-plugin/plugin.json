@@ -1,0 +1,11 @@
+{
+  "name": "agency-os-marketing",
+  "description": "Agency OS Marketing: Carousel-Posts nach der 4-Bausteine-Formel (Idee bis 10 gerenderte Slides + Caption) und wöchentliches Content-Mining (8-Bucket-Interview zu Content-Ideen)",
+  "version": "1.0.0",
+  "author": {
+    "name": "Markus Vieghofer",
+    "email": "hallo@markusvieghofer.com"
+  },
+  "homepage": "https://github.com/Lean-Agency-OS/agency-os-skills",
+  "repository": "https://github.com/Lean-Agency-OS/agency-os-skills"
+}

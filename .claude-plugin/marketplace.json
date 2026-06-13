@@ -4,16 +4,43 @@
     "name": "Markus Vieghofer",
     "email": "hallo@markusvieghofer.com"
   },
-  "metadata": {
-    "description": "Agency OS Skills — Workflows für Marketing-Agenturen (DACH) von Markus Vieghofer",
-    "version": "3.0.0",
-    "repository": "https://github.com/Lean-Agency-OS/agency-os-skills"
-  },
+  "description": "Agency OS Skills — Workflows für Marketing-Agenturen (DACH) von Markus Vieghofer",
   "plugins": [
     {
-      "name": "agency-os",
-      "description": "Agency OS Skills für Marketing-Agenturen (DACH): Tages-Workflows (Start, Capture, Plan, Review, Shutdown, GitHub-Sicherung), Brand Voice, ICP, Content-Mining, Carousel und Video-Studio",
-      "source": "./"
+      "name": "agency-os-core",
+      "source": "./plugins/agency-os-core",
+      "description": "Tages-Workflows: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown und GitHub-Sicherung",
+      "category": "workflow",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
+    },
+    {
+      "name": "agency-os-brand",
+      "source": "./plugins/agency-os-brand",
+      "description": "Brand Voice (eigenes Stimm-Profil) und ICP-System (Wunschkunden-Profil, Bewerten, Personas, Leads qualifizieren)",
+      "category": "content",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
+    },
+    {
+      "name": "agency-os-marketing",
+      "source": "./plugins/agency-os-marketing",
+      "description": "Carousel-Posts nach der 4-Bausteine-Formel und wöchentliches Content-Mining",
+      "category": "content",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
+    },
+    {
+      "name": "agency-os-video",
+      "source": "./plugins/agency-os-video",
+      "description": "KI-Video-Editing: Roh-Video zu Reel/Short plus lokale Schnell-Triage ganzer Video-Ordner ohne API",
+      "category": "content",
+      "author": {
+        "name": "Markus Vieghofer"
+      }
     }
   ]
 }

@@ -1,0 +1,11 @@
+{
+  "name": "agency-os-brand",
+  "description": "Agency OS Brand: Voice-Profile-System (einmaliges Stimm-Setup, danach klingen alle Texte nach dir) und ICP-System (Wunschkunden-Profil, Content bewerten, Personas, Leads qualifizieren)",
+  "version": "1.0.0",
+  "author": {
+    "name": "Markus Vieghofer",
+    "email": "hallo@markusvieghofer.com"
+  },
+  "homepage": "https://github.com/Lean-Agency-OS/agency-os-skills",
+  "repository": "https://github.com/Lean-Agency-OS/agency-os-skills"
+}

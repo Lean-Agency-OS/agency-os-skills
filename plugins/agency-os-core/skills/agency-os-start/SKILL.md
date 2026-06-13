@@ -3,7 +3,7 @@ name: agency-os-start
 description: "Morgen-Briefing für Markus. Verwende diesen Skill IMMER wenn der User 'guten morgen', 'morgen', 'start', 'gm', 'los gehts', 'was steht an', 'starten wir', 'lass uns starten', 'good morning' oder ähnliche Begrüßungen/Start-Signale sagt."
 ---
 
-# Morgen-Briefing (Jarvis Start)
+# Morgen-Briefing
 
 **Trigger:** Markus sagt *"guten morgen"*, *"morgen"*, *"start"*, *"gm"*, *"los gehts"*, *"was steht an"*, *"starten wir"*, *"good morning"* oder ruft `/start` auf.
 

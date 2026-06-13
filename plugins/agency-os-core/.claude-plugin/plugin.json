@@ -1,0 +1,11 @@
+{
+  "name": "agency-os-core",
+  "description": "Agency OS Tages-Workflows: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown und GitHub-Sicherung in einfacher Sprache",
+  "version": "3.0.0",
+  "author": {
+    "name": "Markus Vieghofer",
+    "email": "hallo@markusvieghofer.com"
+  },
+  "homepage": "https://github.com/Lean-Agency-OS/agency-os-skills",
+  "repository": "https://github.com/Lean-Agency-OS/agency-os-skills"
+}

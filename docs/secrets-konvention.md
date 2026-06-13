@@ -43,7 +43,7 @@ data_dir = os.environ.get("CLAUDE_PLUGIN_DATA",
 - `.env.example` im Plugin dokumentiert, welche Variablen das Plugin braucht — die echte `.env` entsteht erst beim Setup im Daten-Verzeichnis
 - Setup-Marker (`.ready`) trägt die Plugin-Version → Doctor erkennt nach einem Update, dass Dependencies neu installiert werden müssen, **ohne** dass der User seinen Key neu eintragen muss
 - Secrets nie in Ausgaben, Logs oder committete Dateien — in Bestätigungen maskieren
-- Referenz-Implementierung: `skills/video-studio/scripts/setup.sh` (Bash)
+- Referenz-Implementierung: `plugins/agency-os-video/skills/video-studio/scripts/setup.sh` (Bash)
 
 ## Offen / zu verifizieren
 
