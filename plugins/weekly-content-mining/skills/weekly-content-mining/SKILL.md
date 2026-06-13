@@ -4,7 +4,7 @@ description: >
   Wöchentliches Content-Mining Interview. Führt ein strukturiertes
   8-Bucket-Interview durch (Kalender, Kunden, Projekte, Nachrichten, Community,
   Content, Privates, Käufe) um rohe Wochenerlebnisse in
-  Content-Gold zu verwandeln und als Content-Mining Dump im Agency OS zu speichern.
+  Content-Gold zu verwandeln und als Content-Mining Dump zu speichern.
   Triggern bei: Goldmine, weekly goldmine, content mining, was kann ich diese
   Woche posten, lass uns die Woche durchgehen, 8 buckets, content ideen aus
   der woche, mining session, meine woche für content, goldmine session starten,
@@ -14,19 +14,30 @@ description: >
 
 # Weekly Content Mining — das Wochen-Interview
 
-Du führst das Interview als erfahrener Content-Stratege: direkt, neugierig, tempoorientiert. Ziel: Rohe Wochenerlebnisse → strukturierte Content-Nuggets → Content-Mining Dump im Agency OS.
+Du führst das Interview als erfahrener Content-Stratege: direkt, neugierig, tempoorientiert. Ziel: Rohe Wochenerlebnisse → strukturierte Content-Nuggets → Content-Mining Dump.
 
-**Ausgabe-Stil:** Falls ein Voice-Profile existiert (`01-context/brand/voice.md`), wende es auf alle geschriebenen Outputs an (Nuggets, Top Plays, Wildcard).
+---
+
+## Ablage (aus dem Brain herleiten — keine festen Pfade)
+
+Dieser Skill kennt **keine hartkodierten Pfade**. Wo gelesen und geschrieben wird, leitest du aus der Selbstbeschreibung des Projekts ab, genau dafür ist das Markdown-Brain da.
+
+1. **Struktur-Quelle lesen.** Im Projekt-Root die Quelle der Wahrheit für die Struktur öffnen (`OS.md`, ersatzweise `README.md` oder das Root-`_index.md`) und über die `_index.md`-Navigation verstehen, wie das Brain organisiert ist.
+2. **Kontext-Quellen finden** (alle optional, fürs Briefing): ICP-/Zielgruppen-Profil, Voice-Profile, Positionierung/Brand. In Marcus' Brain: ICP unter `01-context/angebot/agency-os-icp.md`, Positionierung unter `01-context/positionierung/`, Voice-Profile unter `01-context/brand/voice-profile.md`. Was nicht existiert, wird übersprungen.
+3. **Ziel-Ordner für den Dump bestimmen.** Den Ort wählen, an dem wöchentliche Content-/Goldmine-Dumps liegen oder thematisch hingehören. In Marcus' Brain: `03-marketing/content/weekly-goldmine/`. Liegen schon frühere Dumps dort (z.B. `*-KW*.md`), dorthin. Gibt es noch keinen klaren Ort, den nach der Brain-Logik plausibelsten Ordner vorschlagen und **einmal kurz rückversichern**, bevor du schreibst.
+4. **Index pflegen.** Entsteht dabei ein neuer Ordner, ihn im zuständigen `_index.md` verlinken. In Marcus' Brain: neuen Ordner in `03-marketing/_index.md` ergänzen.
+
+**Ausgabe-Stil:** Existiert ein Voice-Profile (in Marcus' Brain: `01-context/brand/voice-profile.md`), wende es auf alle geschriebenen Outputs an (Nuggets, Top Plays, Wildcard).
 
 ---
 
 ## Kontext laden (vor der ersten Frage)
 
-Lies, falls vorhanden:
-- `01-context/zielgruppe.md` — für wen wird Content gemacht (ICP)
-- `01-context/positionierung.md` — wofür steht die Agentur
+Die in der Ablage gefundenen Kontext-Quellen lesen, falls vorhanden:
+- **ICP / Zielgruppe** — für wen wird Content gemacht (in Marcus' Brain: `01-context/angebot/agency-os-icp.md`)
+- **Positionierung** — wofür steht die Agentur (in Marcus' Brain: `01-context/positionierung/`)
 
-Fehlen beide: Session trotzdem starten, aber am Ende empfehlen, das ICP-Profil anzulegen (icp-Plugin), weil die Top-Plays-Auswahl davon lebt.
+Fehlen beide: Session trotzdem starten, aber am Ende empfehlen, das ICP-Profil anzulegen (icp-Skill), weil die Top-Plays-Auswahl davon lebt.
 
 ---
 
@@ -62,13 +73,15 @@ Wenn eine Antwort dünn ist, einmal nachfragen: *"Was war das Konkrete daran?"* 
 
 ### 3. Content-Mining Dump erstellen und speichern
 
-Nach allen 8 Buckets den Content-Mining Dump schreiben und speichern:
+Nach allen 8 Buckets den Content-Mining Dump im aufgelösten Ziel-Ordner (siehe Ablage) speichern:
 
 ```
-06-knowledge/content/mining/[YYYY]-KW[XX].md
+[Ziel-Ordner]/[YYYY]-KW[XX].md
 ```
 
-**Index-Pflege:** Falls dabei der Ordner `content/` oder `mining/` neu entsteht, einen Markdown-Link in der `## Aktuell vorhanden`-Sektion von `06-knowledge/_index.md` ergänzen (erste Zeile `- _(noch leer)_` dabei entfernen).
+In Marcus' Brain konkret: `03-marketing/content/weekly-goldmine/[YYYY]-KW[XX].md`
+
+**Index-Pflege:** Entsteht der Ziel-Ordner dabei neu, im zuständigen `_index.md` verlinken, damit er auffindbar bleibt.
 
 ---
 
@@ -101,7 +114,7 @@ Nach allen 8 Buckets den Content-Mining Dump schreiben und speichern:
 ### 1. [Titel — klingt wie der erste Satz eines Posts]
 **Warum stark:** [1 Satz — was macht das für die Zielgruppe treffsicher]
 **Rohmaterial:** [Bucket + konkrete Story]
-**Angles:** [2–3 Stichworte]
+**Angles:** [2-3 Stichworte]
 
 ### 2. [Titel]
 ### 3. [Titel]
@@ -119,8 +132,8 @@ Nach allen 8 Buckets den Content-Mining Dump schreiben und speichern:
 ## Gesprächsprinzipien
 
 - Einen Bucket nach dem anderen — nie mehrere Fragen auf einmal.
-- Tempo: max. 20–25 Minuten für die ganze Session.
+- Tempo: max. 20-25 Minuten für die ganze Session.
 - Messy ist gut. Niemand muss perfekt formulieren.
 - Kurze Feedback-Momente nach jedem Bucket halten den Flow aufrecht.
 - Nur extrahieren was gesagt wurde — nichts dazuerfinden.
-- Bei jedem Nugget gegen das ICP-Profil prüfen (`01-context/zielgruppe.md`): Würde die Zielgruppe das aus ihrem eigenen Alltag kennen?
+- Bei jedem Nugget gegen das ICP-Profil prüfen (siehe Ablage): Würde die Zielgruppe das aus ihrem eigenen Alltag kennen?

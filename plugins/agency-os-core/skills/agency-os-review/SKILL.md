@@ -1,21 +1,24 @@
 ---
 name: agency-os-review
-description: Wöchentliches Review der Agentur - Inbox leeren, Open Loops prüfen, Projekte updaten, Reflexion, nächste Woche planen. Verwende wenn der User "review", "wochenrückblick", "weekly review", "sonntags-review", "review machen", "wochen-check" oder ähnliche Review-Phrasen nutzt.
+version: 2.0.0
+description: Wöchentliches Review für Marcus' Lean Agency. Triggert wenn Markus "review", "wochenrückblick", "weekly review", "sonntags-review", "review machen", "wochen-check", "lass uns reviewen" oder ähnliche Review-Phrasen nutzt. Kombiniert strukturiertes 6-Schritt-Protokoll mit ehrlicher Muster-Spiegelung und Anti-Pattern-Disziplin.
 ---
 
-# Agency OS - Review
+# Agency OS — Review
 
-Wöchentliches Review. Am besten Sonntag oder Montag.
+Wöchentliches Review. Am besten Sonntag abend oder Montag morgen.
 
-## Ablauf
+Lies `references/review-protocol.md` für den vollständigen Ablauf. Dieser Skill ist der Trigger — das Protokoll ist die kanonische Quelle.
 
-Lies `references/review-protocol.md` für den vollständigen 6-Schritt-Ablauf:
+## Ablauf (Kurzform)
 
-1. Inbox leeren
-2. Open Loops prüfen
-3. Projekte updaten
-4. Reflexion (3 Fragen)
-5. Weekly Log schreiben
-6. Nächste Woche planen
+1. Brain lesen (bevor du irgendwas sagst)
+2. Inbox leeren (`00-inbox/`)
+3. Loops prüfen + altern (`02-strategy/open-loops.md`)
+4. Projekte updaten (`06-projects/`)
+5. Muster spiegeln — ehrlich, kein Schmeicheln
+6. Nächste Woche planen + Log schreiben (`10-logs/`)
 
-Jeden Schritt mit dem User einzeln durchgehen, nicht alles auf einmal. Geduldig bleiben - Review braucht Zeit.
+Jeden Schritt einzeln durchgehen. Kein Hetzen, kein Überspringen.
+
+**Reflexions-Modus:** Das Review endet nicht mit einer Tabelle. Es endet mit einer Spiegelung und einer Frage, die sitzt.

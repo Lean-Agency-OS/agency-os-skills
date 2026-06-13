@@ -1,5 +1,6 @@
 ---
 name: video-studio
+version: 1.1.0
 description: Schneidet Roh-Videos zu fertigen Reels/Shorts/Clips - Transkript, Schnitt, Untertitel, Motion Graphics, Render. Triggert bei "schneid das Video", "mach ein Reel draus", "bau ein Short aus diesem Video", "/video", "/reel", "kuerz das Video", "Untertitel aufs Video", "video-studio". Brand-aware ueber 01-context/brands/{brand}/ (default aazb), nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 

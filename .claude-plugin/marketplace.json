@@ -25,15 +25,6 @@
       }
     },
     {
-      "name": "github-cowork",
-      "source": "./plugins/github-cowork",
-      "description": "GitHub für Nicht-Techniker: Commit, Push, Pull und Verlauf in normaler Sprache, ohne Git-Kenntnisse",
-      "category": "workflow",
-      "author": {
-        "name": "Markus Vieghofer"
-      }
-    },
-    {
       "name": "icp",
       "source": "./plugins/icp",
       "description": "ICP-System: Wunschkunden-Profil per Setup-Interview, danach 3 Modi — Content bewerten (inkl. simulierter ICP-Reaktion), Personas generieren, Leads qualifizieren",

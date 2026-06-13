@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Carousel Preview — IG Mobile View</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
 <!-- {{CAROUSEL_STYLES}} -->
-<!-- ↑ Hier wird beim Build der <style>-Block aus carousel.html injiziert (Slide-CSS inkl. :root-CI-Vars) -->
+<!-- Hier wird beim Build der <style>-Block aus carousel.html injiziert (Slide-CSS inkl. CI-Variablen) -->
 
 <style>
-/* ------- IG-Mobile-View Mockup (brand-neutral) ------- */
+/* ------- IG-Mobile-View Mockup (brand-neutral shell) ------- */
 * { box-sizing: border-box; }
 html, body {
   margin: 0 !important;
@@ -24,7 +24,7 @@ html, body {
   font-size: 14px;
   line-height: 1.4;
 }
-/* Slides initial verstecken — JS verschiebt sie gleich in den Slider */
+/* Slides initial verstecken — JS verschiebt sie in den Slider */
 body > section.slide { display: none !important; }
 .snap > section.slide { display: flex !important; }
 
@@ -42,6 +42,7 @@ body > section.slide { display: none !important; }
   display: flex; align-items: center; gap: 12px;
   padding: 12px 14px;
 }
+/* IG-Avatar mit Coral-Flag (Marcus' Brand-Mark) */
 .ig-avatar {
   width: 32px; height: 32px; border-radius: 50%;
   background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
@@ -49,12 +50,13 @@ body > section.slide { display: none !important; }
 }
 .ig-avatar-inner {
   width: 100%; height: 100%; border-radius: 50%;
-  background: #1c1c1c;
+  background: #F2EBDD;
   display: flex; align-items: center; justify-content: center;
 }
-.ig-avatar-mark {
-  width: 13px; height: 13px; border-radius: 3px;
-  background: var(--accent, #888);
+.ig-avatar-flag {
+  width: 12px; height: 14px;
+  background: #E85F33;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%);
 }
 .ig-handle-block { flex: 1; line-height: 1.2; }
 .ig-handle { font-weight: 600; font-size: 14px; color: #262626; }
@@ -81,6 +83,7 @@ body > section.slide { display: none !important; }
 .slider::-webkit-scrollbar { display: none; }
 .snap {
   flex: 0 0 100%; width: 100%;
+  /* Korrekte 4:5-Ratio (1080x1350) — NICHT 3:4 */
   aspect-ratio: 4 / 5;
   scroll-snap-align: center;
   overflow: hidden; position: relative;
@@ -120,18 +123,22 @@ body > section.slide { display: none !important; }
 <body>
 
 <!-- {{SLIDES}} -->
-<!-- ↑ Hier injiziert der Build alle <section class="slide">…</section> 1-zu-1 aus carousel.html.
-     Bilder sind als base64-Data-URI eingebettet (macht render.py automatisch). -->
+<!-- Hier injiziert render.py alle <section class="slide">...</section> aus carousel.html.
+     Bilder sind als base64-Data-URI eingebettet (automatisch durch render.py). -->
 
 <div class="ig-frame">
   <div class="ig-post-header">
-    <div class="ig-avatar"><div class="ig-avatar-inner"><div class="ig-avatar-mark"></div></div></div>
+    <div class="ig-avatar">
+      <div class="ig-avatar-inner">
+        <div class="ig-avatar-flag"></div>
+      </div>
+    </div>
     <div class="ig-handle-block">
       <div class="ig-handle">{{HANDLE}}</div>
       <div class="ig-meta">{{BRAND}}</div>
     </div>
     <div class="ig-follow">Folgen</div>
-    <div class="ig-more">⋯</div>
+    <div class="ig-more">&#8943;</div>
   </div>
 
   <div class="ig-slider-wrap">

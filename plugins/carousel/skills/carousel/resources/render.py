@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Carousel-Builder Render Script (Kunden-Plugin, generisch / CI-getrieben)
+Carousel-Builder Render Script (Marcus Vieghofer / Lean Agency)
 
 Wandelt eine Carousel-HTML-Datei in eine mobile-first preview.html und — mit
 --final — in einzelne PNG-Slides (1080x1350) plus ein gesamthaftes PDF.
 
-Usage (immer aus dem Projekt-Root / Brain-Root aufrufen):
-  python3 <plugin>/resources/render.py <input.html> <output_dir> [--final]
-                                       [--handle "@dein_handle"] [--brand "Marke"]
+Usage (immer aus dem Projekt-Root aufrufen):
+  python3 skills/carousel/resources/render.py <input.html> <output_dir> [--final]
+                                              [--handle "@markusvieghofer_com"]
+                                              [--brand "LEAN AGENCY"]
 
 Voraussetzungen fuer --final (einmalig):
   pip install playwright pillow --break-system-packages
@@ -17,10 +18,11 @@ Verhalten:
   - Schreibt IMMER zuerst eine preview.html (kein Chromium noetig) -> Iterations-Modus.
   - Nur mit --final zusaetzlich: pro Slide ein PNG (1080x1350) + ein PDF.
 
-Pfad-Konventionen (Kunden-Plugin):
-  - Bild-Assets im Slide-HTML referenzieren als  01-context/brand/{file}
+Pfad-Konventionen:
+  - Bild-Assets im Slide-HTML referenzieren als
+      ../../../../01-context/positionierung/brand-assets/{file}
     und werden relativ zum CWD (Projekt-Root) aufgeloest und base64-eingebettet.
-  - preview-template.html liegt neben diesem Script (Plugin-Resources).
+  - preview-template.html liegt neben diesem Script.
 """
 
 import sys
@@ -45,7 +47,7 @@ def write_preview(input_html, output_dir, slide_ids, handle, brand):
         mit Platzhaltern {{CAROUSEL_STYLES}}, {{SLIDES}}, {{CAPTION}}, {{TOTAL}},
         {{HANDLE}}, {{BRAND}}.
       - Diese Funktion extrahiert Slide-CSS + <section class="slide"> aus dem
-        Carousel-HTML, bettet alle 01-context/brand/-Bilder als base64 ein und
+        Carousel-HTML, bettet alle Brand-Asset-Bilder als base64 ein und
         injiziert beides ins Template. Caption aus caption.md wird formatiert.
 
     base64-Pflicht:
@@ -55,10 +57,15 @@ def write_preview(input_html, output_dir, slide_ids, handle, brand):
     # ---- 1. Carousel-HTML laden + Brand-Assets in base64 ----
     carousel_html = input_html.read_text(encoding="utf-8")
 
-    asset_re = re.compile(r"(?:\.\./)*01-context/brand/([^\'\")\s]+)")
-    brand_dir = (Path.cwd() / "01-context" / "brand").resolve()
-    mime_map = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-                ".gif": "image/gif", ".webp": "image/webp", ".svg": "image/svg+xml"}
+    # Matching: beliebig viele "../"-Prefixe + 01-context/positionierung/brand-assets/{file}
+    asset_re = re.compile(
+        r"(?:\.\./)*01-context/positionierung/brand-assets/([^\'\")\s]+)"
+    )
+    brand_dir = (Path.cwd() / "01-context" / "positionierung" / "brand-assets").resolve()
+    mime_map = {
+        ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+        ".gif": "image/gif", ".webp": "image/webp", ".svg": "image/svg+xml",
+    }
 
     def to_data_uri(match):
         rel = match.group(1)
@@ -133,7 +140,8 @@ def write_preview(input_html, output_dir, slide_ids, handle, brand):
 def main():
     # Args parsen: --final ist Flag, --handle/--brand nehmen einen Wert, Rest positional.
     args = sys.argv[1:]
-    handle, brand = "your_handle", ""
+    handle = "@markusvieghofer_com"
+    brand = "LEAN AGENCY"
     pos = []
     i = 0
     while i < len(args):
@@ -234,7 +242,7 @@ def main():
         first.save(pdf_path, save_all=True, append_images=rest, resolution=150)
         print(f"PDF erstellt: {pdf_path.name} ({len(images)} Seiten)")
 
-    print(f"\n✓ Fertig. Output in: {output_dir}")
+    print(f"\nFertig. Output in: {output_dir}")
     print(f"  PNGs: {len(png_paths)}")
     print(f"  PDF:  {pdf_path.name}")
     print(f"  Preview: preview.html (mobile-first IG-Slider)")

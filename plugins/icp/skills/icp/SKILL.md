@@ -1,5 +1,6 @@
 ---
 name: icp
+version: 1.0.0
 description: >
   Zentrale ICP-Referenz der Agentur. 3 Modi:
   (1) BEWERTEN — Content, Ads, Namen, Copy gegen das ICP prüfen inkl. simulierter ICP-Reaktion.
@@ -21,7 +22,7 @@ Dieser Skill ist die Single Source of Truth für das ICP deiner Agentur. Die Dat
 ## Pre-flight Check
 
 1. Lies `01-context/zielgruppe.md`.
-2. **Existiert nicht oder enthält kein vollständiges Profil** (fehlende Abschnitte: Kernproblem, emotionale Spannungen, Sprache, Qualifizierungs-Kriterien): Setup anbieten — *"Dein ICP-Profil ist noch nicht vollständig. 10 Minuten Interview, dann steht es. Jetzt machen?"* → bei Ja: `references/setup.md` folgen.
+2. **Existiert nicht oder enthält kein vollständiges Profil** (fehlende Abschnitte: Kernproblem, emotionale Spannungen, Sprache, Qualifizierungs-Kriterien): Setup anbieten — *"Dein ICP-Profil ist noch nicht vollständig. 10 Minuten Interview, dann steht es. Jetzt machen?"* → bei Ja dem ICP-Setup des Onboardings folgen (`agency-os-onboarding/references/icp-setup.md`), das `01-context/zielgruppe.md` schreibt. Dieser Skill macht kein eigenes Setup.
 3. **Existiert vollständig:** direkt in den passenden Modus.
 
 ---

@@ -1,9 +1,0 @@
-{
-  "name": "github-cowork",
-  "description": "GitHub für Nicht-Techniker: Commit, Push, Pull und Verlauf in normaler Sprache — ohne Git-Kenntnisse, via GitHub REST API",
-  "version": "1.0.0",
-  "author": {
-    "name": "Markus Vieghofer",
-    "email": "hallo@markusvieghofer.com"
-  }
-}
