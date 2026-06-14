@@ -8,6 +8,8 @@ description: Implementierungsplan für ein Projekt oder eine Kampagne erstellen.
 
 Implementierungsplan für ein Projekt erstellen.
 
+> **Brain-Pfade:** Die Pfade hier (`06-projects/`, `05-clients/` …) sind **Defaults**, keine festen Namen - Brains variieren. Pro Pfad: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Default-Name zuerst; (3) nichts gefunden → Ordner nach Default-Namen anlegen. Default-Tabelle: `agency-os-start/references/architecture.md`.
+
 ## Schritte
 
 1. Frage: "Welches Projekt? Was ist das Ziel?"

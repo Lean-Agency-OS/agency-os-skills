@@ -3,11 +3,17 @@ name: agency-os-shutdown
 description: "Session-Shutdown und Daily Log. Verwende diesen Skill IMMER wenn der User 'gute nacht', 'shutdown', 'fertig für heute', 'session ende', 'bis morgen', 'schluss für heute', 'feierabend', 'mach zu', 'good night', 'eod' oder ähnliche Abschluss-Signale sagt."
 ---
 
-# Shutdown (Jarvis Ende)
+# Shutdown
 
-**Trigger:** Markus sagt *"gute nacht"*, *"shutdown"*, *"fertig für heute"*, *"session ende"*, *"bis morgen"*, *"schluss für heute"*, *"feierabend"*, *"mach zu"*, *"good night"*, *"eod"* oder ruft `/shutdown` auf.
+**Trigger:** Der User sagt *"gute nacht"*, *"shutdown"*, *"fertig für heute"*, *"session ende"*, *"bis morgen"*, *"schluss für heute"*, *"feierabend"*, *"mach zu"*, *"good night"*, *"eod"* oder ruft `/shutdown` auf.
 
 **Output:** Brain-Updates (`02-strategy/open-loops.md`, `02-strategy/hot.md`, Daily Log) + Commit + Push + knappe Abschluss-Meldung im Chat.
+
+---
+
+## Brain-Pfade
+
+Die Ordner-/Datei-Pfade unten (`02-strategy/`, `10-logs/` …) sind **Defaults**, keine festen Namen - Brains variieren (z.B. `08-knowledge/` statt `08-wiki/`, oder ein Ordner fehlt). Auflösung pro Pfad: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Default-Name zuerst; (3) nichts gefunden → Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
 
 ---
 
@@ -20,9 +26,9 @@ git log --since=midnight --oneline
 git status --short
 ```
 
-Erste Liste = heutige Commits (was bereits versioniert ist). Zweite = uncommitted (was im Shutdown-Commit landet). Damit hat der Shutdown die volle Tagesbilanz ohne Raten oder Markus-Frage-Ping-Pong.
+Erste Liste = heutige Commits (was bereits versioniert ist). Zweite = uncommitted (was im Shutdown-Commit landet). Damit hat der Shutdown die volle Tagesbilanz ohne Raten oder Nachfrage-Ping-Pong.
 
-Optional Reflexions-Frage an Markus: *"Was war heute schwer, was ein Quick-Win?"* - qualitativ, nicht faktisch.
+Optional Reflexions-Frage an den User: *"Was war heute schwer, was ein Quick-Win?"* - qualitativ, nicht faktisch.
 
 ### 2. 02-strategy/open-loops.md updaten
 
@@ -53,7 +59,7 @@ Sicherheitsnetz: Falls heute eine Korrektur/Präferenz kam, die noch nicht an ih
 **Default (Log existiert bereits):** Sektionen durchgehen, Lücken ergänzen, dann eine abschließende Bilanz-Sektion anhängen mit dem was die Tages-Sektionen nicht abdecken:
 
 ```markdown
-## [YYYY-MM-DD] markus-session | shutdown
+## [YYYY-MM-DD] <name>-session | shutdown
 
 **Bilanz:**
 - 1-2 Zeilen Take-Aways des Tages
@@ -66,12 +72,12 @@ Sicherheitsnetz: Falls heute eine Korrektur/Präferenz kam, die noch nicht an ih
 
 **Edge (Log existiert nicht):** Anlegen mit `# YYYY-MM-DD` als erste Zeile, dann die Shutdown-Sektion einfügen.
 
-### 6. Notion Tasks updaten
+### 6. Tasks updaten
 
-Falls in der Session Notion-Tasks erledigt oder neue angelegt wurden:
-- **Erledigte** auf "Abgeschlossen" setzen (via Notion-MCP)
+Falls in der Session Tasks erledigt oder neue angelegt wurden, im Task-Tool des Users nachziehen (gleiche Quelle wie im Start-Skill: Konfig → verbundenes Task-MCP, je nachdem was der User hat: ClickUp, Notion, Asana, ...):
+- **Erledigte** auf "Abgeschlossen" setzen
 - **Neue Tasks** anlegen wenn nötig
-- Wenn Notion-MCP nicht verfügbar: Markus den Link geben und ihn manuell setzen lassen
+- Wenn kein Task-MCP verfügbar: dem User den Board-Link (falls konfiguriert) geben und ihn manuell setzen lassen
 
 ### 7. Commit + Push
 
@@ -98,7 +104,7 @@ Dann push:
 git push
 ```
 
-Bei Pre-commit-Hook-Fehler: investigieren, fixen, neu committen. Niemals `--no-verify` ohne explizite Markus-Anweisung.
+Bei Pre-commit-Hook-Fehler: investigieren, fixen, neu committen. Niemals `--no-verify` ohne explizite Anweisung des Users.
 
 ### 8. Abschluss-Meldung
 
@@ -107,7 +113,7 @@ Knappe Schlussmeldung im Chat:
 ```
 Session gesichert.
 {X} Loops updated, {Y} neue Einträge.
-{Aktive Rollen heute: Liste oder "keine"}
+{nur falls eine Rollen-Struktur existiert: Aktive Rollen heute: Liste, sonst Zeile weglassen}
 Commit {hash} gepusht.
 Bis zum nächsten Mal.
 ```
@@ -116,18 +122,18 @@ Bis zum nächsten Mal.
 
 ## Edge Cases
 
-- **Markus shutdownt mehrmals am Tag:** Erste Shutdown-Sektion bleibt, nächste wird als zusätzlicher `markus-session | shutdown` Eintrag angehängt. Pro Shutdown ein Commit.
+- **User shutdownt mehrmals am Tag:** Erste Shutdown-Sektion bleibt, nächste wird als zusätzlicher `<name>-session | shutdown` Eintrag angehängt. Pro Shutdown ein Commit.
 - **Während der Session keine Brain-Änderungen, nur Sparring:** Trotzdem Bilanz-Eintrag mit Sparring-Thema und Beobachtung. Wenn `git status` clean ist und kein neuer Log-Eintrag nötig: Shutdown ohne Commit, nur Abschluss-Meldung.
 - **Pre-commit-Hook schlägt fehl:** Investigieren, nicht überspringen. Fixen, neu committen.
 - **Aging-Loops älter als 4 Wochen:** beim Shutdown explizit ansprechen (*"Loop X hängt seit {N} Wochen, noch aktuell?"*).
-- **Push schlägt fehl (z.B. divergente Remote):** Pull mit Rebase, neu pushen. Bei Konflikt: Markus fragen, nicht autonom mergen.
+- **Push schlägt fehl (z.B. divergente Remote):** Pull mit Rebase, neu pushen. Bei Konflikt: den User fragen, nicht autonom mergen.
 
 ---
 
 ## Was NICHT passiert
 
 - **Kein Force-Push auf main.**
-- **Kein --no-verify** ohne Markus' explizite Zustimmung.
-- **Keine destruktiven Operationen** (Files löschen etc.) ohne explizite Markus-Bestätigung.
+- **Kein --no-verify** ohne explizite Zustimmung des Users.
+- **Keine destruktiven Operationen** (Files löschen etc.) ohne explizite Bestätigung des Users.
 - **Kein Beschönigen.** Wenn der Tag dünn war, das auch so im Log benennen.
 - **Kein Überspringen** des Daily Logs, auch wenn die Session kurz war.

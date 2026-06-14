@@ -8,6 +8,8 @@ description: Schnelle Ersterfassung von Gedanken, Tasks, Ideen, Open Loops oder 
 
 Schnelle Ersterfassung. Nicht tief verarbeiten (das ist Job von `/ingest`). Schnell rein, richtig einsortiert.
 
+> **Brain-Pfade:** Die Pfade hier (`00-inbox/`, `02-strategy/` …) sind **Defaults**, keine festen Namen - Brains variieren. Pro Pfad: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Default-Name zuerst; (3) nichts gefunden → Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
+
 ## Schritte
 
 ### 1. Inhalt prüfen
@@ -37,15 +39,15 @@ Schreibe in die passende Zieldatei (Mapping in `references/capture-routing.md`).
 
 ### 4. Routing-Hinweis geben
 
-Nach dem Schreiben: kurzer Hinweis an Markus wohin das Item beim naechsten Ingest weiterwandert:
+Nach dem Schreiben: kurzer Hinweis an den User wohin das Item beim naechsten Ingest weiterwandert:
 
 ```
 Gespeichert in `{dateiname}` als [Kategorie].
-Naechster Schritt: {wohin das beim Ingest geht - z.B. "05-clients/Klaus/" oder "02-strategy/open-loops.md"}
+Naechster Schritt: {wohin das beim Ingest geht - z.B. "05-clients/{kunde}/" oder "02-strategy/open-loops.md"}
 Noch was?
 ```
 
-### 5. Loop bis Markus fertig ist
+### 5. Loop bis der User fertig ist
 
 ---
 
@@ -55,7 +57,7 @@ Noch was?
 |---|---|
 | Schnell rein, Rohzustand ok | Tiefe Verarbeitung, Cross-Links, Atomare Notes |
 | `02-strategy/open-loops.md` / `00-inbox/capture.md` als Zwischenspeicher | Brain-Files direkt updaten |
-| Kein Markus-Ping vorher | Markus bestaetigt bevor losgeschrieben wird |
+| Kein User-Ping vorher | User bestaetigt bevor losgeschrieben wird |
 | Sekunden, nicht Minuten | Darf 5-15 Files beruehren |
 
 Capture legt das Item in die Inbox. Ingest arbeitet es ein.

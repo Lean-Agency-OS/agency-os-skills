@@ -1,7 +1,7 @@
 ---
 name: agency-os-review
 version: 2.0.0
-description: Wöchentliches Review für Marcus' Lean Agency. Triggert wenn Markus "review", "wochenrückblick", "weekly review", "sonntags-review", "review machen", "wochen-check", "lass uns reviewen" oder ähnliche Review-Phrasen nutzt. Kombiniert strukturiertes 6-Schritt-Protokoll mit ehrlicher Muster-Spiegelung und Anti-Pattern-Disziplin.
+description: Wöchentliches Review für die Lean Agency des Users. Triggert wenn der User "review", "wochenrückblick", "weekly review", "sonntags-review", "review machen", "wochen-check", "lass uns reviewen" oder ähnliche Review-Phrasen nutzt. Kombiniert strukturiertes 6-Schritt-Protokoll mit ehrlicher Muster-Spiegelung und Anti-Pattern-Disziplin.
 ---
 
 # Agency OS — Review
@@ -9,6 +9,8 @@ description: Wöchentliches Review für Marcus' Lean Agency. Triggert wenn Marku
 Wöchentliches Review. Am besten Sonntag abend oder Montag morgen.
 
 Lies `references/review-protocol.md` für den vollständigen Ablauf. Dieser Skill ist der Trigger — das Protokoll ist die kanonische Quelle.
+
+> **Brain-Pfade:** Die Pfade im Protokoll (`02-strategy/`, `06-projects/`, `10-logs/` …) sind **Defaults**, keine festen Namen - Brains variieren. Pro Pfad: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Default-Name zuerst; (3) nichts gefunden → Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
 
 ## Ablauf (Kurzform)
 

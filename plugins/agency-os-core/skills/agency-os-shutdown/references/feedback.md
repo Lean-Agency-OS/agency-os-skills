@@ -10,7 +10,7 @@ Achte auf:
 - *"nicht so, lieber so…"* / *"das will ich nicht"* / *"mach das künftig anders"*
 - *"genau so, perfekt"* (positive Bestätigung zählt auch, nicht nur Korrekturen)
 - *"bitte kürzer / länger / anders"*
-- **Implizite Korrekturen:** Markus formuliert um, was ich geschrieben habe
+- **Implizite Korrekturen:** Der User formuliert um, was ich geschrieben habe
 - Eine bestätigte nicht-offensichtliche Präferenz (*"eigentlich…"*, *"merk dir…"*)
 
 ---
@@ -20,7 +20,7 @@ Achte auf:
 Wenn so ein Signal kommt:
 
 1. **Regel + Why + How-to-apply** sofort an den passenden Enforcement-Ort schreiben (Routing-Tabelle unten). Sofort, weil das Kontext-Window die Korrektur sonst verliert und sie meist gleich wieder gebraucht wird.
-2. Brain-Write **nur mit Markus' Bestätigung im aktuellen Turn** (Obsidian-MCP hat keine READ_ONLY-Wall — siehe [`systeme.md` § Obsidian](08-wiki/systeme.md)). Vorher einmal zusammenfassen *was* geschrieben wird.
+2. Brain-Write **nur mit Bestätigung des Users im aktuellen Turn** (Obsidian-MCP hat keine READ_ONLY-Wall — siehe [`systeme.md` § Obsidian](08-wiki/systeme.md)). Vorher einmal zusammenfassen *was* geschrieben wird.
 3. Nie fragen *"soll ich das merken?"* — einfach an den Enforcement-Ort schreiben (nur der Brain-Write braucht den Check aus Schritt 2). Knapp bestätigen wo es gelandet ist (*"Gemerkt in {Ort}."*), dann weitermachen. Kein Drama.
 
 **Why immer mitschreiben:** Die Regel allein sagt *was*, das Why erlaubt das Urteil in Grenzfällen. Format am Ziel-Ort: Regel → **Why:** → **How to apply:**.
@@ -37,13 +37,13 @@ Wenn so ein Signal kommt:
 | **Sub-Agent-Briefing** (Content-Rewrites, Research) | [`founder-notes-hebel.md`](06-projects/plattform/founder-notes-hebel.md) |
 | **Content-Format / Kanal** (Carousel, Reel, Newsletter) | die jeweilige SOP in [`08-wiki/sops/`](08-wiki/sops/_index.md) |
 | **ICP / Naming / Positionierung / Zielgruppen-Sprache** | [`zielgruppe.md`](01-context/zielgruppe.md) (+ `/icp`-Skill) |
-| **Persona-spezifisch** (CTO Linus, CMO Mara, …) | die jeweilige [`07-org/{rolle}/role.md`](07-org/) |
+| **Persona-spezifisch** (je Rolle, falls eine Rollen-Struktur existiert) | die jeweilige [`07-org/{rolle}/role.md`](07-org/) |
 | **Externe Systeme / API / Webhooks / Obsidian / Secrets** | [`systeme.md`](08-wiki/systeme.md) |
 | **Framework / Methode** (Grenzen, Negativ-Hinweise) | die jeweilige `09-ip/`-Note |
 
 **Strukturell?** Wenn die Korrektur ein Brain-Prinzip ist (Architektur, Workflow, Persona-Switching), zusätzlich in [`OS.md`](OS.md) verankern.
 
-**Schreibgesperrt — Claude-Code-Briefing statt Paste-Block:** `.claude/skills/` ist aus der Cowork-Session nicht editierbar. Korrekturen an aktiven Skills (z.B. `anti-patterns.md`, `/icp`, `/rechnung`) **nicht** als losen Paste-Block liefern, sondern als **selbst-ausführbares Claude-Code-Briefing**: eine `.md`-Datei mit Kontext (eine Zeile, was sich ändert und warum), exaktem Datei-Pfad + Anker-Stelle, fertigem Einfüge-Block und Grep-Verifikation am Schluss. Self-contained schreiben — Claude Code hat den Chat-Kontext nicht. Markus kippt es in Claude Code und lässt es ausführen.
+**Schreibgesperrt — Claude-Code-Briefing statt Paste-Block:** `.claude/skills/` ist aus der Cowork-Session nicht editierbar. Korrekturen an aktiven Skills (z.B. `anti-patterns.md`, `/icp`, `/rechnung`) **nicht** als losen Paste-Block liefern, sondern als **selbst-ausführbares Claude-Code-Briefing**: eine `.md`-Datei mit Kontext (eine Zeile, was sich ändert und warum), exaktem Datei-Pfad + Anker-Stelle, fertigem Einfüge-Block und Grep-Verifikation am Schluss. Self-contained schreiben — Claude Code hat den Chat-Kontext nicht. Der User kippt es in Claude Code und lässt es ausführen.
 
 ---
 

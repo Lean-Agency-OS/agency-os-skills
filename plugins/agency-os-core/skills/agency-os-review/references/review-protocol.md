@@ -1,6 +1,8 @@
-# Review-Protokoll — Agency OS (Marcus-nativ)
+# Review-Protokoll — Agency OS
 
-Am besten Sonntag abend oder Montag morgen. Jeden Schritt einzeln mit Markus durchgehen — nicht alles auf einmal.
+Am besten Sonntag abend oder Montag morgen. Jeden Schritt einzeln mit dem User durchgehen — nicht alles auf einmal.
+
+> **Brain-Pfade:** Alle Pfade hier sind Defaults. Auflösung pro Pfad: `.agency-os/architecture.md` (falls vorhanden) → sonst per Rolle/Muster suchen (Default-Name zuerst) → sonst Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
 
 ---
 
@@ -11,7 +13,7 @@ Bevor du eine Frage stellst oder etwas präsentierst:
 - `02-strategy/hot.md` — Current Focus, Active Threads, Key Numbers
 - `02-strategy/open-loops.md` — alle offenen Loops, Aging-Check (Einträge mit Datum > 2 Wochen)
 - `10-logs/` — letzte 3-7 Tages-Files, neueste zuerst
-- `07-org/ceo/_wetten.md` — aktive Wetten, ob sich was bewegt hat
+- Falls eine Rollen-/Org-Struktur mit Wetten existiert (z.B. `07-org/<rolle>/_wetten.md`): aktive Wetten, ob sich was bewegt hat. Sonst überspringen.
 
 Erst lesen. Dann denken. Dann anfangen.
 
@@ -35,7 +37,7 @@ Erst lesen. Dann denken. Dann anfangen.
 
 1. Lies `02-strategy/open-loops.md` vollständig.
 2. **Aging-Marker setzen:** Jeder Loop mit Datum older als 14 Tage bekommt einen Kommentar `#aging` (direkt in der Zeile, am Ende).
-3. Pro altem Loop mit Markus klären: *"Noch relevant? Erledigt? Oder eskalieren zu einer Entscheidung?"*
+3. Pro altem Loop mit dem User klären: *"Noch relevant? Erledigt? Oder eskalieren zu einer Entscheidung?"*
    - Erledigt: `[x]` setzen, wird beim nächsten Ingest ins Log transferiert und gelöscht
    - Nicht mehr relevant: löschen
    - Eskalation nötig: `#entscheidung` Tag hinzufügen und in der aktuellen Session ansprechen
@@ -68,11 +70,11 @@ Beispiel: *"Laut Log warst du 4 von 5 Tagen im Operativen, kein einziger Marketi
 Beispiel: *"Das ist die dritte Woche in Folge, wo Klienten-Arbeit die eigene Content-Pipeline verdrängt."*
 Wenn ein Muster da ist: aussprechen. Auch wenn unangenehm. Besonders dann.
 
-**c) Wetten-Check** — Haben sich aktive Wetten (aus `07-org/ceo/_wetten.md`) bewegt? Gibt es neue Evidenz, die eine Wette stützt oder widerlegt?
+**c) Wetten-Check** (nur falls eine Wetten-Struktur existiert, z.B. `07-org/<rolle>/_wetten.md`) — Haben sich aktive Wetten bewegt? Gibt es neue Evidenz, die eine Wette stützt oder widerlegt?
 
 **Dann: eine Frage stellen, die trifft.**
 
-Eine Frage. Nicht fünf. Markus hat keinen Mangel an Optionen, er hat einen Mangel an Klarheit.
+Eine Frage. Nicht fünf. Der User hat keinen Mangel an Optionen, er hat einen Mangel an Klarheit.
 
 Gute Fragen für Reviews:
 - *"Was hast du diese Woche vermieden, obwohl du wusstest, dass es dran wäre?"*
@@ -93,7 +95,7 @@ Gute Fragen für Reviews:
 Tages-Log `10-logs/YYYY-MM-DD.md` (heutiges Datum) anlegen oder ergänzen:
 
 ```markdown
-## [YYYY-MM-DD] markus-session | weekly-review KW{WW}
+## [YYYY-MM-DD] <name>-session | weekly-review KW{WW}
 
 **Was ist passiert:** 3-5 Punkte, konkret, mit Datums-Anker.
 
@@ -128,7 +130,7 @@ Wenn aus dem Review ein Pattern, eine Methode oder eine Klient-Erkenntnis entste
 
 - Pattern über Klienten hinweg - `09-ip/patterns/`
 - Methode/Framework-Idee - `09-ip/os-kandidaten/`
-- Markus-Selbst-Erkenntnis - `01-context/markus.md` ergänzen
+- Selbst-Erkenntnis des Users - das User-Profil in `01-context/` ergänzen
 - Klient-Insight - `05-clients/{name}/{name}.md` ergänzen
 
 Frag: *"Soll ich das als Note ablegen?"* Nicht autonom schreiben.
@@ -143,7 +145,7 @@ Frag: *"Soll ich das als Note ablegen?"* Nicht autonom schreiben.
 - Markdown-Links in alle neuen Einträge
 - Datum immer ISO-Format (`YYYY-MM-DD`)
 - Wenn Logs fehlen für einzelne Tage: im Review-Log benennen, nicht aus dem Bauch füllen
-- Wenn Markus die Spiegelung widerspricht und das Brain das Gegenteil belegt: mit Zitat dagegen halten, nicht einknicken
+- Wenn der User der Spiegelung widerspricht und das Brain das Gegenteil belegt: mit Zitat dagegen halten, nicht einknicken
 
 ---
 
@@ -152,5 +154,5 @@ Frag: *"Soll ich das als Note ablegen?"* Nicht autonom schreiben.
 - **Inbox leer und Logs fehlen:** Review trotzdem machen mit dem was da ist, Datenlücken benennen.
 - **Loops aus der Vorwoche bereits in `02-strategy/hot.md` eingetragen:** Kein Doppel-Eintrag — nur prüfen ob der Stand noch stimmt.
 - **Mehrere Projekte mit unklarem Status:** Eskalieren als `#entscheidung` Loop, nicht stellvertretend entscheiden.
-- **Markus ist im Stress-Modus:** Schritt 4 (Muster-Spiegelung) trotzdem nicht überspringen. Gerade dann ist er relevant — aber Spiegelung kommt vor Frage, erst Resonanz dann Schärfe.
-- **Review-Modus zieht sich über mehrere Turns:** Aktiv bleiben, nicht resetten. Wenn Markus eine konkrete Aufgabe stellt (*"schreib mir X"*), Modus verlassen und liefern, dann zurück.
+- **User ist im Stress-Modus:** Schritt 4 (Muster-Spiegelung) trotzdem nicht überspringen. Gerade dann ist er relevant — aber Spiegelung kommt vor Frage, erst Resonanz dann Schärfe.
+- **Review-Modus zieht sich über mehrere Turns:** Aktiv bleiben, nicht resetten. Wenn der User eine konkrete Aufgabe stellt (*"schreib mir X"*), Modus verlassen und liefern, dann zurück.

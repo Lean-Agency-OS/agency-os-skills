@@ -2,6 +2,8 @@
 
 Wenn der User etwas festhalten will, kategorisiere automatisch und schreibe in die korrekte Datei. Pfade sind root-relativ (der Skill laeuft vom Brain-Root).
 
+> **Brain-Pfade:** Alle Pfade hier sind Defaults, keine festen Namen. Auflösung pro Pfad: `.agency-os/architecture.md` (falls vorhanden) → sonst per Rolle/Muster suchen (Default-Name zuerst) → sonst Default-Pfad anlegen/verwenden. Default-Tabelle: `agency-os-start/references/architecture.md`.
+
 ---
 
 ## Kategorien und Zieldateien
@@ -83,9 +85,9 @@ Beim Bestaetigen immer mitliefern, wohin das Item beim naechsten `/ingest` weite
 
 | User-Input | Kategorie | Datei | Eintrag |
 |---|---|---|---|
-| "Morgen Klaus anrufen wegen Command-Center" | TASK | `02-strategy/current-priorities.md` | `- [ ] [2026-06-11] **Klaus anrufen wegen E-Mail-Command-Center** -> Naechster Hebel nach Overload-Session. [klaus-buchroithner.md](05-clients/klaus-buchroithner/klaus-buchroithner.md)` |
+| "Morgen Anna anrufen wegen Onboarding" | TASK | `02-strategy/current-priorities.md` | `- [ ] [2026-06-11] **Anna anrufen wegen Onboarding** -> Naechster Schritt nach Kickoff. [anna-beispiel.md](05-clients/anna-beispiel/anna-beispiel.md)` |
 | "Idee: Newsletter mit Case-Study-Format testen" | IDEE | `00-inbox/capture.md` | `- [2026-06-11] Idee: Newsletter mit Case-Study-Format testen` |
-| "Ben Klinger wartet auf AI-First-Playbook-Launch" | LOOP | `02-strategy/open-loops.md` | `- [ ] [2026-06-11] **Ben Klinger: Nachfassen wenn AI-First-Playbook live** -> [slide-funnels.md](04-sales/leads/slide-funnels/slide-funnels.md)` |
-| "Soll ich Skool wirklich noch mal evaluieren?" | ENTSCHEIDUNG | `02-strategy/open-loops.md` | `- [ ] [2026-06-11] **Skool Community re-evaluieren?** -> Letzte Evaluation in [skool-community-evaluation.md](02-strategy/skool-community-evaluation.md) #entscheidung` |
-| "Bottleneck Audit hat heute 2 Completions gehabt" | QUICK NOTE | `00-inbox/capture.md` | `- [2026-06-11] Bottleneck Audit: 2 Completions heute (Key Numbers beim naechsten Ingest updaten)` |
-| "Mario braucht noch die AP2-Verifikation" | TASK | `02-strategy/current-priorities.md` | `- [ ] [2026-06-11] **Mario AP2 verifizieren** -> [lastenheft.md](06-projects/mario-grabner-brain-build/lastenheft.md)` |
+| "Kunde Müller wartet auf das Angebot" | LOOP | `02-strategy/open-loops.md` | `- [ ] [2026-06-11] **Kunde Müller: Nachfassen wenn Angebot raus** -> [mueller.md](04-sales/leads/mueller/mueller.md)` |
+| "Soll ich Tool X wirklich noch mal evaluieren?" | ENTSCHEIDUNG | `02-strategy/open-loops.md` | `- [ ] [2026-06-11] **Tool X re-evaluieren?** -> Letzte Evaluation in [tool-x-evaluation.md](02-strategy/tool-x-evaluation.md) #entscheidung` |
+| "Landingpage hatte heute 2 Conversions" | QUICK NOTE | `00-inbox/capture.md` | `- [2026-06-11] Landingpage: 2 Conversions heute (Key Numbers beim naechsten Ingest updaten)` |
+| "Projekt Y braucht noch die finale Freigabe" | TASK | `02-strategy/current-priorities.md` | `- [ ] [2026-06-11] **Projekt Y: finale Freigabe einholen** -> [lastenheft.md](06-projects/projekt-y/lastenheft.md)` |
