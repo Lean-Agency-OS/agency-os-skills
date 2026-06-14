@@ -9,7 +9,7 @@
     {
       "name": "agency-os-core",
       "source": "./plugins/agency-os-core",
-      "description": "Tages-Workflows: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown und GitHub-Sicherung",
+      "description": "Tages-Workflows: Session-Start, Capture, Ingest, Projektplanung, Weekly Review, Session-Shutdown, Lint (Brain-Hygiene) und GitHub-Sicherung",
       "category": "workflow",
       "author": {
         "name": "Markus Vieghofer"
@@ -18,7 +18,7 @@
     {
       "name": "agency-os-brand",
       "source": "./plugins/agency-os-brand",
-      "description": "Brand Voice (eigenes Stimm-Profil) und ICP-System (Wunschkunden-Profil, Bewerten, Personas, Leads qualifizieren)",
+      "description": "Brand Voice (Stimm-Profil), ICP-System (Wunschkunden-Profil, Bewerten, Personas, Qualifizieren), Brand-CI (Farben/Fonts/Logo als ci.md) und Positionierung (Differenzierung, Messaging, Angebot)",
       "category": "content",
       "author": {
         "name": "Markus Vieghofer"
@@ -27,7 +27,7 @@
     {
       "name": "agency-os-marketing",
       "source": "./plugins/agency-os-marketing",
-      "description": "Carousel-Posts nach der 4-Bausteine-Formel und wöchentliches Content-Mining",
+      "description": "Strategie, Conversion + Content: Kampagnen-Plan, Content-Kalender, Content-Mining, Landingpage, Lead-Magnet, E-Mail-Sequenz, Carousel, Newsletter-E-Mails, Reel-Skript, Instagram- und LinkedIn-Captions",
       "category": "content",
       "author": {
         "name": "Markus Vieghofer"

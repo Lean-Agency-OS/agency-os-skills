@@ -31,12 +31,12 @@ Hinweis: Wer das [Agency-OS-Template](https://github.com/markusvieghofer/agency-
 
 | Plugin | Skills | Inhalt |
 |---|---|---|
-| `agency-os-core` | `agency-os-start`, `agency-os-capture`, `agency-os-plan`, `agency-os-review`, `agency-os-shutdown`, `agency-os-github` | Tages-Workflows: Session-Start, Capture, Projektplanung, Weekly Review, Session-Shutdown und GitHub-Sicherung in einfacher Sprache |
-| `agency-os-brand` | `brand-voice`, `icp` | Eigenes Stimm-Profil (danach klingen alle Texte nach dir) und Wunschkunden-Profil (Bewerten / Persona / Qualifizieren) |
-| `agency-os-marketing` | `carousel`, `weekly-content-mining` | Carousel-Posts nach der 4-Bausteine-Formel und wöchentliches Content-Mining (8-Bucket-Interview) |
+| `agency-os-core` | `agency-os-start`, `agency-os-capture`, `agency-os-ingest`, `agency-os-plan`, `agency-os-review`, `agency-os-shutdown`, `agency-os-lint`, `agency-os-github` | Tages-Workflows: Session-Start, Capture, Ingest (Rohquelle ins Brain einarbeiten), Projektplanung, Weekly Review, Session-Shutdown, Lint (Brain-Hygiene) und GitHub-Sicherung in einfacher Sprache |
+| `agency-os-brand` | `brand-voice`, `icp`, `brand-ci`, `positionierung` | Strategie-Fundament: Stimm-Profil, Wunschkunden-Profil (Bewerten / Persona / Qualifizieren), Brand-CI (Farben/Fonts/Logo als ci.md) und Positionierung (Differenzierung, Messaging, Angebot als positionierung.md) - gemeinsame Quelle für die Marketing-Skills |
+| `agency-os-marketing` | `kampagnen-plan`, `content-kalender`, `weekly-content-mining`, `landingpage`, `lead-magnet`, `email-sequenz`, `carousel`, `newsletter-email`, `reel-skript`, `instagram-caption`, `linkedin-caption` | Strategie, Conversion + Content: Kampagnen-Plan (zielgebundener Push, orchestriert Asset-Skills), Content-Kalender (laufender Takt), Content-Mining; Conversion-Layer Landingpage / Lead-Magnet / E-Mail-Sequenz; Asset-Skills nach der 4-Bausteine-Formel (Carousel bis 10 Slides, Newsletter, Reel-Skript, IG-/LinkedIn-Captions) |
 | `agency-os-video` | `video-studio` | KI-Video-Editing: Roh-Video → Reel/Short + lokale Schnell-Triage ganzer Video-Ordner ohne API. Braucht einmalig `setup.sh` + ElevenLabs-Key |
 
-Die Plugins greifen ineinander: `icp` pflegt das Wunschkunden-Profil in `01-context/zielgruppe.md`, `brand-voice` die Stimme in `01-context/brand/voice.md` — `agency-os-marketing` (Carousel, Content-Mining) liest beides.
+Die Plugins greifen ineinander: `icp` pflegt das Wunschkunden-Profil in `01-context/zielgruppe.md`, `brand-voice` die Stimme in `01-context/brand/voice.md` — `agency-os-marketing` (Carousel, Content-Mining, Newsletter-E-Mail, Reel-Skript, Captions) liest beides.
 
 Die Skills werden über natürliche Sprache ausgelöst ("guten morgen", "notiere…", "review machen", "feierabend") oder direkt per `/agency-os-core:agency-os-start` etc.
 
