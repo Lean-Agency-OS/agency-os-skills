@@ -19,6 +19,7 @@ Pro benötigter Rolle in dieser Reihenfolge:
 | `strategy` | `02-strategy/` | Arbeitsspeicher + offene Loops |
 | `working-memory` | `02-strategy/hot.md` | Current Focus, Active Threads, Key Numbers |
 | `open-loops` | `02-strategy/open-loops.md` | offene Tasks/Entscheidungen |
+| `marketing` | `03-marketing/` | Content, Kampagnen, Layout-Templates, Specs |
 | `sales` | `04-sales/` | Leads, Pipeline |
 | `clients` | `05-clients/` | Kunden |
 | `projects` | `06-projects/` | Projekte |

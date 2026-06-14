@@ -1,7 +1,7 @@
 ---
 name: agency-os-review
 version: 2.0.0
-description: Wöchentliches Review für die Lean Agency des Users. Triggert wenn der User "review", "wochenrückblick", "weekly review", "sonntags-review", "review machen", "wochen-check", "lass uns reviewen" oder ähnliche Review-Phrasen nutzt. Kombiniert strukturiertes 6-Schritt-Protokoll mit ehrlicher Muster-Spiegelung und Anti-Pattern-Disziplin.
+description: Wöchentliches Review für die schlanke Agentur des Users. Triggert wenn der User "review", "wochenrückblick", "weekly review", "sonntags-review", "review machen", "wochen-check", "lass uns reviewen" oder ähnliche Review-Phrasen nutzt. Kombiniert strukturiertes 6-Schritt-Protokoll mit ehrlicher Muster-Spiegelung und Anti-Pattern-Disziplin.
 ---
 
 # Agency OS — Review
