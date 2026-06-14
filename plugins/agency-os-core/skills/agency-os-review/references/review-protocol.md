@@ -10,10 +10,10 @@ Am besten Sonntag abend oder Montag morgen. Jeden Schritt einzeln mit dem User d
 
 Bevor du eine Frage stellst oder etwas präsentierst:
 
-- `02-strategy/hot.md` — Current Focus, Active Threads, Key Numbers
-- `02-strategy/open-loops.md` — alle offenen Loops, Aging-Check (Einträge mit Datum > 2 Wochen)
-- `10-logs/` — letzte 3-7 Tages-Files, neueste zuerst
-- Falls eine Rollen-/Org-Struktur mit Wetten existiert (z.B. `07-org/<rolle>/_wetten.md`): aktive Wetten, ob sich was bewegt hat. Sonst überspringen.
+- `{working-memory}` — Current Focus, Active Threads, Key Numbers
+- `{open-loops}` — alle offenen Loops, Aging-Check (Einträge mit Datum > 2 Wochen)
+- `{logs}/` — letzte 3-7 Tages-Files, neueste zuerst
+- Falls eine Rollen-/Org-Struktur mit Wetten existiert (z.B. `{roles}/<rolle>/_wetten.md`): aktive Wetten, ob sich was bewegt hat. Sonst überspringen.
 
 Erst lesen. Dann denken. Dann anfangen.
 
@@ -21,13 +21,13 @@ Erst lesen. Dann denken. Dann anfangen.
 
 ## Schritt 1: Inbox leeren
 
-1. Lies alle Files in `00-inbox/` (typisch: `_index.md` und lose Captures).
+1. Lies alle Files in `{inbox}/` (typisch: `_index.md` und lose Captures).
 2. Falls leer: kurz benennen, weiter.
 3. Falls Items vorhanden: jedes einzeln zeigen, dann fragen:
-   - **Machen** - Als Loop in `02-strategy/open-loops.md` eintragen (Format: `- [ ] [YYYY-MM-DD] Titel → Link`)
-   - **Projekt** - Als `06-projects/{name}/_index.md` anlegen oder bestehendes updaten
-   - **Klient/Lead** - In `05-clients/` oder `04-sales/leads/`
-   - **IP/Lernstoff** - In `09-ip/patterns/` oder `09-ip/os-kandidaten/`
+   - **Machen** - Als Loop in `{open-loops}` eintragen (Format: `- [ ] [YYYY-MM-DD] Titel → Link`)
+   - **Projekt** - Als `{projects}/{name}/_index.md` anlegen oder bestehendes updaten
+   - **Klient/Lead** - In `{clients}/` oder `{sales}/leads/`
+   - **IP/Lernstoff** - In `{ip}/patterns/` oder `{ip}/os-kandidaten/`
    - **Löschen** - Entfernen, kein Archiv nötig wenn wertlos
 4. Nach Verarbeitung: Inbox leeren (keine Leichen stehen lassen).
 
@@ -35,7 +35,7 @@ Erst lesen. Dann denken. Dann anfangen.
 
 ## Schritt 2: Open Loops prüfen + altern lassen
 
-1. Lies `02-strategy/open-loops.md` vollständig.
+1. Lies `{open-loops}` vollständig.
 2. **Aging-Marker setzen:** Jeder Loop mit Datum older als 14 Tage bekommt einen Kommentar `#aging` (direkt in der Zeile, am Ende).
 3. Pro altem Loop mit dem User klären: *"Noch relevant? Erledigt? Oder eskalieren zu einer Entscheidung?"*
    - Erledigt: `[x]` setzen, wird beim nächsten Ingest ins Log transferiert und gelöscht
@@ -49,11 +49,11 @@ Erst lesen. Dann denken. Dann anfangen.
 
 ## Schritt 3: Projekte updaten
 
-1. Lies `06-projects/_index.md` für die aktive Projektliste.
+1. Lies `{projects}/_index.md` für die aktive Projektliste.
 2. Frag: *"Was hat sich bei den Projekten bewegt?"*
-3. Status in den jeweiligen `06-projects/{name}/_index.md` aktualisieren (Frontmatter: `proposal/active/done`).
-4. Abgeschlossene Projekte: in `11-archive/projekte/` verschieben, `06-projects/_index.md` bereinigen.
-5. `02-strategy/hot.md` prüfen: Spiegeln die Active Threads noch die Realität? Wenn nicht, `02-strategy/hot.md` aktualisieren.
+3. Status in den jeweiligen `{projects}/{name}/_index.md` aktualisieren (Frontmatter: `proposal/active/done`).
+4. Abgeschlossene Projekte: in `{archive}/projekte/` verschieben, `{projects}/_index.md` bereinigen.
+5. `{working-memory}` prüfen: Spiegeln die Active Threads noch die Realität? Wenn nicht, `{working-memory}` aktualisieren.
 
 ---
 
@@ -70,7 +70,7 @@ Beispiel: *"Laut Log warst du 4 von 5 Tagen im Operativen, kein einziger Marketi
 Beispiel: *"Das ist die dritte Woche in Folge, wo Klienten-Arbeit die eigene Content-Pipeline verdrängt."*
 Wenn ein Muster da ist: aussprechen. Auch wenn unangenehm. Besonders dann.
 
-**c) Wetten-Check** (nur falls eine Wetten-Struktur existiert, z.B. `07-org/<rolle>/_wetten.md`) — Haben sich aktive Wetten bewegt? Gibt es neue Evidenz, die eine Wette stützt oder widerlegt?
+**c) Wetten-Check** (nur falls eine Wetten-Struktur existiert, z.B. `{roles}/<rolle>/_wetten.md`) — Haben sich aktive Wetten bewegt? Gibt es neue Evidenz, die eine Wette stützt oder widerlegt?
 
 **Dann: eine Frage stellen, die trifft.**
 
@@ -92,7 +92,7 @@ Gute Fragen für Reviews:
 
 ## Schritt 5: Weekly Log schreiben
 
-Tages-Log `10-logs/YYYY-MM-DD.md` (heutiges Datum) anlegen oder ergänzen:
+Tages-Log `{logs}/YYYY-MM-DD.md` (heutiges Datum) anlegen oder ergänzen:
 
 ```markdown
 ## [YYYY-MM-DD] <name>-session | weekly-review KW{WW}
@@ -119,7 +119,7 @@ Kein generischer Management-Sprech. Kein künstliches Auffüllen wenn die Woche 
    - **P0** (muss diese Woche): max. 3 Items
    - **P1** (sollte diese Woche): weitere wichtige Items
    - **P2** (nice to have / falls Zeit bleibt)
-3. In `02-strategy/open-loops.md` als neue Einträge oder Update bestehender Einträge — oder in `02-strategy/hot.md` als Current Focus wenn es wirklich das Wichtigste ist.
+3. In `{open-loops}` als neue Einträge oder Update bestehender Einträge — oder in `{working-memory}` als Current Focus wenn es wirklich das Wichtigste ist.
 4. Abschluss: *"Review fertig."* Kein Motivations-Outro.
 
 ---
@@ -128,10 +128,10 @@ Kein generischer Management-Sprech. Kein künstliches Auffüllen wenn die Woche 
 
 Wenn aus dem Review ein Pattern, eine Methode oder eine Klient-Erkenntnis entsteht, die wert ist zu kompoundieren:
 
-- Pattern über Klienten hinweg - `09-ip/patterns/`
-- Methode/Framework-Idee - `09-ip/os-kandidaten/`
-- Selbst-Erkenntnis des Users - das User-Profil in `01-context/` ergänzen
-- Klient-Insight - `05-clients/{name}/{name}.md` ergänzen
+- Pattern über Klienten hinweg - `{ip}/patterns/`
+- Methode/Framework-Idee - `{ip}/os-kandidaten/`
+- Selbst-Erkenntnis des Users - das User-Profil in `{context}/` ergänzen
+- Klient-Insight - `{clients}/{name}/{name}.md` ergänzen
 
 Frag: *"Soll ich das als Note ablegen?"* Nicht autonom schreiben.
 
@@ -152,7 +152,7 @@ Frag: *"Soll ich das als Note ablegen?"* Nicht autonom schreiben.
 ## Edge Cases
 
 - **Inbox leer und Logs fehlen:** Review trotzdem machen mit dem was da ist, Datenlücken benennen.
-- **Loops aus der Vorwoche bereits in `02-strategy/hot.md` eingetragen:** Kein Doppel-Eintrag — nur prüfen ob der Stand noch stimmt.
+- **Loops aus der Vorwoche bereits in `{working-memory}` eingetragen:** Kein Doppel-Eintrag — nur prüfen ob der Stand noch stimmt.
 - **Mehrere Projekte mit unklarem Status:** Eskalieren als `#entscheidung` Loop, nicht stellvertretend entscheiden.
 - **User ist im Stress-Modus:** Schritt 4 (Muster-Spiegelung) trotzdem nicht überspringen. Gerade dann ist er relevant — aber Spiegelung kommt vor Frage, erst Resonanz dann Schärfe.
 - **Review-Modus zieht sich über mehrere Turns:** Aktiv bleiben, nicht resetten. Wenn der User eine konkrete Aufgabe stellt (*"schreib mir X"*), Modus verlassen und liefern, dann zurück.

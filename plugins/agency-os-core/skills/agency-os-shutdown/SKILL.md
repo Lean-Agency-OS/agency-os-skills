@@ -1,5 +1,6 @@
 ---
 name: agency-os-shutdown
+version: 1.0.0
 description: "Session-Shutdown und Daily Log. Verwende diesen Skill IMMER wenn der User 'gute nacht', 'shutdown', 'fertig für heute', 'session ende', 'bis morgen', 'schluss für heute', 'feierabend', 'mach zu', 'good night', 'eod' oder ähnliche Abschluss-Signale sagt."
 ---
 
@@ -7,13 +8,13 @@ description: "Session-Shutdown und Daily Log. Verwende diesen Skill IMMER wenn d
 
 **Trigger:** Der User sagt *"gute nacht"*, *"shutdown"*, *"fertig für heute"*, *"session ende"*, *"bis morgen"*, *"schluss für heute"*, *"feierabend"*, *"mach zu"*, *"good night"*, *"eod"* oder ruft `/shutdown` auf.
 
-**Output:** Brain-Updates (`02-strategy/open-loops.md`, `02-strategy/hot.md`, Daily Log) + Commit + Push + knappe Abschluss-Meldung im Chat.
+**Output:** Brain-Updates (`{open-loops}`, `{working-memory}`, Daily Log) + Commit + Push + knappe Abschluss-Meldung im Chat.
 
 ---
 
-## Brain-Pfade
+## Pfade & Fundament
 
-Die Ordner-/Datei-Pfade unten (`02-strategy/`, `10-logs/` …) sind **Defaults**, keine festen Namen - Brains variieren (z.B. `08-knowledge/` statt `08-wiki/`, oder ein Ordner fehlt). Auflösung pro Pfad: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Default-Name zuerst; (3) nichts gefunden → Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
+Die `{...}`-Platzhalter unten (`{strategy}/`, `{logs}/` …) sind **Rollen** aus `.agency-os/architecture.md`, keine festen Ordnernamen - Brains variieren (z.B. `08-knowledge/` statt `08-wiki/` als `{knowledge}`, oder ein Ordner fehlt). Auflösung pro Rolle: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Standard-Ordnername zuerst; (3) nichts gefunden → Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
 
 ---
 
@@ -30,23 +31,23 @@ Erste Liste = heutige Commits (was bereits versioniert ist). Zweite = uncommitte
 
 Optional Reflexions-Frage an den User: *"Was war heute schwer, was ein Quick-Win?"* - qualitativ, nicht faktisch.
 
-### 2. 02-strategy/open-loops.md updaten
+### 2. Open Loops updaten
 
-`02-strategy/open-loops.md`:
+`{open-loops}`:
 - **Neue Einträge** mit heutigem Datum `[YYYY-MM-DD]` und Marker (`[ ]` Task, `[?]` Entscheidung)
-- **Erledigte** ins Log überführt und aus `02-strategy/open-loops.md` löschen.
+- **Erledigte** ins Log überführt und aus `{open-loops}` löschen.
 
-### 3. 02-strategy/hot.md aktualisieren
+### 3. Arbeitsspeicher (hot.md) aktualisieren
 
-`02-strategy/hot.md`, wenn sich der aktive Kontext verschoben hat:
+`{working-memory}`, wenn sich der aktive Kontext verschoben hat:
 - **Current Focus** updaten
 - **Active Threads** aktualisieren (Threads, die heute neu entstanden oder weitergegangen sind)
 - **Key Numbers** wenn neue Zahlen aufgetaucht sind
 - **Recent** mit der heutigen Session ergänzen (3-5 Stichworte zur Tagesleistung)
 
-In `02-strategy/hot.md` dürfen die Einträge maximal 7 Tage alt sein. Alles was älter ist, muss gelöscht werden.
+In `{working-memory}` dürfen die Einträge maximal 7 Tage alt sein. Alles was älter ist, muss gelöscht werden.
 
-**WICHTIG:** Keine Open Loops in `02-strategy/hot.md`, die gehören in `02-strategy/open-loops.md`. `02-strategy/hot.md` ist Arbeitsspeicher, nicht Persistenz.
+**WICHTIG:** Keine Open Loops in `{working-memory}`, die gehören in `{open-loops}`. `{working-memory}` ist Arbeitsspeicher, nicht Persistenz.
 
 ### 4. Korrekturen-Check
 
@@ -54,7 +55,7 @@ Sicherheitsnetz: Falls heute eine Korrektur/Präferenz kam, die noch nicht an ih
 
 ### 5. Daily Log vervollständigen
 
-`10-logs/YYYY-MM-DD.md` wird **permanent über den Tag** beschrieben (Morning-Startup, Persona-Sessions, Ingests, Reviews schreiben jeweils ihre eigenen Sektionen). Beim Shutdown:
+`{logs}/YYYY-MM-DD.md` wird **permanent über den Tag** beschrieben (Morning-Startup, Persona-Sessions, Ingests, Reviews schreiben jeweils ihre eigenen Sektionen). Beim Shutdown:
 
 **Default (Log existiert bereits):** Sektionen durchgehen, Lücken ergänzen, dann eine abschließende Bilanz-Sektion anhängen mit dem was die Tages-Sektionen nicht abdecken:
 
@@ -117,6 +118,13 @@ Session gesichert.
 Commit {hash} gepusht.
 Bis zum nächsten Mal.
 ```
+
+---
+
+## Output
+
+- Brain-Updates: `{open-loops}`, `{working-memory}`, Daily Log `{logs}/YYYY-MM-DD.md` (Sektion `## [YYYY-MM-DD] <name>-session | shutdown`).
+- Commit + Push (Schritt 7) plus knappe Abschluss-Meldung im Chat (Schritt 8).
 
 ---
 

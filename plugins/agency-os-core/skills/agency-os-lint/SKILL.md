@@ -10,6 +10,8 @@ description: Brain-Hygiene-Check. Verwende wenn der User "lint", "räum auf", "c
 
 **Kritisch:** keine destruktiven Änderungen autonom. Keine Mass-Renames. Der User genehmigt jeden Fix einzeln.
 
+## Pfade & Fundament
+
 > **Brain-Pfade:** Keine festen Ordnernamen. Pfade unten (`{projects}`, `{ip}`, `{logs}` …) sind Platzhalter für die Rollen aus `.agency-os/architecture.md`; fehlt eine, gilt der Standard-Name. Die mitgelieferten Skripte lösen die Rollen selbst über die `architecture.md` auf (gemeinsamer Helper `resources/_arch.py`, Fallback auf die Standard-Namen) und scannen das Arbeitsverzeichnis (Brain-Root) als Wurzel.
 
 **Aufruf der Skripte:** vom Brain-Root aus. Abkürzung unten: `LINT="${CLAUDE_PLUGIN_ROOT:-.}/skills/agency-os-lint"`. Die Skripte nehmen das aktuelle Verzeichnis als Brain-Root; optional lässt sich der Root als erstes Argument übergeben.
@@ -84,6 +86,13 @@ Pro Punkt: *"Soll ich das fixen, oder ist das beabsichtigt?"*. Mach **nichts** a
 ### 6. Log-Eintrag
 
 Sektion `## [YYYY-MM-DD] lint` ins zentrale Tageslog (`{logs}/YYYY-MM-DD.md`), mit 1-2 Zeilen über die Anzahl der Findings (inkl. ggf. korrigierter architecture.md).
+
+---
+
+## Output
+
+- Befund-Report im Chat (keine eigene Datei): Broken Links, Orphans, Widersprüche/veraltete Claims, Empfehlungen nach Priorität.
+- Log-Eintrag `## [YYYY-MM-DD] lint` in `{logs}/YYYY-MM-DD.md` (Schritt 6). Fixes nur nach Einzel-Genehmigung durch den User, nichts autonom destruktiv.
 
 ---
 

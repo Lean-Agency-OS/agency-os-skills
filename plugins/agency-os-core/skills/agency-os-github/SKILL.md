@@ -1,5 +1,6 @@
 ---
 name: agency-os-github
+version: 1.0.0
 description: Offene Änderungen sauber auf GitHub sichern (committen + pullen mit Rebase + pushen) und Konflikte auflösen, damit alles für alle verfügbar und auf dem neuesten Stand ist. Verwende wenn der User "sichere die offenen Änderungen", "offene Änderungen sichern", "committen", "commit", "sichern", "verfügbar machen", "speichern für alle", "sauber machen", "aktualisieren", "neuesten Stand holen", "pull", "mergen", "Konflikt auflösen" oder den Copy-Paste-Prompt aus dem Session-Start-Hinweis nutzt.
 ---
 
@@ -7,7 +8,7 @@ description: Offene Änderungen sauber auf GitHub sichern (committen + pullen mi
 
 Offene Änderungen sichern, damit sie nicht nur lokal liegen, sondern für alle verfügbar sind. Sprich in einfacher, nicht-technischer Sprache. "Sichern" statt "committen", "verfügbar machen" statt "pushen". Git-Begriffe nur, wenn der User sie selbst nutzt.
 
-## Schritte
+## Workflow
 
 1. **Status holen** (still): `git status --porcelain` und `git diff --stat` für den Überblick. Bei Bedarf `git status` für untracked Ordnerinhalte.
 2. **Nichts offen?** Kurz bestätigen: "Alles sauber, hier liegt nichts Ungesichertes." Ende.
@@ -20,6 +21,10 @@ Offene Änderungen sichern, damit sie nicht nur lokal liegen, sondern für alle 
 7. **Verfügbar machen:** Nach erfolgreichem Rebase `git push`. Wenn der Rebase die History umgeschrieben hat und der Push abgelehnt wird, NICHT blind `--force` nutzen — erst prüfen, ob jemand anderes auf der Branch arbeitet. Bei eigener Feature-Branch ist `git push --force-with-lease` okay, auf `main` vorher kurz Rücksprache. Nach erfolgreichem Push das **Push-Datum** ins State-File schreiben.
 
 Auch wenn lokal nichts zu committen ist (Schritt 2), darf der User trotzdem „aktualisieren" wollen → dann nur Schritt 6 (`git pull --rebase`) ausführen, um den neuesten Stand zu holen.
+
+## Output
+
+Commit + Pull (Rebase) + Push der besprochenen Änderungen, Pull-/Push-Datum in `.agency-os/state.md` (lokal, nicht committet), plus Klartext-Feedback im Chat ("Erledigt, ist jetzt gesichert").
 
 ## Lokaler State (`.agency-os/state.md`)
 

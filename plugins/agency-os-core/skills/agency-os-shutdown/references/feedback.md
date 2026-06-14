@@ -2,6 +2,8 @@
 
 *Diese Datei ist **kein** chronologischer Korrektur-Log mehr. Eine Korrektur wird **direkt dorthin geschrieben, wo sie greift** (Enforcement-Ort) — nicht hier gesammelt. Grund: ein 700-Zeilen-Log wird nicht gelesen, also greifen die Regeln nicht. Die alte Log-History liegt vollständig in git (Commit `788e16f`, `git show 788e16f:feedback.md`).*
 
+Pfade unten sind Rollen-Platzhalter (aufgelöst über `.agency-os/architecture.md`, sonst Standard-Ordnername).
+
 ---
 
 ## Erkennung — wann der Reflex greift
@@ -20,7 +22,7 @@ Achte auf:
 Wenn so ein Signal kommt:
 
 1. **Regel + Why + How-to-apply** sofort an den passenden Enforcement-Ort schreiben (Routing-Tabelle unten). Sofort, weil das Kontext-Window die Korrektur sonst verliert und sie meist gleich wieder gebraucht wird.
-2. Brain-Write **nur mit Bestätigung des Users im aktuellen Turn** (Obsidian-MCP hat keine READ_ONLY-Wall — siehe [`systeme.md` § Obsidian](08-wiki/systeme.md)). Vorher einmal zusammenfassen *was* geschrieben wird.
+2. Brain-Write **nur mit Bestätigung des Users im aktuellen Turn** (Obsidian-MCP hat keine READ_ONLY-Wall — siehe [`systeme.md` § Obsidian]({knowledge}/systeme.md)). Vorher einmal zusammenfassen *was* geschrieben wird.
 3. Nie fragen *"soll ich das merken?"* — einfach an den Enforcement-Ort schreiben (nur der Brain-Write braucht den Check aus Schritt 2). Knapp bestätigen wo es gelandet ist (*"Gemerkt in {Ort}."*), dann weitermachen. Kein Drama.
 
 **Why immer mitschreiben:** Die Regel allein sagt *was*, das Why erlaubt das Urteil in Grenzfällen. Format am Ziel-Ort: Regel → **Why:** → **How to apply:**.
@@ -31,15 +33,15 @@ Wenn so ein Signal kommt:
 
 | Art der Korrektur | Enforcement-Ort |
 |---|---|
-| **Voice / Slop / KI-Tells** (Pattern, Tabu, Pointe) | [`voice-profile.md`](01-context/brand/voice-profile.md) (Anti-Patterns sind dort eingearbeitet; universell → zusätzlich ins Kunden-Template) |
+| **Voice / Slop / KI-Tells** (Pattern, Tabu, Pointe) | [`voice-profile.md`]({context}/brands/{brand}/voice-profile.md) (Anti-Patterns sind dort eingearbeitet; universell → zusätzlich ins Kunden-Template) |
 | **Brain-Mechanik / Hygiene / Loops / Tags / Persönlichkeit / Reflexe** | [`OS.md`](OS.md) |
 | **Ingest / Genauigkeit / Note-Prinzipien / IP-vs-Business / Skill-Ablage** | [`OS.md`](OS.md) |
-| **Sub-Agent-Briefing** (Content-Rewrites, Research) | [`founder-notes-hebel.md`](06-projects/plattform/founder-notes-hebel.md) |
-| **Content-Format / Kanal** (Carousel, Reel, Newsletter) | die jeweilige SOP in [`08-wiki/sops/`](08-wiki/sops/_index.md) |
-| **ICP / Naming / Positionierung / Zielgruppen-Sprache** | [`zielgruppe.md`](01-context/zielgruppe.md) (+ `/icp`-Skill) |
-| **Persona-spezifisch** (je Rolle, falls eine Rollen-Struktur existiert) | die jeweilige [`07-org/{rolle}/role.md`](07-org/) |
-| **Externe Systeme / API / Webhooks / Obsidian / Secrets** | [`systeme.md`](08-wiki/systeme.md) |
-| **Framework / Methode** (Grenzen, Negativ-Hinweise) | die jeweilige `09-ip/`-Note |
+| **Sub-Agent-Briefing** (Content-Rewrites, Research) | die jeweilige Projekt-Note unter `{projects}/` |
+| **Content-Format / Kanal** (Carousel, Reel, Newsletter) | die jeweilige SOP in [`{knowledge}/sops/`]({knowledge}/sops/_index.md) |
+| **ICP / Naming / Positionierung / Zielgruppen-Sprache** | [`icp.md`]({context}/brands/{brand}/icp.md) (+ `/icp`-Skill) |
+| **Persona-spezifisch** (je Rolle, falls eine Rollen-Struktur existiert) | die jeweilige [`{roles}/{rolle}/role.md`]({roles}/) |
+| **Externe Systeme / API / Webhooks / Obsidian / Secrets** | [`systeme.md`]({knowledge}/systeme.md) |
+| **Framework / Methode** (Grenzen, Negativ-Hinweise) | die jeweilige `{ip}/`-Note |
 
 **Strukturell?** Wenn die Korrektur ein Brain-Prinzip ist (Architektur, Workflow, Persona-Switching), zusätzlich in [`OS.md`](OS.md) verankern.
 

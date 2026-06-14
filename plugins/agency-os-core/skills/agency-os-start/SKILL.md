@@ -1,5 +1,6 @@
 ---
 name: agency-os-start
+version: 1.0.0
 description: "Morgen-/Start-Briefing für den User. Verwende diesen Skill IMMER wenn der User 'guten morgen', 'morgen', 'start', 'gm', 'los gehts', 'was steht an', 'starten wir', 'lass uns starten', 'good morning' oder ähnliche Begrüßungen/Start-Signale sagt."
 ---
 
@@ -7,15 +8,15 @@ description: "Morgen-/Start-Briefing für den User. Verwende diesen Skill IMMER 
 
 **Trigger:** Der User sagt *"guten morgen"*, *"morgen"*, *"start"*, *"gm"*, *"los gehts"*, *"was steht an"*, *"starten wir"*, *"good morning"* oder ruft `/start` auf.
 
-**Output:** Knappes Briefing im Chat plus eine Sektion `## [YYYY-MM-DD] <name>-session | startup` im zentralen `10-logs/YYYY-MM-DD.md` (`<name>` = Vorname-Slug des Users, z.B. `max`).
+**Output:** Knappes Briefing im Chat plus eine Sektion `## [YYYY-MM-DD] <name>-session | startup` im zentralen `{logs}/YYYY-MM-DD.md` (`<name>` = Vorname-Slug des Users, z.B. `max`).
 
 Der User will in 30 Sekunden wissen was los ist. Keine Wand.
 
 ---
 
-## Brain-Pfade
+## Pfade & Fundament
 
-Die Ordner-/Datei-Pfade unten (`02-strategy/`, `10-logs/`, `08-wiki/` …) sind **Defaults**, keine festen Namen - Brains variieren (z.B. `08-knowledge/` statt `08-wiki/`, oder ein Ordner fehlt). Auflösung pro Pfad: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Default-Name zuerst; (3) nichts gefunden → Schritt überspringen. Details + Default-Tabelle: [`references/architecture.md`](references/architecture.md).
+Die `{...}`-Platzhalter unten (`{strategy}/`, `{logs}/`, `{knowledge}/` …) sind **Rollen** aus `.agency-os/architecture.md`, keine festen Ordnernamen - Brains variieren (z.B. `08-knowledge/` statt `08-wiki/` als `{knowledge}`, oder ein Ordner fehlt). Auflösung pro Rolle: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Standard-Ordnername zuerst; (3) nichts gefunden → Schritt überspringen. Details + Default-Tabelle: [`references/architecture.md`](references/architecture.md).
 
 **Map automatisch pflegen (einmal pro Start, vor den Schritten):** Top-Level-Struktur des Brains scannen und gegen `.agency-os/architecture.md` abgleichen:
 - Map fehlt → aus der erkannten Struktur neu schreiben.
@@ -36,31 +37,31 @@ Hole die neuesten Änderungen (eine Automatisierung, z.B. n8n, könnte über Nac
 git pull
 ```
 
-### 2. Neue Files in 00-inbox/ prüfen
+### 2. Neue Files in der Inbox prüfen
 
-Checke `00-inbox/` auf neue Brain-Ingest-Files oder Spoke-Einträge. Wenn ja: kurz melden was da ist (nicht ingesten, nur melden, das ist Job des `/ingest`-Skills).
+Checke `{inbox}/` auf neue Brain-Ingest-Files oder Spoke-Einträge. Wenn ja: kurz melden was da ist (nicht ingesten, nur melden, das ist Job des `/ingest`-Skills).
 
-### 3. 02-strategy/hot.md lesen
+### 3. Arbeitsspeicher (hot.md) lesen
 
-Lies `02-strategy/hot.md`, das ist der Arbeitsspeicher. Fasse Current Focus und Active Threads in 2-3 Sätzen zusammen. Wenn die Datei (noch) nicht existiert, überspringe den Punkt.
+Lies `{working-memory}`, das ist der Arbeitsspeicher. Fasse Current Focus und Active Threads in 2-3 Sätzen zusammen. Wenn die Datei (noch) nicht existiert, überspringe den Punkt.
 
-### 4. 02-strategy/open-loops.md prüfen
+### 4. Open Loops prüfen
 
-Lies `02-strategy/open-loops.md`. Wenn die Datei (noch) nicht existiert, überspringe den Punkt. Sonst melde:
+Lies `{open-loops}`. Wenn die Datei (noch) nicht existiert, überspringe den Punkt. Sonst melde:
 - **Loops älter als 2 Wochen** (Aging-Check, sichtbar machen)
 - **Neue offene Entscheidungen** mit Marker `[?]`
 - **Erledigte** mit `[x]` die noch nicht ins Log verschoben wurden
 
 ### 5. Daily Log heute prüfen
 
-Prüfe `10-logs/` auf eine Datei mit dem heutigen Datum (`YYYY-MM-DD.md`). Wenn keine existiert, lege sie an mit dem Header `# YYYY-MM-DD` und ergänze später beim Briefing-Ende eine Sektion `## [YYYY-MM-DD] <name>-session | startup`.
+Prüfe `{logs}/` auf eine Datei mit dem heutigen Datum (`YYYY-MM-DD.md`). Wenn keine existiert, lege sie an mit dem Header `# YYYY-MM-DD` und ergänze später beim Briefing-Ende eine Sektion `## [YYYY-MM-DD] <name>-session | startup`.
 
 ### 6. Tasks checken
 
 Ermittle die Task-Quelle des Users in dieser Reihenfolge und nutze die erste, die greift:
 
-1. **Konfiguration:** Falls in `01-context/` ein Setup-File das Task-Tool und/oder einen Board-Link festlegt, nutze diese Angabe.
-2. **Gecachter Export:** Prüfe `01-context/` auf einen Tasks-Export, z.B. `notion-tasks.json`, `clickup-tasks.json`, `asana-tasks.json` (von n8n o.ä. geschrieben). Nimm den, falls vorhanden.
+1. **Konfiguration:** Falls in `{context}/` ein Setup-File das Task-Tool und/oder einen Board-Link festlegt, nutze diese Angabe.
+2. **Gecachter Export:** Prüfe `{context}/` auf einen Tasks-Export, z.B. `notion-tasks.json`, `clickup-tasks.json`, `asana-tasks.json` (von n8n o.ä. geschrieben). Nimm den, falls vorhanden.
 3. **Verbundenes MCP:** Sonst frage das verbundene Task-Management-MCP direkt ab, je nachdem was der User hat (ClickUp, Notion, Asana, Airtable, ...). Wenn mehrere verbunden sind, bevorzuge das in der Konfiguration genannte, sonst das offensichtlich aktiv genutzte.
 
 **Tasks anzeigen (egal aus welcher Quelle):**
@@ -73,13 +74,13 @@ Ermittle die Task-Quelle des Users in dieser Reihenfolge und nutze die erste, di
 **Wenn keine Task-Quelle verfügbar (Fallback):**
 - Melde: *"Kein Task-Tool eingerichtet oder verbunden."*
 - Falls in der Konfiguration ein Board-Link hinterlegt ist, gib ihn aus.
-- Hinweis, wie man es einrichtet: Task-MCP verbinden (ClickUp, Notion, ...) oder einen Tasks-Export nach `01-context/` schreiben lassen.
+- Hinweis, wie man es einrichtet: Task-MCP verbinden (ClickUp, Notion, ...) oder einen Tasks-Export nach `{context}/` schreiben lassen.
 
 ### 7. Kalender checken
 
 Ermittle die Kalender-Quelle in dieser Reihenfolge:
 
-1. **Gecachter Export:** Prüfe `01-context/calendar-today.json` (z.B. n8n-Export heutiger + morgiger Termine). Nimm den, falls vorhanden.
+1. **Gecachter Export:** Prüfe `{context}/calendar-today.json` (z.B. n8n-Export heutiger + morgiger Termine). Nimm den, falls vorhanden.
 2. **Verbundenes MCP:** Sonst frage das verbundene Kalender-MCP für heute + morgen ab (z.B. Google Calendar `list_events`).
 3. **Sonst:** überspringe den Kalender-Teil.
 
@@ -92,11 +93,11 @@ Ermittle die Kalender-Quelle in dieser Reihenfolge:
 
 ### 8. Rollen-/Persona-Status (optional)
 
-**Nur relevant, wenn der User mit Rollen/Personas arbeitet** (eine Org-Struktur im Brain, z.B. ein `07-org/`-Ordner mit einem Unterordner pro Rolle). Existiert keine solche Struktur, **überspringe diesen Schritt komplett** und gib keine Rollen-Zeile im Briefing aus.
+**Nur relevant, wenn der User mit Rollen/Personas arbeitet** (eine Org-Struktur im Brain, z.B. ein `{roles}/`-Ordner mit einem Unterordner pro Rolle). Existiert keine solche Struktur, **überspringe diesen Schritt komplett** und gib keine Rollen-Zeile im Briefing aus.
 
 Wenn eine Rollen-Struktur existiert, ermittle die Rollen **dynamisch** (Unterordner der Org-Struktur, nicht hardcoden) und prüfe, ob seit der letzten Session eine aktiv war. Zwei Signale:
 
-1. **Persona-Session-Header in den letzten `10-logs/`-Files**: grep in den letzten 3-5 Tages-Logs nach fremden Session-Headern (Muster `<rolle>-session`), die nicht die eigene Session sind.
+1. **Persona-Session-Header in den letzten `{logs}/`-Files**: grep in den letzten 3-5 Tages-Logs nach fremden Session-Headern (Muster `<rolle>-session`), die nicht die eigene Session sind.
 2. **mtime-Check der Rollen-Files**: den Org-Ordner jeder Rolle auf neue/geänderte Files (z.B. `role.md`, `_todos.md`) seit der letzten Session prüfen.
 
 Nur prüfen ob sich was geändert hat, nicht alles lesen. Wenn aktiv: in 1 Zeile pro Rolle zusammenfassen.
@@ -112,11 +113,11 @@ Fasse dann alles in einem knappen Briefing zusammen:
 ```
 {Begrüßung je nach Tageszeit}, {Vorname}.
 
-**Fokus:** {aus 02-strategy/hot.md}
+**Fokus:** {aus {working-memory}}
 **Heute:** {Termine + fällige Tasks}
 **Tasks:** {High-Prio + fällige aus dem Task-Tool}
 **Offen:** {wichtigste Loops, besonders aging}
-**Inbox:** {X neue Files in 00-inbox/}
+**Inbox:** {X neue Files in {inbox}/}
 **Rollen:** {nur falls eine Rollen-Struktur existiert: welche Rolle war aktiv, was hat sie getan, sonst Zeile weglassen}
 ```
 
@@ -124,13 +125,20 @@ Kurz halten. Kein Essay. Der User will in 30 Sekunden wissen, was los ist.
 
 ### 10. Log-Sektion für Startup
 
-Ergänze die Datei `10-logs/YYYY-MM-DD.md` mit einer Sektion:
+Ergänze die Datei `{logs}/YYYY-MM-DD.md` mit einer Sektion:
 
 ```markdown
 ## [YYYY-MM-DD] <name>-session | startup
 
 Briefing ausgegeben. Loops aging: {N}. Neue Inbox-Items: {N}. Aktive Rollen seit letzter Session: {Liste, "keine" oder "n/a" falls keine Rollen-Struktur}.
 ```
+
+---
+
+## Output
+
+- Knappes Briefing im Chat (Schritt 9).
+- Eine Sektion `## [YYYY-MM-DD] <name>-session | startup` in `{logs}/YYYY-MM-DD.md` (Schritt 10; `<name>` = Vorname-Slug des Users).
 
 ---
 

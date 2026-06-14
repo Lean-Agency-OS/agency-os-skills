@@ -8,19 +8,27 @@ description: Wöchentliches Review für die schlanke Agentur des Users. Triggert
 
 Wöchentliches Review. Am besten Sonntag abend oder Montag morgen.
 
+## Methodik
+
 Lies `references/review-protocol.md` für den vollständigen Ablauf. Dieser Skill ist der Trigger — das Protokoll ist die kanonische Quelle.
 
-> **Brain-Pfade:** Die Pfade im Protokoll (`02-strategy/`, `06-projects/`, `10-logs/` …) sind **Defaults**, keine festen Namen - Brains variieren. Pro Pfad: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Default-Name zuerst; (3) nichts gefunden → Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
+## Pfade & Fundament
 
-## Ablauf (Kurzform)
+> **Brain-Pfade:** Die `{...}`-Platzhalter im Protokoll (`{strategy}/`, `{projects}/`, `{logs}/` …) sind **Rollen** aus `.agency-os/architecture.md`, keine festen Ordnernamen - Brains variieren. Pro Rolle: (1) wenn `.agency-os/architecture.md` die Rolle nennt → diesen Pfad; (2) sonst per Rolle/Muster suchen, Standard-Ordnername zuerst; (3) nichts gefunden → Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
+
+## Workflow
 
 1. Brain lesen (bevor du irgendwas sagst)
-2. Inbox leeren (`00-inbox/`)
-3. Loops prüfen + altern (`02-strategy/open-loops.md`)
-4. Projekte updaten (`06-projects/`)
+2. Inbox leeren (`{inbox}/`)
+3. Loops prüfen + altern (`{open-loops}`)
+4. Projekte updaten (`{projects}/`)
 5. Muster spiegeln — ehrlich, kein Schmeicheln
-6. Nächste Woche planen + Log schreiben (`10-logs/`)
+6. Nächste Woche planen + Log schreiben (`{logs}/`)
 
 Jeden Schritt einzeln durchgehen. Kein Hetzen, kein Überspringen.
 
 **Reflexions-Modus:** Das Review endet nicht mit einer Tabelle. Es endet mit einer Spiegelung und einer Frage, die sitzt.
+
+## Output
+
+Aktualisierte Brain-Files (`{inbox}/` geleert, `{open-loops}`, `{projects}/`) plus ein Log-Eintrag in `{logs}/` (Schritt 6). Im Chat: Muster-Spiegelung und eine Frage, die sitzt.

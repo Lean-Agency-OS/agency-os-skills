@@ -8,9 +8,9 @@ description: Rohquelle aus dem Inbox-Ordner ins Brain einarbeiten. Verwende wenn
 
 Arbeitet eine Rohquelle aus dem Inbox-Ordner tief ins Brain ein. Substanz, nicht Volumen.
 
-> **Brain-Pfade:** Keine festen Ordnernamen. Die Platzhalter unten (`{inbox}`, `{clients}`, `{projects}`, `{sales}`, `{marketing}`, `{ip}`, `{strategy}`, `{open-loops}`, `{working-memory}`, `{roles}`, `{logs}`) stehen für die Rollen aus `.agency-os/architecture.md` (`agency-os-start` pflegt die Map); fehlt eine, gilt der Standard-Name bzw. per Muster suchen, sonst Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`. Root-Navigation: `OS.md` (ersatzweise `README.md` / Root-`_index.md`).
+## Pfade & Fundament
 
-**Abgrenzung zu `file-to-markdown`:** `file-to-markdown` konvertiert externe Files (PDF, DOCX, etc.) in den Inbox-Ordner und stoppt dort. `ingest` nimmt Markdown-Files aus dem Inbox-Ordner und arbeitet sie ins Brain ein. Beide laufen nicht automatisch hintereinander.
+> **Brain-Pfade:** Keine festen Ordnernamen. Die Platzhalter unten (`{inbox}`, `{clients}`, `{projects}`, `{sales}`, `{marketing}`, `{ip}`, `{strategy}`, `{open-loops}`, `{working-memory}`, `{roles}`, `{logs}`) stehen für die Rollen aus `.agency-os/architecture.md` (`agency-os-start` pflegt die Map); fehlt eine, gilt der Standard-Name bzw. per Muster suchen, sonst Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`. Root-Navigation: `OS.md` (ersatzweise `README.md` / Root-`_index.md`).
 
 ---
 
@@ -109,6 +109,20 @@ Knapp:
 - *"Fällt mir auf: {1-2 Beobachtungen}."*
 
 Beobachtungen sind der Mehrwert. Das ist der Grund, warum der User den Skill einsetzt und nicht nur die Datei selbst kopiert.
+
+---
+
+## Output
+
+- Aktualisierte Brain-Files (5-15 möglich, je nach Routing-Tabelle), Cross-Links gesetzt.
+- Log-Eintrag im Tageslog `{logs}/YYYY-MM-DD.md` (Schritt 5), ggf. Index-Updates, Loops in `{open-loops}` nachgezogen.
+- Rohquelle im Inbox-Ordner gelöscht (Schritt 9). Knappe Rückmeldung im Chat mit Beobachtungen.
+
+---
+
+## Verwandte Skills
+
+**Abgrenzung zu `file-to-markdown`:** `file-to-markdown` konvertiert externe Files (PDF, DOCX, etc.) in den Inbox-Ordner und stoppt dort. `ingest` nimmt Markdown-Files aus dem Inbox-Ordner und arbeitet sie ins Brain ein. Beide laufen nicht automatisch hintereinander.
 
 ---
 

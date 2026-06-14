@@ -10,7 +10,7 @@ Aktiv
 
 ## Kunde
 
-[{{KUNDE}}](05-clients/{{KUNDE}}/_index.md)
+[{{KUNDE}}]({clients}/{{KUNDE}}/_index.md)
 
 ## Verweise
 
