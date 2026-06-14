@@ -1,7 +1,7 @@
 {
   "name": "agency-os-brand",
-  "description": "Agency OS Brand: Voice-Profile-System (einmaliges Stimm-Setup, danach klingen alle Texte nach dir) und ICP-System (Wunschkunden-Profil, Content bewerten, Personas, Leads qualifizieren)",
-  "version": "1.0.0",
+  "description": "Agency OS Brand: Voice-Profile-System (einmaliges Stimm-Setup, danach klingen alle Texte nach dir), ICP-System (Wunschkunden-Profil, Content bewerten, Personas, Leads qualifizieren) und Brand-CI (Farben/Fonts/Logo als ci.md, Quelle für Carousel + Video)",
+  "version": "1.1.0",
   "author": {
     "name": "Markus Vieghofer",
     "email": "hallo@markusvieghofer.com"
