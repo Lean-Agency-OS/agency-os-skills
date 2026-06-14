@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="de"><head><meta charset="UTF-8">
 <!--
-  Carousel-Starter (Marcus Vieghofer / Lean Agency).
-  Der Skill kopiert diese Datei als carousel.html in den Output-Ordner und:
-    - setzt Slide-Text + Akzent-Worte per class="acc" (Coral)
-    - waehlt Light- oder Cinema-Edition (CSS-Swap, s. Kommentare unten)
-    - referenziert Fotos als ../../../../01-context/positionierung/brand-assets/{datei}
-  BRAND ("LEAN AGENCY") und HANDLE ("@markusvieghofer_com") sind fest verbaut.
-  Nach Phase 3 darf KEIN {{...}}-Token mehr im File stehen.
+  Seed-Layout. Wird EINMALIG benutzt, um im Brain ein Brand-Template zu generieren:
+    - :root-CI-Block (Farben/Fonts) aus der Brand-CI (ci.md-Frontmatter) einbacken
+    - BRAND-Name + HANDLE aus der CI setzen (Platzhalter unten)
+    - Fotos project-root-relativ als {assets_dir}/{datei} referenzieren (KEIN ../; render.py bettet base64 ein)
+  Beim Bauen wird das fertige Brand-Template als carousel.html kopiert, Slide-Text + Akzente (class="acc")
+  gesetzt, Light/Cinema gewaehlt. Nach dem Build darf KEIN {{...}}-Token mehr im File stehen.
 
-  Design-System: 03-marketing/specs/carousel-design-system-v1.md
-  Farben: --cream #F2EBDD | --black #0F0F0E | --coral #E85F33
-  Typo: Open Sans ExtraBold (800) fuer Display, Regular (400) fuer Sub, JetBrains Mono (500) fuer Mono
-  Format: 1080x1350px (4:5, IG-Feed-konform)
+  Format: 1080x1350px (4:5, IG-Feed-konform). Werte unten sind neutrale Platzhalter, via CI ueberschreiben.
 -->
+<!-- Google-Fonts-Link an fonts.display / fonts.mono der CI anpassen, falls die Brand andere Fonts nutzt. -->
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-/* === LIGHT EDITION (Default) ===
-   Fuer Cinema Edition: background-color -> var(--black), color -> var(--cream), background-image -> none */
+/* === CI — aus ci.md-Frontmatter befuellen ===
+   colors.bg_light -> --cream | colors.bg_cinema (= fg im Light) -> --black | colors.accent -> --coral
+   fonts.display -> --font-display | fonts.mono -> --font-mono
+   LIGHT EDITION ist Default. Fuer Cinema: background-color -> var(--black), color -> var(--cream), background-image -> none */
 :root {
   --cream: #F2EBDD;
   --black: #0F0F0E;
   --coral: #E85F33;
+  --font-display: 'Open Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { background: #999; font-family: 'Open Sans', sans-serif; }
+html, body { background: #999; font-family: var(--font-display); }
 body { display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 40px 0; }
 
 /* === SLIDE BASE (gilt fuer beide Editions) === */
@@ -32,7 +33,7 @@ body { display: flex; flex-direction: column; align-items: center; gap: 40px; pa
   width: 1080px; height: 1350px;
   position: relative; overflow: hidden;
   display: flex; flex-direction: column;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--font-display);
   /* --- LIGHT EDITION --- */
   background-color: var(--cream);
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44'><path d='M 44 0 L 0 0 0 44' fill='none' stroke='black' stroke-opacity='0.05' stroke-width='1'/></svg>");
@@ -49,7 +50,7 @@ body { display: flex; flex-direction: column; align-items: center; gap: 40px; pa
   height: 180px;
   padding: 0 120px 0 50px;
   display: flex; justify-content: space-between; align-items: center;
-  font-family: 'JetBrains Mono', monospace; font-weight: 500;
+  font-family: var(--font-mono); font-weight: 500;
   font-size: 26px; letter-spacing: 1.5px; text-transform: uppercase;
 }
 .topbar { opacity: 0.65; }
@@ -69,8 +70,8 @@ body { display: flex; flex-direction: column; align-items: center; gap: 40px; pa
 /* Coral-Flag (Bookmark-Form, 32x38px) */
 .flag { width: 32px; height: 38px; background: var(--coral); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%); }
 .handle { font-weight: 500; text-transform: none; letter-spacing: 1px; }
-.arrow { color: var(--coral); font-size: 64px; font-weight: 800; line-height: 1; font-family: 'Open Sans', sans-serif; }
-.end-mark { font-family: 'JetBrains Mono', monospace; font-size: 22px; letter-spacing: 2px; opacity: 0.5; }
+.arrow { color: var(--coral); font-size: 64px; font-weight: 800; line-height: 1; font-family: var(--font-display); }
+.end-mark { font-family: var(--font-mono); font-size: 22px; letter-spacing: 2px; opacity: 0.5; }
 
 /* === TYPOGRAFIE === */
 .display { font-weight: 800; line-height: 0.98; letter-spacing: -0.025em; font-size: 130px; }
@@ -94,7 +95,7 @@ body { display: flex; flex-direction: column; align-items: center; gap: 40px; pa
   background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.1);
   border-radius: 16px; padding: 32px; flex: 1; min-height: 220px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 26px;
+  gap: 14px; font-family: var(--font-mono); font-size: 26px;
   letter-spacing: 1px; text-transform: uppercase; opacity: 0.75; text-align: center; line-height: 1.2;
 }
 /* Cinema: .diag-block { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); } */
@@ -105,7 +106,7 @@ body { display: flex; flex-direction: column; align-items: center; gap: 40px; pa
 .tree {
   background: #fff; border-radius: 16px; padding: 36px 44px;
   border: 1px solid rgba(0,0,0,0.1); margin-top: 36px;
-  font-family: 'JetBrains Mono', monospace; font-size: 30px; line-height: 1.55; max-width: 92%;
+  font-family: var(--font-mono); font-size: 30px; line-height: 1.55; max-width: 92%;
 }
 /* Cinema: .tree { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); } */
 .tree .dir { font-weight: 500; }
@@ -115,7 +116,7 @@ body { display: flex; flex-direction: column; align-items: center; gap: 40px; pa
 .flow { display: flex; align-items: center; gap: 24px; margin-top: 50px; justify-content: center; flex-wrap: wrap; }
 .flow-block {
   background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 18px; padding: 28px 36px; font-family: 'JetBrains Mono', monospace;
+  border-radius: 18px; padding: 28px 36px; font-family: var(--font-mono);
   font-size: 32px; text-transform: uppercase; letter-spacing: 1px; text-align: center; line-height: 1.2;
 }
 /* Cinema: .flow-block { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); } */
@@ -124,7 +125,7 @@ body { display: flex; flex-direction: column; align-items: center; gap: 40px; pa
 .in-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 50px; }
 .in-cell {
   background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 14px; padding: 22px 28px; font-family: 'JetBrains Mono', monospace;
+  border-radius: 14px; padding: 22px 28px; font-family: var(--font-mono);
   font-size: 28px; text-transform: uppercase; letter-spacing: 1px; text-align: center;
 }
 /* Cinema: .in-cell { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); } */
@@ -135,94 +136,94 @@ body { display: flex; flex-direction: column; align-items: center; gap: 40px; pa
 
 <!-- Slide 1 — Visual Hook (6-10 Woerter, ein Coral-Akzent, <2 Sek lesbar) -->
 <section class="slide" id="slide-1">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>01 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>01 / 10</span></header>
 <main class="body">
 <h1 class="display sm">Hook hier — die <span class="acc">eine Spannung</span>.</h1>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <!-- Slide 2 — Rehook (anderer Modus als Slide 1, standalone-faehig, ein Coral-Akzent) -->
 <section class="slide" id="slide-2">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>02 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>02 / 10</span></header>
 <main class="body">
 <h1 class="display xs">Rehook — scharfer Schmerz, kein Kontext, kein Auflösen.</h1>
 <p class="sub">Ein Satz. Mehr nicht. <span class="acc">Konkret.</span></p>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <!-- Slides 3-7 — Build (Story / Liste / Steps, genau ein Subtyp durchgaengig) -->
 <section class="slide" id="slide-3">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>03 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>03 / 10</span></header>
 <main class="body">
 <h1 class="display sm">Build 1 — <span class="acc">Diagnose</span>.</h1>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <section class="slide" id="slide-4">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>04 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>04 / 10</span></header>
 <main class="body">
 <h1 class="display sm">Build 2 — First <span class="acc">Principle</span>.</h1>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <section class="slide" id="slide-5">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>05 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>05 / 10</span></header>
 <main class="body">
 <h1 class="display sm">Build 3 — <span class="acc">Framework</span>.</h1>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <section class="slide" id="slide-6">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>06 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>06 / 10</span></header>
 <main class="body">
 <h1 class="display sm">Build 4 — <span class="acc">Beweis</span>.</h1>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <section class="slide" id="slide-7">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>07 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>07 / 10</span></header>
 <main class="body">
 <h1 class="display sm">Build 5 — <span class="acc">Taktik</span>.</h1>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <!-- Slide 8 — Payoff (Insight ODER Umsetzung, nie beides, kein Recap) -->
 <section class="slide" id="slide-8">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>08 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>08 / 10</span></header>
 <main class="body">
 <h1 class="display xs">Payoff — der <span class="acc">Aha-Moment</span>.</h1>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <!-- Slide 9 — Bridge / Stakes / Proof (kein konkurrierender CTA!) -->
 <section class="slide" id="slide-9">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>09 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>09 / 10</span></header>
 <main class="body">
 <h1 class="display xs">Stakes — was es kostet, <span class="acc">nichts</span> zu tun.</h1>
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="arrow">→</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="arrow">→</span></footer>
 </section>
 
 <!-- Slide 10 — CTA (ein Comment-Wort / Direktlink) + Foto Markus -->
 <section class="slide" id="slide-10">
-<header class="topbar"><span class="mark"><span class="flag"></span>LEAN AGENCY</span><span>10 / 10</span></header>
+<header class="topbar"><span class="mark"><span class="flag"></span>BRAND</span><span>10 / 10</span></header>
 <main class="body cta-body">
 <div class="cta-text">
 <h1 class="display sm">Willst du das<br>Template?</h1>
 <p class="sub">Kommentiere <span class="acc" style="font-weight: 800;">WORT</span> — ich schick's dir per DM.</p>
 </div>
 <!-- Foto-Auswahl: Sales/Authority -> 1.png | Story/Personal -> 2.png | Reflexion -> 3.png -->
-<img class="cta-photo-cutout" src="../../../../01-context/positionierung/brand-assets/2.png" alt="Markus Vieghofer">
+<img class="cta-photo-cutout" src="{assets_dir}/2.png" alt="Foto">
 </main>
-<footer class="foot"><span class="handle">@markusvieghofer_com</span><span class="end-mark">END</span></footer>
+<footer class="foot"><span class="handle">@yourhandle</span><span class="end-mark">END</span></footer>
 </section>
 
 </body></html>

@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
-Carousel-Builder Render Script (Marcus Vieghofer / Lean Agency)
+Carousel-Builder Render Script
 
 Wandelt eine Carousel-HTML-Datei in eine mobile-first preview.html und — mit
 --final — in einzelne PNG-Slides (1080x1350) plus ein gesamthaftes PDF.
 
 Usage (immer aus dem Projekt-Root aufrufen):
   python3 skills/carousel/resources/render.py <input.html> <output_dir> [--final]
-                                              [--handle "@markusvieghofer_com"]
-                                              [--brand "LEAN AGENCY"]
+                                              [--handle "@yourhandle"]
+                                              [--brand "BRAND"]
+                                              [--assets-dir "<context>/brands/<brand>/brand-assets"]
+
+  --handle / --brand / --assets-dir kommen aus der Brand-CI (ci.md-Frontmatter); der Skill
+  liest sie dort und reicht sie hier durch. Ohne Angabe gelten neutrale Platzhalter-Defaults.
 
 Voraussetzungen fuer --final (einmalig):
   pip install playwright pillow --break-system-packages
@@ -19,9 +23,10 @@ Verhalten:
   - Nur mit --final zusaetzlich: pro Slide ein PNG (1080x1350) + ein PDF.
 
 Pfad-Konventionen:
-  - Bild-Assets im Slide-HTML referenzieren als
-      ../../../../01-context/positionierung/brand-assets/{file}
-    und werden relativ zum CWD (Projekt-Root) aufgeloest und base64-eingebettet.
+  - Bild-Assets im Slide-HTML referenzieren als ../../../../{assets-dir}/{file}
+    (assets-dir = relativer Pfad ab Projekt-Root, aus der CI). Sie werden relativ zum CWD
+    (Projekt-Root) aufgeloest und base64-eingebettet. Default-assets-dir, falls nicht gesetzt:
+    01-context/brand-assets.
   - preview-template.html liegt neben diesem Script.
 """
 
@@ -34,34 +39,17 @@ from pathlib import Path
 
 def usage():
     print('Usage: python3 render.py <input.html> <output_dir> [--final] '
-          '[--handle "@x"] [--brand "Name"]')
+          '[--handle "@x"] [--brand "Name"] [--assets-dir "rel/path"]')
     sys.exit(1)
 
 
-def write_preview(input_html, output_dir, slide_ids, handle, brand):
-    """
-    Schreibt eine mobile-first preview.html (Instagram-Mobile-View-Mockup).
-
-    Architektur (Template-driven):
-      - preview-template.html (neben diesem Script) ist ein statisches IG-Mockup
-        mit Platzhaltern {{CAROUSEL_STYLES}}, {{SLIDES}}, {{CAPTION}}, {{TOTAL}},
-        {{HANDLE}}, {{BRAND}}.
-      - Diese Funktion extrahiert Slide-CSS + <section class="slide"> aus dem
-        Carousel-HTML, bettet alle Brand-Asset-Bilder als base64 ein und
-        injiziert beides ins Template. Caption aus caption.md wird formatiert.
-
-    base64-Pflicht:
-      Unter file:// blockiert Chrome je nach OS lokale Bilder aus relativen
-      Pfaden. Die preview.html muss self-contained sein.
-    """
-    # ---- 1. Carousel-HTML laden + Brand-Assets in base64 ----
-    carousel_html = input_html.read_text(encoding="utf-8")
-
-    # Matching: beliebig viele "../"-Prefixe + 01-context/positionierung/brand-assets/{file}
-    asset_re = re.compile(
-        r"(?:\.\./)*01-context/positionierung/brand-assets/([^\'\")\s]+)"
-    )
-    brand_dir = (Path.cwd() / "01-context" / "positionierung" / "brand-assets").resolve()
+def embed_assets(html_text, assets_dir):
+    """Ersetzt Brand-Asset-Referenzen ({assets_dir}/{file}, mit oder ohne fuehrende ../) durch
+    base64-Data-URIs. assets_dir ist relativ ab Projekt-Root (CWD). Macht das HTML self-contained,
+    sodass es ohne relative Pfade unter file:// laedt (Windows-safe)."""
+    assets_rel = assets_dir.strip("/")
+    asset_re = re.compile(r"(?:\.\./)*" + re.escape(assets_rel) + r"/([^\'\")\s]+)")
+    brand_dir = (Path.cwd() / assets_rel).resolve()
     mime_map = {
         ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
         ".gif": "image/gif", ".webp": "image/webp", ".svg": "image/svg+xml",
@@ -78,7 +66,27 @@ def write_preview(input_html, output_dir, slide_ids, handle, brand):
         b64 = base64.b64encode(asset_path.read_bytes()).decode("ascii")
         return f"data:{mime};base64,{b64}"
 
-    carousel_html = asset_re.sub(to_data_uri, carousel_html)
+    return asset_re.sub(to_data_uri, html_text)
+
+
+def write_preview(input_html, output_dir, slide_ids, handle, brand, assets_dir):
+    """
+    Schreibt eine mobile-first preview.html (Instagram-Mobile-View-Mockup).
+
+    Architektur (Template-driven):
+      - preview-template.html (neben diesem Script) ist ein statisches IG-Mockup
+        mit Platzhaltern {{CAROUSEL_STYLES}}, {{SLIDES}}, {{CAPTION}}, {{TOTAL}},
+        {{HANDLE}}, {{BRAND}}.
+      - Diese Funktion extrahiert Slide-CSS + <section class="slide"> aus dem
+        Carousel-HTML, bettet alle Brand-Asset-Bilder als base64 ein und
+        injiziert beides ins Template. Caption aus caption.md wird formatiert.
+
+    base64-Pflicht:
+      Unter file:// blockiert Chrome je nach OS lokale Bilder aus relativen
+      Pfaden. Die preview.html muss self-contained sein.
+    """
+    # ---- 1. Carousel-HTML laden + Brand-Assets in base64 ----
+    carousel_html = embed_assets(input_html.read_text(encoding="utf-8"), assets_dir)
 
     # ---- 2. Slide-CSS und Slide-Sections extrahieren ----
     style_match = re.search(r"<style>(.*?)</style>", carousel_html, re.DOTALL)
@@ -140,8 +148,9 @@ def write_preview(input_html, output_dir, slide_ids, handle, brand):
 def main():
     # Args parsen: --final ist Flag, --handle/--brand nehmen einen Wert, Rest positional.
     args = sys.argv[1:]
-    handle = "@markusvieghofer_com"
-    brand = "LEAN AGENCY"
+    handle = "@yourhandle"
+    brand = "BRAND"
+    assets_dir = "01-context/brand-assets"
     pos = []
     i = 0
     while i < len(args):
@@ -153,6 +162,9 @@ def main():
             i += 2
         elif a == "--brand":
             brand = args[i + 1] if i + 1 < len(args) else brand
+            i += 2
+        elif a == "--assets-dir":
+            assets_dir = args[i + 1] if i + 1 < len(args) else assets_dir
             i += 2
         elif a.startswith("--"):
             i += 1
@@ -185,7 +197,7 @@ def main():
     print(f"Gefunden: {len(slide_ids)} Slides")
 
     # preview.html IMMER schreiben (Iterations-Modus, kein Chromium noetig).
-    write_preview(input_html, output_dir, slide_ids, handle, brand)
+    write_preview(input_html, output_dir, slide_ids, handle, brand, assets_dir)
 
     if "--final" not in sys.argv:
         print("Preview geschrieben (preview-only). PNGs + PDF erst mit --final am Schluss.")
@@ -206,30 +218,36 @@ def main():
         print("Setup: pip install pillow --break-system-packages")
         sys.exit(1)
 
-    file_url = f"file://{input_html}"
+    # Assets base64-einbetten, damit der Chromium-Render keine relativen Pfade braucht (Windows-safe).
+    render_input = output_dir / "_carousel_embedded.html"
+    render_input.write_text(embed_assets(html_text, assets_dir), encoding="utf-8")
+    file_url = f"file://{render_input}"
     png_paths = []
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        context = browser.new_context(
-            viewport={"width": 1080, "height": 1350},
-            device_scale_factor=2
-        )
-        page = context.new_page()
-        page.goto(file_url, wait_until="networkidle")
-        page.wait_for_timeout(1500)
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            context = browser.new_context(
+                viewport={"width": 1080, "height": 1350},
+                device_scale_factor=2
+            )
+            page = context.new_page()
+            page.goto(file_url, wait_until="networkidle")
+            page.wait_for_timeout(1500)
 
-        for idx, slide_id in enumerate(slide_ids, start=1):
-            png_path = output_dir / f"slide-{idx:02d}.png"
-            element = page.query_selector(f"#{slide_id}")
-            if element is None:
-                print(f"WARNUNG: #{slide_id} nicht gefunden, ueberspringe.")
-                continue
-            element.screenshot(path=str(png_path), omit_background=False)
-            png_paths.append(png_path)
-            print(f"  [{idx:02d}/{len(slide_ids)}] {png_path.name}")
+            for idx, slide_id in enumerate(slide_ids, start=1):
+                png_path = output_dir / f"slide-{idx:02d}.png"
+                element = page.query_selector(f"#{slide_id}")
+                if element is None:
+                    print(f"WARNUNG: #{slide_id} nicht gefunden, ueberspringe.")
+                    continue
+                element.screenshot(path=str(png_path), omit_background=False)
+                png_paths.append(png_path)
+                print(f"  [{idx:02d}/{len(slide_ids)}] {png_path.name}")
 
-        browser.close()
+            browser.close()
+    finally:
+        render_input.unlink(missing_ok=True)
 
     if not png_paths:
         print("FEHLER: Keine Slides gerendert.")

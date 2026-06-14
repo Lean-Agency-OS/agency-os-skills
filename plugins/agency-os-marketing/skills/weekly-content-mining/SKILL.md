@@ -1,5 +1,6 @@
 ---
 name: weekly-content-mining
+version: 1.0.0
 description: >
   Wöchentliches Content-Mining Interview. Führt ein strukturiertes
   8-Bucket-Interview durch (Kalender, Kunden, Projekte, Nachrichten, Community,
@@ -18,30 +19,28 @@ Du führst das Interview als erfahrener Content-Stratege: direkt, neugierig, tem
 
 ---
 
-## Ablage (aus dem Brain herleiten — keine festen Pfade)
+## Pfade & Fundament
 
 Dieser Skill kennt **keine hartkodierten Pfade**. Wo gelesen und geschrieben wird, leitest du aus der Selbstbeschreibung des Projekts ab, genau dafür ist das Markdown-Brain da.
 
 1. **Struktur-Quelle lesen.** Im Projekt-Root die Quelle der Wahrheit für die Struktur öffnen (`OS.md`, ersatzweise `README.md` oder das Root-`_index.md`) und über die `_index.md`-Navigation verstehen, wie das Brain organisiert ist.
-2. **Kontext-Quellen finden** (alle optional, fürs Briefing): ICP-/Zielgruppen-Profil, Voice-Profile, Positionierung/Brand. In Marcus' Brain: ICP unter `01-context/angebot/agency-os-icp.md`, Positionierung unter `01-context/positionierung/`, Voice-Profile unter `01-context/brand/voice-profile.md`. Was nicht existiert, wird übersprungen.
-3. **Ziel-Ordner für den Dump bestimmen.** Den Ort wählen, an dem wöchentliche Content-/Goldmine-Dumps liegen oder thematisch hingehören. In Marcus' Brain: `03-marketing/content/weekly-goldmine/`. Liegen schon frühere Dumps dort (z.B. `*-KW*.md`), dorthin. Gibt es noch keinen klaren Ort, den nach der Brain-Logik plausibelsten Ordner vorschlagen und **einmal kurz rückversichern**, bevor du schreibst.
-4. **Index pflegen.** Entsteht dabei ein neuer Ordner, ihn im zuständigen `_index.md` verlinken. In Marcus' Brain: neuen Ordner in `03-marketing/_index.md` ergänzen.
+2. **Kontext-Quellen finden** (alle optional, fürs Briefing) aus `{context}/brands/{brand}/` (Fallback projektweit): ICP (`icp.md`), Positionierung (`positionierung.md`), Voice-Profile (`voice-profile.md`). Was nicht existiert, wird übersprungen.
+3. **Ziel-Ordner für den Dump bestimmen.** Den Ort wählen, an dem wöchentliche Content-/Goldmine-Dumps liegen oder thematisch hingehören. Im Marketing-/Content-Bereich (`{marketing}`, z.B. `{marketing}/content/weekly-goldmine/`). Liegen schon frühere Dumps dort (z.B. `*-KW*.md`), dorthin. Gibt es noch keinen klaren Ort, den nach der Brain-Logik plausibelsten Ordner vorschlagen und **einmal kurz rückversichern**, bevor du schreibst.
+4. **Index pflegen.** Entsteht dabei ein neuer Ordner, ihn im zuständigen `_index.md` verlinken (z.B. `{marketing}/_index.md`).
 
-**Ausgabe-Stil:** Existiert ein Voice-Profile (in Marcus' Brain: `01-context/brand/voice-profile.md`), wende es auf alle geschriebenen Outputs an (Nuggets, Top Plays, Wildcard).
+**Ausgabe-Stil:** Existiert ein Voice-Profile (`{context}/brands/{brand}/voice-profile.md`), wende es auf alle geschriebenen Outputs an (Nuggets, Top Plays, Wildcard).
 
----
-
-## Kontext laden (vor der ersten Frage)
+### Kontext laden (vor der ersten Frage)
 
 Die in der Ablage gefundenen Kontext-Quellen lesen, falls vorhanden:
-- **ICP / Zielgruppe** — für wen wird Content gemacht (in Marcus' Brain: `01-context/angebot/agency-os-icp.md`)
-- **Positionierung** — wofür steht die Agentur (in Marcus' Brain: `01-context/positionierung/`)
+- **ICP / Zielgruppe** — für wen wird Content gemacht (`{context}/brands/{brand}/icp.md`)
+- **Positionierung** — wofür steht die Agentur (`{context}/brands/{brand}/positionierung.md`)
 
 Fehlen beide: Session trotzdem starten, aber am Ende empfehlen, das ICP-Profil anzulegen (icp-Skill), weil die Top-Plays-Auswahl davon lebt.
 
 ---
 
-## Session-Ablauf
+## Workflow
 
 ### 1. Sofort starten
 
@@ -79,13 +78,15 @@ Nach allen 8 Buckets den Content-Mining Dump im aufgelösten Ziel-Ordner (siehe 
 [Ziel-Ordner]/[YYYY]-KW[XX].md
 ```
 
-In Marcus' Brain konkret: `03-marketing/content/weekly-goldmine/[YYYY]-KW[XX].md`
+Konkret z.B.: `{marketing}/content/weekly-goldmine/[YYYY]-KW[XX].md`
 
 **Index-Pflege:** Entsteht der Ziel-Ordner dabei neu, im zuständigen `_index.md` verlinken, damit er auffindbar bleibt.
 
 ---
 
-## Output-Format: Content-Mining Dump
+## Output
+
+Ein Content-Mining Dump im aufgelösten Ziel-Ordner (z.B. `{marketing}/content/weekly-goldmine/[YYYY]-KW[XX].md`), Format:
 
 ```markdown
 # Content-Mining Dump — KW [XX] / [YYYY]
