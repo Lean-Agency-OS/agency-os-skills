@@ -17,21 +17,27 @@ description: >
 
 Dieser Skill ist die Single Source of Truth für das ICP deiner Agentur. Die Daten leben in **deinem** Agency OS, der Skill liefert die Methodik.
 
-**Datenquelle:** `01-context/zielgruppe.md`
+## Pfade & Fundament
 
-## Pre-flight Check
+**Datenquelle:** `{context}/brands/{brand}/icp.md`
 
-1. Lies `01-context/zielgruppe.md`.
-2. **Existiert nicht oder enthält kein vollständiges Profil** (fehlende Abschnitte: Kernproblem, emotionale Spannungen, Sprache, Qualifizierungs-Kriterien): Setup anbieten — *"Dein ICP-Profil ist noch nicht vollständig. 10 Minuten Interview, dann steht es. Jetzt machen?"* → bei Ja dem ICP-Setup des Onboardings folgen (`agency-os-onboarding/references/icp-setup.md`), das `01-context/zielgruppe.md` schreibt. Dieser Skill macht kein eigenes Setup.
+Den `context`-Ordner über `.agency-os/architecture.md` auflösen (`agency-os-start` pflegt die Map), sonst per Muster `*context*`. Brand = aktive Brand unter `{context}/brands/` (nur eine → die; mehrere → die mit `brand-config.md` `status: active`; kein fester Default-Name).
+
+### Pre-flight Check
+
+1. Lies `{context}/brands/{brand}/icp.md`.
+2. **Existiert nicht oder enthält kein vollständiges Profil** (fehlende Abschnitte: Kernproblem, emotionale Spannungen, Sprache, Qualifizierungs-Kriterien): Setup anbieten — *"Dein ICP-Profil ist noch nicht vollständig. 10 Minuten Interview, dann steht es. Jetzt machen?"* → bei Ja dem ICP-Setup des Onboardings folgen (`agency-os-onboarding/references/icp-setup.md`), das `{context}/brands/{brand}/icp.md` schreibt. Dieser Skill macht kein eigenes Setup.
 3. **Existiert vollständig:** direkt in den passenden Modus.
 
 ---
 
-## 3 Modi
+## Workflow
+
+### 3 Modi
 
 Der Modus ergibt sich automatisch aus der Anfrage.
 
-### Modus 1: Bewerten
+#### Modus 1: Bewerten
 
 Analytische Bewertung auf 5 Dimensionen + simulierte ICP-Reaktion als innerer Monolog + konkreter Verbesserungsvorschlag. Funktioniert für Content-Ideen, Angebotstexte, Ads, Offer-Namen, Framework-Namen, Landing Pages, Lead Magnets, Hooks, CTAs, Newsletter-Themen.
 
@@ -39,7 +45,7 @@ Analytische Bewertung auf 5 Dimensionen + simulierte ICP-Reaktion als innerer Mo
 
 → Lies `references/modus-bewerten.md`.
 
-### Modus 2: Persona generieren
+#### Modus 2: Persona generieren
 
 Erzeugt konkrete, fiktive ICP-Instanzen mit Name, Stadt, Firmen-Typ, Psychogramm, Tagesablauf, aktueller Krise und Trigger-Situation. Die Persona kann danach als Gesprächspartner genutzt werden (Pitch durchspielen, Angebot testen, Sales-Gespräch üben).
 
@@ -47,7 +53,7 @@ Erzeugt konkrete, fiktive ICP-Instanzen mit Name, Stadt, Firmen-Typ, Psychogramm
 
 → Lies `references/modus-persona.md`.
 
-### Modus 3: Qualifizieren
+#### Modus 3: Qualifizieren
 
 Schneller Check ob eine reale Person ins ICP fällt. Input: LinkedIn-Profil, Name+Firma, Screenshot, oder kurze Beschreibung. Output: Passt / Passt nicht / Grenzfall mit Begründung.
 
@@ -57,11 +63,15 @@ Schneller Check ob eine reale Person ins ICP fällt. Input: LinkedIn-Profil, Nam
 
 ---
 
-## Nutzung durch andere Skills
+## Output
 
-Dieser Skill ist die zentrale ICP-Referenz. Andere Skills (z.B. weekly-goldmine, carousel, brand-voice-Anwendungen) verweisen auf `01-context/zielgruppe.md` statt eigene ICP-Daten zu pflegen. Modus 1 kann von jedem Skill genutzt werden, um Outputs zu prüfen.
+Kein File-Write: der Liefergegenstand ist ein Chat-Output je nach Modus - eine ICP-Bewertung (5 Dimensionen + simulierte Reaktion + Verbesserungsvorschlag), eine generierte Persona oder ein Qualifizierungs-Urteil (Passt / Passt nicht / Grenzfall). Profil-Lücken werden in `{context}/brands/{brand}/icp.md` ergänzt.
 
-## No-Gos
+## Verwandte Skills
+
+Dieser Skill ist die zentrale ICP-Referenz. Andere Skills (z.B. weekly-goldmine, carousel, brand-voice-Anwendungen) verweisen auf `{context}/brands/{brand}/icp.md` statt eigene ICP-Daten zu pflegen. Modus 1 kann von jedem Skill genutzt werden, um Outputs zu prüfen. Setup läuft über das Onboarding (`agency-os-onboarding/references/icp-setup.md`), nicht hier.
+
+## Hard-Stops (No-Gos)
 
 - Generische Business-Weisheiten ohne Bezug zum dokumentierten ICP
 - Bewertungen aus dem Bauch, wenn das Profil etwas anderes sagt — das Profil ist die Quelle

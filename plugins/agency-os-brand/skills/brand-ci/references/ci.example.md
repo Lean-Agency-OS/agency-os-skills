@@ -32,7 +32,7 @@ stehen ausschließlich im Frontmatter oben. Ton und Stimme leben in `voice-profi
 
 - **carousel:** Modell liest das Frontmatter, schreibt `colors`/`fonts` in den `:root`-Block von
   `carousel.html` und übergibt `--handle {handle}`, `--brand {name}`, `--assets-dir {assets_dir}` an `render.py`.
-  Die Layout-Templates liegen unter `{marketing}/carousels/00-templates/*.html` (mehrere möglich), nicht im
+  Die Layout-Templates liegen unter `{marketing}/content/carousels/00-templates/*.html` (mehrere möglich), nicht im
   Plugin; sie werden beim ersten Lauf aus dem Skill-Seed dorthin generiert (CI eingebacken) und sind danach
   frei anpass-/erweiterbar.
 - **video-studio:** Modell liest das Frontmatter und übergibt z.B. `--caption-color {colors.subtitle}`,

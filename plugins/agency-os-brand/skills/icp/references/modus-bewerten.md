@@ -1,6 +1,6 @@
 # Modus 1: Bewerten
 
-Jede Bewertung besteht aus drei Teilen: analytische Bewertung, simulierte ICP-Reaktion, konkreter Verbesserungsvorschlag. Grundlage ist immer das Profil in `01-context/zielgruppe.md` — nicht dein Bauchgefühl.
+Jede Bewertung besteht aus drei Teilen: analytische Bewertung, simulierte ICP-Reaktion, konkreter Verbesserungsvorschlag. Grundlage ist immer das Profil in `{context}/brands/{brand}/icp.md` — nicht dein Bauchgefühl.
 
 ---
 

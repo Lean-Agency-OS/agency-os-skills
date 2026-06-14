@@ -2,7 +2,7 @@
 
 Schneller Check, ob eine reale Person ins ICP fällt. Input kann sein: LinkedIn-Profil-URL, Name + Firma, Screenshot, Copy-Paste aus einem Profil, oder eine kurze Beschreibung.
 
-Grundlage: die Tabelle **"Wer (harte Kriterien)"** und die **weichen Signale** aus `01-context/zielgruppe.md`.
+Grundlage: die Tabelle **"Wer (harte Kriterien)"** und die **weichen Signale** aus `{context}/brands/{brand}/icp.md`.
 
 ---
 

@@ -17,7 +17,7 @@ sie antritt, was sie einzigartig macht und was sie konkret anbietet. Das ist das
 `icp` (wer), `brand-voice` (wie klingen), `brand-ci` (wie aussehen) und alle Marketing-Skills (carousel,
 newsletter, captions, später kampagnen-plan) lesen es als **Positionierungs-Anker**.
 
-## Pfade
+## Pfade & Fundament
 
 Keine hartkodierten Pfade. Den `context`-Ordner über `.agency-os/architecture.md` auflösen
 (`agency-os-start` pflegt die Map), sonst per Muster `*context*`. Ziel: `{context}/brands/{brand}/positionierung.md`.
@@ -25,7 +25,7 @@ Keine hartkodierten Pfade. Den `context`-Ordner über `.agency-os/architecture.m
 - **Brand bestimmen:** Ordner unter `{context}/brands/`. Nur einer → der; mehrere → die mit `brand-config.md` `status: active`; neue Brand → Slug + Name erfragen, Ordner anlegen.
 - **Existiert `positionierung.md` schon:** laden, aktuellen Stand zeigen, im **Update-Modus** nur das Genannte ändern. Sonst **Anlege-Modus**.
 
-## Was das Dokument enthält
+### Was das Dokument enthält
 
 1. **Zielkunde** - für wen ist es (Verweis auf `icp.md`, nicht duplizieren).
 2. **Kategorie / Alternative** - in welcher Kategorie konkurriert die Marke; was tut der Kunde sonst (Status quo, Wettbewerber, "nichts tun").
@@ -79,7 +79,11 @@ Pfad ausgeben. Hinweis: ICP, Brand-Voice und die Marketing-Skills nutzen die Pos
 Anker. Falls beim Scan Lücken auffielen (kein ICP, kein Angebot scharf): kurz benennen und auf `/icp` bzw.
 eine Angebots-Schärfung hinweisen.
 
-## Abgrenzung
+## Output
+
+Schreibt (nach "go") `{context}/brands/{brand}/positionierung.md` mit allen Abschnitten (Zielkunde, Kategorie/Alternative, Differenzierung, Beweise, Positioning-Statement, Messaging-Pillars, Angebot, Sprache), verlinkt auf `icp.md` und `voice-profile.md`. Im Update-Modus nur die geänderten Abschnitte, Rest unverändert.
+
+## Verwandte Skills
 
 - **Strategie, kein Asset.** Schreibt nur das Fundament-Dokument, keine Posts/Mails/Ads.
 - `icp` = WER (Zielgruppe), `brand-voice` = WIE klingen, `brand-ci` = WIE aussehen, **positionierung = WARUM gewinnen / WAS anbieten**.

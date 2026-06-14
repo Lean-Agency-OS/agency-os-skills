@@ -16,7 +16,7 @@ Schreibt die **Brand-CI** als `ci.md` (YAML-Frontmatter) in den Brand-Ordner. Di
 (Layout-CI) und `/video-studio` (Untertitel, Overlays, Logo) gelesen. Ton/Stimme gehören NICHT hierher,
 die liegen in `voice-profile.md` (`/brand-voice`).
 
-## Pfade
+## Pfade & Fundament
 
 Keine hartkodierten Pfade. Den `context`-Ordner über `.agency-os/architecture.md` auflösen
 (`agency-os-start` pflegt die Map), sonst per Muster `*context*`. Ziel: `{context}/brands/{brand}/ci.md`.
@@ -24,7 +24,7 @@ Keine hartkodierten Pfade. Den `context`-Ordner über `.agency-os/architecture.m
 - **Brand bestimmen:** Gibt es schon Ordner unter `{context}/brands/`? Dann den passenden nehmen bzw. fragen, welche Brand. Neue Brand → Slug (kebab-case) + Name erfragen, Ordner `{context}/brands/{brand}/` anlegen.
 - **Existiert die `ci.md` schon:** laden, aktuellen Stand zeigen, im **Update-Modus** nur das Genannte ändern (Rest unverändert). Sonst **Anlege-Modus**.
 
-## Schema (`ci.md`)
+### Schema (`ci.md`)
 
 Vollständiges Schema + ausgefülltes Beispiel: [`references/ci.example.md`](references/ci.example.md) (kanonische
 Vorlage, nach diesem Schema schreiben). Frontmatter-Felder in Kürze:
@@ -43,7 +43,7 @@ Erst schauen, was schon da ist, statt blind zu fragen. Den Brand-Ordner + Umgebu
 
 - **Bestehende `ci.md`** → Update-Modus, alle Felder vorbelegen.
 - **Brand-Assets-Ordner** (z.B. `{context}/brands/{brand}/brand-assets/` o.ä.): vorhanden? → `assets_dir` vorschlagen; Logo-/Bilddatei finden → `logo` vorschlagen.
-- **Bestehende Layout-Templates** (`{marketing}/carousels/00-templates/*.html`): `:root`-Werte (Akzent/Hintergründe) + Fonts auslesen → `colors`/`fonts` vorschlagen.
+- **Bestehende Layout-Templates** (`{marketing}/content/carousels/00-templates/*.html`): `:root`-Werte (Akzent/Hintergründe) + Fonts auslesen → `colors`/`fonts` vorschlagen.
 - **`voice-profile.md`, Positionierungs-/Brand-Notizen** im Kontext: Hinweise auf Name, Handle, Farben, Fonts.
 - **Account/Projekt:** Brand-Name + Handle ableitbar (z.B. aus vorhandenen Profilen)?
 
@@ -77,7 +77,11 @@ aktualisieren (Update-Modus, übrige Felder + Prosa unverändert lassen). Ordner
 Pfad ausgeben. Hinweis: `/carousel` und `/video-studio` nutzen die `ci.md` ab jetzt automatisch. Falls
 ein `assets_dir` gesetzt wurde, das aber noch nicht existiert: kurz erwähnen, dass dort Logo/Fotos abgelegt werden sollten.
 
-## Abgrenzung
+## Output
+
+Schreibt (nach "go") `{context}/brands/{brand}/ci.md` (YAML-Frontmatter + optionale Prosa-Notizen). Im Update-Modus nur die geänderten Felder, Rest unverändert. `/carousel` und `/video-studio` lesen die Datei ab dann automatisch.
+
+## Verwandte Skills
 
 - Schreibt nur die `ci.md` (Optik/Identität). Stimme/Ton → `/brand-voice` (`voice-profile.md`), Zielgruppe → `/icp` (`icp.md`).
 - Erstellt keine Layout-Templates und keine Assets - nur die CI-Daten.
