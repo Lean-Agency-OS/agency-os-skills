@@ -4,7 +4,8 @@ Self-contained Struktur-Spec für Carousels. Methodik-Basis: [`4-bausteine-forme
 Visuelles (Farben, Fonts, Foto, Brand-Mark) kommt aus dem Layout-Template + der Brand-CI, nicht hier.
 
 **Länge ist flexibel** - keine feste Slide-Zahl. Fix sind nur die Rollen-Anker; der Build dazwischen ist so
-lang wie das Thema es braucht (Sweetspot gesamt ~8-10, geht aber auch kürzer). Feste Anker:
+lang wie das Thema es braucht (Sweetspot gesamt ~8-10, geht aber auch kürzer). **Spanne: 5 (Minimal) bis
+20 Slides** - 20 ist das harte Instagram-Carousel-Limit, nie mehr. Feste Anker:
 
 - **Hook** = die **ersten zwei** Slides (Visual Hook + Rehook).
 - **Build** = der Rest dazwischen, **variabel** (1 bis viele Slides, darf kurz sein).

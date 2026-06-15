@@ -155,6 +155,7 @@ Kein automatisches Posten. Kurzer Eintrag im Tages-Log `{logs}/[YYYY-MM-DD].md` 
 
 ## Hard-Stops
 
+- Mehr als **20 Slides** -> kürzen (hartes Instagram-Carousel-Limit). Sinnvolle Spanne: 5-20.
 - User hat in Phase 1 oder 2 nicht bestätigt.
 - Assertion schlägt an (offene `{{...}}`-Tokens).
 - ICP-Check zweimal fail -> Schwachstelle offenlegen statt drüberbügeln.
