@@ -2,9 +2,9 @@
 name: carousel
 version: 2.1.0
 description: >
-  Baut Carousel-Posts (10 Slides, 1080x1350, Instagram/LinkedIn) nach der 4-Bausteine-Formel
+  Baut Carousel-Posts (flexible Slide-Zahl, 1080x1350, Instagram/LinkedIn) nach der 4-Bausteine-Formel
   (Hook -> Build -> Payoff -> CTA): Preflight (CI + Template) -> geführtes Setup -> Hook-Auswahl ->
-  Build aller 10 Slides ins HTML -> Quality-/ICP-Check -> Preview-Render -> nach "Go" Final-Render zu
+  Build aller Slides ins HTML -> Quality-/ICP-Check -> Preview-Render -> nach "Go" Final-Render zu
   PNG + PDF + Caption. Layout-Templates und Brand-CI liegen im Brain (mehrere Templates möglich),
   Pfade über .agency-os/architecture.md. Triggern bei: "bau mir einen Carousel", "Carousel-Post zu",
   "Carousel-Idee", "Slides für Instagram", "Karussell-Post", "Carousel erstellen".
@@ -12,7 +12,7 @@ description: >
 
 # Carousel-Builder
 
-Baut einen 10-Slide-Carousel von der Idee bis zu fertigen PNGs + PDF + Caption.
+Baut einen Carousel (flexible Slide-Zahl) von der Idee bis zu fertigen PNGs + PDF + Caption.
 
 ## Methodik
 
@@ -39,7 +39,7 @@ Render-Default aus dem Plugin; der Seed wird nur einmal benutzt, um das erste Te
 
 - `resources/templates/standard.html` — **ein** Seed-Layout. Nur zur Erst-Generierung eines Brain-Templates.
 - `resources/preview-template.html` — IG-Mobile-Mockup, von `render.py` befüllt.
-- `resources/render.py` — schreibt standardmäßig nur `preview.html` (kein Chromium); mit `--final` zusätzlich 10x PNG (1080x1350) + PDF. Args `--handle`/`--brand`/`--assets-dir` aus der CI. Bettet Brand-Assets aus `--assets-dir` als base64 ein - in die Preview **und** beim Final-Render, sodass im HTML keine relativen Rück-Pfade nötig sind (Windows-safe).
+- `resources/render.py` — schreibt standardmäßig nur `preview.html` (kein Chromium); mit `--final` zusätzlich pro Slide ein PNG (1080x1350) + PDF. Args `--handle`/`--brand`/`--assets-dir` aus der CI. Bettet Brand-Assets aus `--assets-dir` als base64 ein - in die Preview **und** beim Final-Render, sodass im HTML keine relativen Rück-Pfade nötig sind (Windows-safe).
 
 ---
 
@@ -77,12 +77,12 @@ Slide 1, mind. eine ICP-Spannung, ein Akzent. User wählt eine.
 
 1. **Output-Ordner:** `{marketing}/content/carousels/[YYYY-MM-DD]-[slug]/` (Slug: kebab-case aus dem Thema, max 4 Wörter).
 2. **Template kopieren:** das gewählte `{marketing}/content/carousels/00-templates/{name}.html` -> `carousel.html` im Output-Ordner. Die CI ist im Template schon drin - **kein** CI-Einsetzen mehr.
-3. **Slides texten** (nach Slide-Anatomy): Slide 1-2 Hook + Rehook, 3-7 Build (gewählter Subtyp, Story-Material einweben), 8 Payoff, 9 Bridge/Stakes/Proof, 10 CTA + Foto. Genau **ein** Akzent (`class="acc"`) pro Slide. Bild-Assets project-root-relativ als `{assets_dir}/{datei}` referenzieren (kein `../`; `render.py` bettet sie base64 ein).
+3. **Slides texten** (nach Slide-Anatomy, flexible Länge): **Slide 1-2** Hook + Rehook → **Build** (variabel viele Slides, gewählter Subtyp durchgängig, Story-Material einweben - so lang wie das Thema trägt, darf kurz sein) → **Payoff** (1-2 Slides, optional eine Bridge/Stakes/Proof-Slide davor) → **letzte Slide** CTA + Foto. Genau **ein** Akzent (`class="acc"`) pro Slide. Bild-Assets project-root-relativ als `{assets_dir}/{datei}` referenzieren (kein `../`; `render.py` bettet sie base64 ein). Nicht benötigte Slides aus dem Template-Starter entfernen und den Seiten-Index (`X / N`) an die finale Slide-Zahl anpassen.
 4. **Assertion:** `grep -o '{{[^}]*}}' carousel.html` muss leer sein - offene `{{...}}`-Tokens sind ein Build-Fehler, vor dem Weitermachen beheben.
 
 ### Phase 4: Quality + Caption (automatisch)
 
-- **Atomarität (Slide-Anatomy):** Jede Slide standalone lesbar? Ein Akzent? Wortzahl im Range (Slide 1: 6-10, 3-9: 25-40, 10: 10-20)?
+- **Atomarität (Slide-Anatomy):** Jede Slide standalone lesbar? Ein Akzent? Wortzahl im Range je Rolle (Hook-Slide 1: 6-10, Rehook/Build/Payoff: 15-40, CTA: 10-20)?
 - **ICP-Check:** mind. eine ICP-Spannung, Sprache aus dem Profil. Fail → einmal nachschärfen, beim zweiten Fail Schwachstelle offenlegen.
 - **Caption** (Instagram + LinkedIn) mit Voice-Profile schreiben, als `caption.md` in den Output-Ordner.
 
@@ -101,12 +101,12 @@ python3 ${CLAUDE_PLUGIN_ROOT}/skills/carousel/resources/render.py \
 
 ### Phase 6: Final-Render (erst nach "Go")
 
-Erst auf explizites "go"/"passt", **einmal** mit `--final` (gleicher Befehl + `--final`). Erzeugt 10x PNG + `full-carousel.pdf`:
+Erst auf explizites "go"/"passt", **einmal** mit `--final` (gleicher Befehl + `--final`). Erzeugt ein PNG pro Slide + `full-carousel.pdf`:
 
 ```
 {marketing}/content/carousels/[YYYY-MM-DD]-[slug]/
 ├── carousel.html      <- Render-Input        ├── preview.html    <- Browser-Vorschau
-├── caption.md         <- IG + LinkedIn        ├── slide-01..10.png <- Instagram
+├── caption.md         <- IG + LinkedIn        ├── slide-01..NN.png <- Instagram
 └── full-carousel.pdf  <- optional LinkedIn-Document-Post
 ```
 
@@ -133,7 +133,7 @@ Output-Ordner `{marketing}/content/carousels/[YYYY-MM-DD]-[slug]/` mit:
 ```
 {marketing}/content/carousels/[YYYY-MM-DD]-[slug]/
 ├── carousel.html      <- Render-Input        ├── preview.html    <- Browser-Vorschau
-├── caption.md         <- IG + LinkedIn        ├── slide-01..10.png <- Instagram
+├── caption.md         <- IG + LinkedIn        ├── slide-01..NN.png <- Instagram
 └── full-carousel.pdf  <- optional LinkedIn-Document-Post
 ```
 
