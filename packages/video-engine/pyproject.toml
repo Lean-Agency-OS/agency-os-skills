@@ -1,0 +1,22 @@
+[project]
+name = "video-engine"
+version = "0.1.0"
+description = "Geteilte Schnitt-/Transkriptions-/Render-Engine fuer die agency-os-video Skills"
+license = { file = "helpers/LICENSE" }
+requires-python = ">=3.10"
+dependencies = [
+    "requests",
+    "pillow",
+    "numpy",
+]
+
+[project.optional-dependencies]
+animations = ["manim"]
+whisper = ["faster-whisper"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = []
