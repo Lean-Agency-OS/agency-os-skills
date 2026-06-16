@@ -77,13 +77,18 @@ DATA="$(bash "$SK/scripts/resolve-datadir.sh")"   # writable: skill root (Claude
 PY="$DATA/.venv/bin/python"
 RAWDIR="$(dirname "{video}")"
 EDIT="$RAWDIR/_work/edit"
+# CI caption colour/font, format-agnostic (frontmatter OR table); empty -> render default
+CI="{context}/brands/{brand}/ci.md"
+CCOLOR="$($PY $SK/helpers/ci_read.py "$CI" --get caption-color-ass 2>/dev/null)"
+CFONT="$($PY $SK/helpers/ci_read.py "$CI" --get caption-font 2>/dev/null)"
 # write {EDIT}/edl.json: one full-length segment, no grade, then:
 $PY $SK/helpers/render.py "{EDIT}/edl.json" \
-  -o "$RAWDIR/{quell-stem}-captioned.mp4" --build-subtitles
+  -o "$RAWDIR/{quell-stem}-captioned.mp4" --build-subtitles \
+  ${CCOLOR:+--caption-color "$CCOLOR"} ${CFONT:+--caption-font "$CFONT"}
 ```
 
 - **Ton-Check:** Untertitel-Text vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pruefen (Schreibweisen, Begriffe).
-- **CI:** Subtitle-Farbe/Font aus dem `ci.md`-Frontmatter (`colors.subtitle`, `fonts.subtitle` / `fonts.subtitle_path`).
+- **CI:** Subtitle-Farbe/Font via `ci_read.py` aus der CI (format-agnostisch: Frontmatter **oder** Tabelle), als `--caption-color`/`--caption-font` übergeben (Hex -> ASS-BGR). Fehlt die CI: Default weiß/Helvetica.
 - **Safe Zone (Pflicht, `$SK/references/safe-zone.md`):** bei 9:16 die Untertitel in den unteren Safe-Zone-Bereich, **über** dem unteren 19-%-Band, nie unter die Plattform-UI.
 - **Kein Springen:** feste **obere Kante** (Anchor), Captions wachsen nach unten. Die obere Kante bleibt über alle Captions hinweg auf derselben Linie, egal ob ein- oder mehrzeilig.
 - **Hard Rule:** Untertitel werden zuletzt in der Filter-Chain angewandt (kein Overlay verdeckt sie).

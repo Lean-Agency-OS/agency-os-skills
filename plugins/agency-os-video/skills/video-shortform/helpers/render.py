@@ -54,12 +54,34 @@ except Exception:
 # baseline roughly 30% up from the bottom on any aspect — clear of the UI on
 # every major vertical-video platform. Do not drop this below ~75 without a
 # specific reason.
-SUB_FORCE_STYLE = (
-    "FontName=Helvetica,FontSize=18,Bold=1,"
-    "PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,BackColour=&H00000000,"
-    "BorderStyle=1,Outline=2,Shadow=0,"
-    "Alignment=2,MarginV=90"
-)
+def _color_to_ass(value: str | None) -> str:
+    """Accept an ASS &H.. value as-is, a #RRGGBB hex (-> &H00BBGGRR), or None -> white."""
+    if not value:
+        return "&H00FFFFFF"
+    v = value.strip()
+    if v.lower().startswith("&h"):
+        return v
+    m = re.search(r"#?([0-9a-fA-F]{6})\b", v)
+    if not m:
+        return "&H00FFFFFF"
+    rr, gg, bb = m.group(1)[0:2], m.group(1)[2:4], m.group(1)[4:6]
+    return f"&H00{bb}{gg}{rr}".upper()
+
+
+def build_sub_style(color: str | None = None, font: str | None = None) -> str:
+    """Build the libass force_style from optional CI values. MarginV/Bold/Outline are
+    the proven safe-zone defaults (do not lower MarginV below ~75). Colour accepts hex
+    or ASS; font falls back to a widely available family when none is given."""
+    return (
+        f"FontName={font or 'Helvetica'},FontSize=18,Bold=1,"
+        f"PrimaryColour={_color_to_ass(color)},OutlineColour=&H00000000,BackColour=&H00000000,"
+        "BorderStyle=1,Outline=2,Shadow=0,"
+        "Alignment=2,MarginV=90"
+    )
+
+
+# Default style (white, Helvetica) — used when no CI caption colour/font is passed.
+SUB_FORCE_STYLE = build_sub_style()
 
 # -------- Helpers ------------------------------------------------------------
 
@@ -604,6 +626,7 @@ def build_final_composite(
     subtitles_path: Path | None,
     out_path: Path,
     edit_dir: Path,
+    force_style: str = SUB_FORCE_STYLE,
 ) -> None:
     """Final pass: base → overlays (PTS-shifted) → subtitles LAST → out.
 
@@ -648,7 +671,7 @@ def build_final_composite(
         for ch in ("\\", ":", "'", "[", "]", ","):
             subs_abs = subs_abs.replace(ch, "\\" + ch)
         filter_parts.append(
-            f"{current}subtitles='{subs_abs}':force_style='{SUB_FORCE_STYLE}'[outv]"
+            f"{current}subtitles='{subs_abs}':force_style='{force_style}'[outv]"
         )
         out_label = "[outv]"
     else:
@@ -718,6 +741,16 @@ def main() -> None:
              "re-run the same command to continue). Useful where a single call is "
              "time-limited; omit for a one-shot run.",
     )
+    ap.add_argument(
+        "--caption-color",
+        default=None,
+        help="Subtitle colour as hex (#FED760) or ASS (&H0060D7FE), from the brand CI. Default white.",
+    )
+    ap.add_argument(
+        "--caption-font",
+        default=None,
+        help="Subtitle font name (libass) from the brand CI. Default Helvetica.",
+    )
     args = ap.parse_args()
 
     edl_path = args.edl.resolve()
@@ -763,15 +796,16 @@ def main() -> None:
 
     # 4. Composite (overlays + subtitles LAST) → intermediate (pre-loudnorm) path
     overlays = edl.get("overlays") or []
+    sub_style = build_sub_style(args.caption_color, args.caption_font)  # CI colour/font -> libass
     # Write the final output atomically: build it under .part.mp4, rename last — an
     # interrupted composite/loudnorm never leaves a corrupt {slug}.mp4 behind.
     final_tmp = out_path.with_suffix(".part.mp4")
     if args.no_loudnorm:
-        build_final_composite(base_path, overlays, subs_path, final_tmp, edit_dir)
+        build_final_composite(base_path, overlays, subs_path, final_tmp, edit_dir, force_style=sub_style)
     else:
         # Composite to a temp file, then run loudnorm → final (atomic) output
         tmp_composite = out_path.with_suffix(".prenorm.mp4")
-        build_final_composite(base_path, overlays, subs_path, tmp_composite, edit_dir)
+        build_final_composite(base_path, overlays, subs_path, tmp_composite, edit_dir, force_style=sub_style)
         print("loudness normalization → social-ready (-14 LUFS / -1 dBTP / LRA 11)")
         apply_loudnorm_two_pass(tmp_composite, final_tmp, preview=args.draft)
         tmp_composite.unlink(missing_ok=True)

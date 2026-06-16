@@ -114,15 +114,20 @@ DATA="$(bash "$SK/scripts/resolve-datadir.sh")"   # writable: skill root (Claude
 PY="$DATA/.venv/bin/python"
 RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
 OUT="$RAWDIR/{slug}.mp4"   # speaking name (topic/hook slug), unique per clip = batch-safe
+# CI caption colour/font, format-agnostic (frontmatter OR table); empty -> render default
+CI="{context}/brands/{brand}/ci.md"
+CCOLOR="$($PY $SK/helpers/ci_read.py "$CI" --get caption-color-ass 2>/dev/null)"
+CFONT="$($PY $SK/helpers/ci_read.py "$CI" --get caption-font 2>/dev/null)"
 $PY $SK/helpers/render.py "{EDIT}/edl.json" \
-  -o "$OUT" --build-subtitles
+  -o "$OUT" --build-subtitles \
+  ${CCOLOR:+--caption-color "$CCOLOR"} ${CFONT:+--caption-font "$CFONT"}
 ```
 
 **Safe Zone (Pflicht, `$SK/references/safe-zone.md`):** Untertitel + Text-Hook müssen innerhalb der Safe Zone liegen, nie unter der Plattform-UI.
 - **Untertitel:** feste **obere Kante** (Anchor), wachsen nach unten, **springen nie** vertikal - die obere Kante bleibt über alle Captions gleich. Im unteren Safe-Zone-Bereich, über dem unteren 19-%-Band.
 - **Text-Hook:** den in Phase 3 gewählten Hook als On-Screen-Text über den Cut legen (oberer/mittlerer Safe-Zone-Bereich), in der Brand-CI (`colors`/`fonts`). Als ffmpeg-Text-Overlay, oder bei aktiven Motion Graphics als Motion-Layer (Phase 6).
 
-Untertitel-Ton vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pruefen. Subtitle-Farbe/Font aus dem `ci.md`-Frontmatter (`colors.subtitle`, `fonts.subtitle` / `fonts.subtitle_path`).
+Untertitel-Ton vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pruefen. Subtitle-Farbe/Font kommen über `ci_read.py` aus der CI (format-agnostisch: Frontmatter **oder** Tabelle), werden als `--caption-color`/`--caption-font` übergeben (Hex wird zu ASS-BGR konvertiert). Fehlt die CI, rendert render mit Default (weiß/Helvetica).
 
 **Grade-Optionen** (EDL-Feld `grade`): Preset-Name (z.B. `warm_cinematic`), `auto` (datengetriebene Korrektur pro Segment), roher ffmpeg-Filter, oder ein 3D-LUT via `"grade": "lut:/pfad/look.cube"` (wird nach dem HDR->709-Tonemap angewandt). grade.py standalone: `--lut look.cube`.
 
