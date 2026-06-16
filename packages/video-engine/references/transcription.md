@@ -2,7 +2,7 @@
 
 Welche Engine wofuer, warum Word-Level Pflicht ist, und was passiert, wenn
 Scribe nicht erreichbar ist. Diese Regeln gelten fuer jede Transkription in
-video-studio.
+den video-* Skills.
 
 ## Drei Einsatzweisen
 

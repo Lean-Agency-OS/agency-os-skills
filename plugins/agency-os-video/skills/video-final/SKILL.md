@@ -1,34 +1,37 @@
 ---
-name: video-studio
-version: 1.1.0
-description: Schneidet Roh-Videos zu fertigen Reels/Shorts/Clips - Transkript, Schnitt, Untertitel, Motion Graphics, Render. Triggert bei "schneid das Video", "mach ein Reel draus", "bau ein Short aus diesem Video", "/video", "/reel", "kuerz das Video", "Untertitel aufs Video", "video-studio". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
+name: video-final
+version: 1.0.0
+description: Schneidet ein Roh-Video zum postfertigen Reel/Short - Transkript, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "postfertiges Reel", "/video-final". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 
-# Skill: video-studio
+# Skill: video-final
 
-**Zweck:** Aus einem Roh-Video ein sendefertiges Reel/Short bauen. EIN Einstiegspunkt - die Engines laufen intern dahinter, der Nutzer sieht nur diesen Skill.
+Du schneidest als **Senior Short-Form-Editor**: du denkst in Hook, Pacing und Daumenstopp, nicht in Rohmaterial. **Dein Ziel:** ein postfertiges Social-Video ohne Editor-Zeit, das Watch-Time hält und auf die eine Handlung zieht.
+
+**Zweck:** Aus einem Roh-Video ein **sendefertiges** Reel/Short bauen, fertig zum Posten (kein weiterer Schnittprogramm-Schritt nötig). Für die Variante "ich finishe selbst im NLE" gibt es `/video-roughcut`.
 
 **Brand:** die im Brain konfigurierte Brand (Ordner unter `{context}/brands/`). Gibt es nur einen, den nehmen; bei mehreren die mit `brand-config.md` `status: active`. Kein fester Default-Name.
 
 **Brand-Pfade & CI:** `{context}/brands/{brand}/` ist ein Default - existiert `.agency-os/architecture.md` im Projekt-Root (Rolle→Pfad-Map vom `agency-os-start`-Skill), den `context`-Pfad daraus nehmen. Die Brand-CI liegt als **`ci.md` mit YAML-Frontmatter** (`colors`, `fonts`, `handle`, `name`, `assets_dir`, `logo`) im Brand-Ordner - dieselbe Datei und dasselbe Schema nutzt `/carousel`. Werte aus dem Frontmatter lesen und an die Helfer (ffmpeg/PIL) durchreichen.
 
-**Zwei Phasen:** Phase 1 = Schnitt + Untertitel (reines ffmpeg). Phase 2 = Motion Graphics via hyperframes (braucht Chromium).
+**Zwei Phasen:** Phase 1 = Schnitt + Untertitel (reines ffmpeg). Phase 5 = Motion Graphics via hyperframes (braucht Chromium).
 
 ---
 
 ## Methodik
 
-### Struktur (alles in diesem Skill, self-contained)
+### Struktur (self-contained Skill)
 
 - `helpers/` - Schnitt-Engine (Python, ElevenLabs Scribe, ffmpeg). Interpreter: `.venv/bin/python` (Setup baut das venv im Skill-Root).
 - `engines/hyperframes/` - Motion-Graphics-Engine (Node, hyperframes per npm in `node_modules`).
 - `references/cut-standards.md` - **die** Quelle fuer Padding, Silence-Checks, Last-Word-Two-Step, EDL-Format.
 - `references/motion-style.md` - projekt-eigene Motion-Regeln (Anchor-Word-Sync, Render-Defaults). Foundation: hyperframes house-style.md / visual-styles.md in `node_modules`.
 - `references/hard-rules.md` - die Hard Rules der Schnitt-Engine (Referenz, kein eigener Trigger).
-- `references/transcription.md` - Transkriptions-Policy: welche Engine wofuer (Scribe vs. lokales Whisper), Word-Level-Pflicht, Fallback-Kette.
-- `.env` - `ELEVENLABS_API_KEY`.
+- `references/transcription.md` - Transkriptions-Policy: Scribe als Pfad, Word-Level-Pflicht. Dieser Skill ist Scribe-only (kein lokaler Whisper-Fallback).
 
-Abkuerzung in den Befehlen unten: `VS=.claude/skills/video-studio` (Aufruf vom OS-Root).
+Der Code ist aus der geteilten `video-engine`-Quelle gevendort (siehe `packages/video-engine/` im Repo). **Nicht hier editieren** - Änderungen in der Quelle machen und `tools/sync-engine.sh` laufen lassen.
+
+Abkuerzung in den Befehlen unten: `SK=.claude/skills/video-final` (Aufruf vom OS-Root). Den `{context}`-Pfad wie oben beschrieben auflösen.
 
 ---
 
@@ -36,8 +39,8 @@ Abkuerzung in den Befehlen unten: `VS=.claude/skills/video-studio` (Aufruf vom O
 
 ### Phase 0: Setup-Gate (PFLICHT, still)
 
-1. Existiert `$VS/.ready`? Nein -> `bash $VS/scripts/setup.sh`, Ausgabe zeigen.
-2. `bash $VS/scripts/doctor.sh`. Bei `OFFEN ELEVENLABS_API_KEY` -> Nutzer bitten, Key in `$VS/.env` einzutragen, dann stoppen.
+1. Existiert `$SK/.ready`? Nein -> `bash $SK/scripts/setup.sh`, Ausgabe zeigen.
+2. `{context}` auflösen, dann `bash $SK/scripts/doctor.sh "{context}/secrets.env"`. Bei `OFFEN ELEVENLABS_API_KEY` -> Nutzer bitten, den Key in `{context}/secrets.env` einzutragen (Vorlage: `$SK/secrets.env.example`), dann stoppen.
 3. Bei `FEHLT ffmpeg/node/python` -> Hard-Stop (Sandbox ohne Tools).
 
 Nur wenn Doctor sauber -> weiter.
@@ -71,25 +74,23 @@ Erst nach OK -> Phase 2.
 ### Phase 2: Transkribieren
 
 ```bash
-VS=.claude/skills/video-studio
-PY=$VS/.venv/bin/python
-RAWDIR="$(dirname "{video}")"        # Ordner des Roh-Videos = Output-Ordner
-EDIT="$RAWDIR/_work/edit"            # Schnitt-Cache neben dem Raw-File (gitignored)
-$PY $VS/helpers/transcribe.py "{video}" --edit-dir "$EDIT"
-$PY $VS/helpers/pack_transcripts.py --edit-dir "$EDIT" --silence-threshold 0.4
+SK=.claude/skills/video-final
+PY=$SK/.venv/bin/python
+RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
+EDIT="$RAWDIR/_work/edit"            # edit cache next to the raw file (gitignored)
+$PY $SK/helpers/transcribe.py "{video}" --edit-dir "$EDIT"
+$PY $SK/helpers/pack_transcripts.py --edit-dir "$EDIT" --silence-threshold 0.4
 ```
 
-Transkript ist gecached (kein Re-Transkribieren, ausser Source aenderte sich).
-
-Engine-Wahl + Fallback: siehe `$VS/references/transcription.md`. Kurz: Default `scribe` (genau, diarisiert, Word-Timestamps); `--engine whisper` fuer den schnellen lokalen Rough-Pass (braucht `uv pip install -e '.[whisper]'`); ist Scribe nicht erreichbar, faellt es automatisch auf lokales Whisper zurueck (Word-Timestamps bleiben, keine Diarisierung), abschaltbar mit `--no-fallback`.
+Transkript ist gecached (kein Re-Transkribieren, ausser Source aenderte sich). Dieser Skill nutzt Scribe (Word-Timestamps, Diarisierung); Policy siehe `$SK/references/transcription.md`. Kein lokaler Whisper-Fallback - ist Scribe nicht erreichbar, stoppt der Lauf mit klarer Meldung.
 
 ---
 
 ### Phase 3: Schnitt planen (LLM-Reasoning)
 
 **Pflicht-Lektuere zuerst:**
-- `$VS/references/cut-standards.md` - Padding-Tabelle, Pre-Cut-Checks, Last-Word-Two-Step, EDL-Format.
-- `$VS/references/hard-rules.md` - Hard Rules (nie im Wort schneiden, Subtitles zuletzt im Filter, 30ms Audio-Fades, etc.).
+- `$SK/references/cut-standards.md` - Padding-Tabelle, Pre-Cut-Checks, Last-Word-Two-Step, EDL-Format.
+- `$SK/references/hard-rules.md` - Hard Rules (nie im Wort schneiden, Subtitles zuletzt im Filter, 30ms Audio-Fades, etc.).
 
 Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slices laut cut-standards.md pruefen. EDL als JSON mit `_padding_params`-Block schreiben. Drill-down nur bei Bedarf via `timeline_view.py`.
 
@@ -98,34 +99,16 @@ Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slic
 ### Phase 4: Render
 
 ```bash
-VS=.claude/skills/video-studio
-PY=$VS/.venv/bin/python
-RAWDIR="$(dirname "{video}")"        # Ordner des Roh-Videos = Output-Ordner
-$PY $VS/helpers/render.py "{EDIT}/edl.json" \
-  -o "$RAWDIR/final.mp4" --build-subtitles   # final.mp4 direkt neben das Raw-File
+SK=.claude/skills/video-final
+PY=$SK/.venv/bin/python
+RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
+$PY $SK/helpers/render.py "{EDIT}/edl.json" \
+  -o "$RAWDIR/final.mp4" --build-subtitles   # final.mp4 right next to the raw file
 ```
 
 Untertitel-Ton vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pruefen. Subtitle-Farbe/Font aus dem `ci.md`-Frontmatter (`colors.subtitle`, `fonts.subtitle` / `fonts.subtitle_path`).
 
 **Grade-Optionen** (EDL-Feld `grade`): Preset-Name (z.B. `warm_cinematic`), `auto` (datengetriebene Korrektur pro Segment), roher ffmpeg-Filter, oder ein 3D-LUT via `"grade": "lut:/pfad/look.cube"` (wird nach dem HDR->709-Tonemap angewandt). grade.py standalone: `--lut look.cube`.
-
-**NLE-Export (optional):** Schnitt zum Finishen nach DaVinci Resolve / Premiere geben:
-```bash
-# DaVinci Resolve (FCPXML): vertikale 9:16-Timeline, Captions eingebettet,
-# Medienpfad vom Cowork-Sandbox auf den echten Mac-Pfad umbiegen:
-$PY $VS/helpers/export_nle.py "{EDIT}/edl.json" -o "$RAWDIR/final.fcpxml" --fps 24 \
-  --width 1080 --height 1920 --captions --caption-color FED760 \
-  --remap "/sessions/<id>/mnt/<Projekt>=/Users/<user>/Documents/<Projekt>"
-
-# Adobe Premiere (FCP7-XML) oder beide Formate auf einmal:
-$PY $VS/helpers/export_nle.py "{EDIT}/edl.json" --format both --width 1080 --height 1920
-```
-Exportiert nur den Schnitt (Clip-Auswahl + Timing, referenziert die Original-Files).
-Grade/Overlays bewusst NICHT - die macht der Editor nativ im NLE. Optionen:
-- `--width/--height` setzt das Timeline-Raster (z.B. 1080x1920 vertikal); ohne Angabe = Quell-Dimension. Quell-Assets behalten ihr natives Format, sodass rotierte/Querformat-Quellen sauber konformen.
-- `--captions` bettet Untertitel aus `transcripts/<src>.json` (gleiches 2-Wort-Chunking wie der Burn-in) als Subtitle-Spur ein (nur FCPXML). `--caption-color` (Hex) setzt die Fuellfarbe.
-- `--format premiere|both` schreibt zusaetzlich FCP7-XML (xmeml) fuer aeltere Premiere-Versionen; dort Captions ueber die SRT importieren.
-- `--remap FROM=TO` (wiederholbar) biegt Medienpfade um (Cowork-Sandbox -> Mac), damit die NLE die Footage findet.
 
 ---
 
@@ -133,9 +116,9 @@ Grade/Overlays bewusst NICHT - die macht der Editor nativ im NLE. Optionen:
 
 Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 
-- Lektuere: `$VS/references/motion-style.md` (Anchor-Word-Sync, Render-Defaults) + hyperframes-Skill in `$VS/engines/hyperframes/node_modules/hyperframes/dist/skills/hyperframes/SKILL.md`.
+- Lektuere: `$SK/references/motion-style.md` (Anchor-Word-Sync, Render-Defaults) + hyperframes-Skill in `$SK/engines/hyperframes/node_modules/hyperframes/dist/skills/hyperframes/SKILL.md`.
 - Brand: Farben/Fonts/Logo aus dem `ci.md`-Frontmatter (`colors`, `fonts`, `logo`). Hooks/CTA via `icp`-Skill.
-- Compositions bauen, Puppeteer-Render (Executable-Path aus `$VS/engines/hyperframes/.chromium-path`), Overlays nach cut-standards/motion-style ueber den Cut legen.
+- Compositions bauen, Puppeteer-Render (Executable-Path aus `$SK/engines/hyperframes/.chromium-path`), Overlays nach cut-standards/motion-style ueber den Cut legen.
 
 ---
 
@@ -148,8 +131,8 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 # {Titel}
 - Brand: {brand}  | Format: {9:16}
 - Hook: {1 Satz}
-- Status: Rohschnitt fertig
-- Render: _work/final.mp4
+- Status: Postfertig
+- Render: final.mp4
 - Datum: {YYYY-MM-DD}
 ```
 
@@ -160,9 +143,8 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 ## Output
 
 Landet IMMER im selben Ordner wie das Roh-Video (kein neuer datierter Ordner):
-- `final.mp4` (fertiges Reel/Short) + getracktes `_index.md` direkt neben dem Raw-File.
+- `final.mp4` (postfertiges Reel/Short) + getracktes `_index.md` direkt neben dem Raw-File.
 - Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `_work/edit/` (gitignored).
-- Optional NLE-Export (`final.fcpxml` / FCP7-XML) zum Finishen in DaVinci Resolve / Premiere.
 - Daily-Log-Notiz in `{logs}/{YYYY-MM-DD}.md`.
 
 ## Verwandte Skills
@@ -175,4 +157,5 @@ Landet IMMER im selben Ordner wie das Roh-Video (kein neuer datierter Ordner):
 
 ### Abgrenzung
 
-- Schneidet nur Video (Reel/Short/Clip). CI anlegen → `/brand-ci`, Voice-Profil → `/brand-voice`, ICP → `/icp`, statische Karussells → `/carousel`.
+- Baut das **postfertige** Reel/Short. Wer im NLE finishen will → `/video-roughcut` (Rohschnitt + DaVinci/Premiere-Export). Nur Untertitel auf ein fertiges Video → `/video-captions`. Footage sichten/Highlights finden → `/video-footage-mining`.
+- CI anlegen → `/brand-ci`, Voice-Profil → `/brand-voice`, ICP → `/icp`, statische Karussells → `/carousel`.

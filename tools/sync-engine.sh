@@ -10,11 +10,15 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SRC="$ROOT/packages/video-engine"
 SKILLS="$ROOT/plugins/agency-os-video/skills"
 
+# Optional first arg: sync only that one skill (default: all).
+ONLY="${1:-}"
+
 # Base every skill needs (transcribe imports ffmpeg_utils; pack depends on the transcript).
 COMMON_HELPERS="ffmpeg_utils.py transcribe.py pack_transcripts.py"
 
 sync_skill() {
   local name="$1" helpers="$2" refs="$3" hyperframes="$4" whisper="$5"
+  if [ -n "$ONLY" ] && [ "$ONLY" != "$name" ]; then return 0; fi
   local dst="$SKILLS/$name"
   echo "[sync] $name"
   mkdir -p "$dst"

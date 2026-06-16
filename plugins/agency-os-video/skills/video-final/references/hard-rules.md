@@ -1,6 +1,6 @@
 ---
 name: hard-rules
-description: Hard Rules der Schnitt-Engine von video-studio (Referenz-Doku, kein eigener Skill-Trigger). Production-correctness rules are hard; everything else is artistic freedom.
+description: Hard Rules der Schnitt-Engine der video-* Skills (Referenz-Doku, kein eigener Skill-Trigger). Production-correctness rules are hard; everything else is artistic freedom.
 ---
 
 # Schnitt-Engine: Hard Rules
@@ -30,13 +30,13 @@ Das sind die Dinge, bei denen Abweichung zu stillen Fehlern oder kaputtem Output
 9. **Transkripte pro Source cachen.** Nie neu transkribieren, außer die Source-Datei selbst hat sich geändert.
 10. **Parallele Sub-Agents für mehrere Animationen.** Nie sequentiell. Spawne N gleichzeitig über das `Agent`-Tool; Gesamt-Wandzeit ≈ langsamster.
 11. **Strategie-Bestätigung vor Ausführung.** Fass den Schnitt nie an, bevor der Nutzer den Klartext-Plan freigegeben hat.
-12. **Alle Session-Outputs in `<videos_dir>/edit/`.** Schreibe nie in das `video-studio`-Skill-Verzeichnis.
+12. **Alle Session-Outputs in `<videos_dir>/edit/`.** Schreibe nie in das Skill-Verzeichnis.
 
 Alles andere in diesem Dokument ist ein durchgespieltes Beispiel. Weiche ab, wann immer das Material es verlangt.
 
 ## Verzeichnis-Layout
 
-Die Schnitt-Engine lebt im `video-studio`-Skill. Nutzer-Footage liegt, wo der Nutzer es hinlegt. Alle Session-Outputs gehen nach `<videos_dir>/edit/`.
+Die Schnitt-Engine lebt im jeweiligen video-*-Skill. Nutzer-Footage liegt, wo der Nutzer es hinlegt. Alle Session-Outputs gehen nach `<videos_dir>/edit/`.
 
 ```
 <videos_dir>/
@@ -57,17 +57,14 @@ Die Schnitt-Engine lebt im `video-studio`-Skill. Nutzer-Footage liegt, wo der Nu
 
 ## Setup
 
-Die Erstinstallation steht in `install.md` (clone, deps, ffmpeg, Skill-Registrierung, API-Key). Führ sie nicht jede Session neu aus; bei Kaltstart nur prüfen:
+Setup + Umgebungs-Check laufen über `scripts/setup.sh` und `scripts/doctor.sh` des Skills (nicht jede Session neu). Bei Kaltstart nur prüfen:
 
-- `ELEVENLABS_API_KEY` auflösbar: entweder in der Umgebung oder in `.env` im `video-studio`-Skill-Root. Fehlt er, bitte den Nutzer, einen zu pasten, und schreib ihn in `.env` (nie in das `<videos_dir>` des Nutzers).
+- `ELEVENLABS_API_KEY` auflösbar: er liegt extern im Brain unter `{context}/secrets.env` (committet, nie im Skill-Verzeichnis, nie im `<videos_dir>` des Nutzers). Fehlt er, bitte den Nutzer, ihn dort einzutragen (Vorlage: `secrets.env.example`).
 - `ffmpeg` + `ffprobe` im PATH.
-- Python-Deps installiert (`uv sync` oder `pip install -e .` im Repo).
-- Node.js + npm verfügbar, falls die Session HyperFrames- oder Remotion-Slots braucht. HyperFrames braucht aktuell Node.js 22+.
-- `yt-dlp`, HyperFrames, Remotion, Manim erst bei erster Nutzung installiert.
-- First-Use-Animation-Setup passiert im Slot-Verzeichnis, nie im `video-studio`-Skill-Root. HyperFrames lässt sich mit `npx --yes hyperframes ...` aufrufen; Remotion lässt sich mit `npx create-video@latest` scaffolden oder als projekt-lokale Dependency installieren, bevor man seinen `remotion render`-Befehl nutzt.
-- Dieser Skill vendort `skills/manim-video/`. Lies dessen SKILL.md, wenn du einen Manim-Slot baust.
+- Python-Deps installiert (`scripts/setup.sh` baut das venv im Skill-Root).
+- Node.js + npm + Chromium nur für Motion-Graphics nötig, und nur im `video-final`-Skill gebündelt.
 
-Die Helfer (`helpers/transcribe.py`, `helpers/render.py`, etc.) liegen im `video-studio`-Skill-Root (eine Ebene über dieser `references/`-Datei). Der Skill liegt unter `.claude/skills/video-studio/`.
+Die Helfer (`helpers/transcribe.py`, `helpers/render.py`, etc.) liegen im Skill-Root, eine Ebene über dieser `references/`-Datei.
 
 ## Helfer
 

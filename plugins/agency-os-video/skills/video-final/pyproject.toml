@@ -1,7 +1,7 @@
 [project]
-name = "video-studio"
+name = "video-engine"
 version = "0.1.0"
-description = "Conversation-driven video editor skill for Claude Code"
+description = "Shared cut/transcription/render engine for the agency-os-video skills"
 license = { file = "helpers/LICENSE" }
 requires-python = ">=3.10"
 dependencies = [
