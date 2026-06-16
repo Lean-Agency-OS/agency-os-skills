@@ -106,32 +106,24 @@ Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slic
 
 ---
 
-### Phase 5: Render (Schnitt + Untertitel + Text-Hook)
+### Phase 5: Cut rendern (ohne Untertitel)
+
+Den geschnittenen Cut bauen - **ohne** Untertitel. Die kommen beatgenau erst in Phase 7 (auf dem fertigen Cut). Text-Hook + Grade werden hier eingebrannt, der Cut landet im Edit-Cache:
 
 ```bash
 SK=.claude/skills/video-shortform
 DATA="$(bash "$SK/scripts/resolve-datadir.sh")"   # writable: skill root (Claude Code) or cache (Cowork)
 PY="$DATA/.venv/bin/python"
 RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
-OUT="$RAWDIR/{slug}.mp4"   # speaking name (topic/hook slug), unique per clip = batch-safe
-# CI caption colour/font, format-agnostic (frontmatter OR table); empty -> render default
-CI="{context}/brands/{brand}/ci.md"
-CCOLOR="$($PY $SK/helpers/ci_read.py "$CI" --get caption-color-ass 2>/dev/null)"
-CFONT="$($PY $SK/helpers/ci_read.py "$CI" --get caption-font 2>/dev/null)"
-$PY $SK/helpers/render.py "{EDIT}/edl.json" \
-  -o "$OUT" --build-subtitles \
-  ${CCOLOR:+--caption-color "$CCOLOR"} ${CFONT:+--caption-font "$CFONT"}
+EDIT="$RAWDIR/_work/edit"
+$PY $SK/helpers/render.py "$EDIT/edl.json" \
+  -o "$EDIT/cut.mp4" --no-subtitles
 ```
 
-**Safe Zone (Pflicht, `$SK/references/safe-zone.md`):** Untertitel + Text-Hook müssen innerhalb der Safe Zone liegen, nie unter der Plattform-UI.
-- **Untertitel:** feste **obere Kante** (Anchor), wachsen nach unten, **springen nie** vertikal - die obere Kante bleibt über alle Captions gleich. Im unteren Safe-Zone-Bereich, über dem unteren 19-%-Band.
-- **Text-Hook:** den in Phase 3 gewählten Hook als On-Screen-Text über den Cut legen (oberer/mittlerer Safe-Zone-Bereich), in der Brand-CI (`colors`/`fonts`). Als ffmpeg-Text-Overlay, oder bei aktiven Motion Graphics als Motion-Layer (Phase 6).
-
-Untertitel-Ton vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pruefen. Subtitle-Farbe/Font kommen über `ci_read.py` aus der CI (format-agnostisch: Frontmatter **oder** Tabelle), werden als `--caption-color`/`--caption-font` übergeben (Hex wird zu ASS-BGR konvertiert). Fehlt die CI, rendert render mit Default (weiß/Helvetica).
-
-**Grade-Optionen** (EDL-Feld `grade`): Preset-Name (z.B. `warm_cinematic`), `auto` (datengetriebene Korrektur pro Segment), roher ffmpeg-Filter, oder ein 3D-LUT via `"grade": "lut:/pfad/look.cube"` (wird nach dem HDR->709-Tonemap angewandt). grade.py standalone: `--lut look.cube`.
-
-**Resumierbar + atomar:** render.py überspringt bereits gerenderte Segmente (ffprobe-Check) und schreibt atomar (`.part.mp4` -> rename). Bricht ein Lauf ab (Zeitlimit/Crash), denselben Befehl einfach erneut aufrufen, er macht beim nächsten Segment weiter, ohne korrupte Teildatei. Optional `--budget-seconds N`, um bewusst in Blöcken zu rendern.
+- **Text-Hook:** den in Phase 3 gewählten Hook als On-Screen-Text in den Cut einbrennen - oberer/mittlerer Safe-Zone-Bereich (`$SK/references/safe-zone.md`), Brand-CI-Farben/Fonts. Als ffmpeg-Text-Overlay, oder bei aktiven Motion Graphics als Motion-Layer (Phase 6). **Kein Logo.**
+- **Grade-Optionen** (EDL-Feld `grade`): Preset (z.B. `warm_cinematic`), `auto`, roher ffmpeg-Filter oder 3D-LUT (`"grade": "lut:/pfad/look.cube"`). grade.py standalone: `--lut look.cube`.
+- **Resumierbar + atomar:** render.py überspringt bereits gerenderte Segmente (ffprobe) und schreibt atomar (`.part.mp4` -> rename); abgebrochen -> denselben Befehl erneut aufrufen. Optional `--budget-seconds N`.
+- **Hard Rule:** nie auf Schwarz starten/enden (erstes + letztes Frame ist Content).
 
 ---
 
@@ -146,10 +138,22 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 
 ---
 
-### Phase 7: Self-Eval + Ablegen
+### Phase 7: Untertitel (beatgenau, via /video-captions)
 
-- **Self-Eval (einmal):** fertigen Cut gegen die EDL pruefen (Schnitt-im-Wort + Untertitel-Leaks) per `timeline_view`-Stichproben an den Schnitt-Raendern. Zusätzlich pruefen: Text-Hook + Untertitel innerhalb der Safe Zone, Caption-Oberkante springt nicht, und **erstes + letztes Frame sind Content (nie Schwarz)**. Nicht pro Render.
-- **Ablage (OS-Convention):** `_index.md` neben das Raw-File schreiben (getrackt), `final.mp4` daneben, Media/Cache bleibt in `_work/` (gitignored):
+Der Cut steht fest - **jetzt** die Untertitel. Wichtig: **nicht** aus dem Roh-Transkript hochrechnen (das driftet durch Padding/Fades gegen die echte Cut-Timeline), sondern den **fertigen Cut neu transkribieren**, damit die Wort-Zeiten exakt auf der Cut-Timeline sitzen.
+
+Genau das ist der Job von `/video-captions`. shortform liefert nur den fertigen Cut und übergibt:
+- **Eingabe:** `$EDIT/cut.mp4` (fertig geschnitten, inkl. Hook/Overlays).
+- **Ziel:** `{slug}.mp4` neben dem Roh-Video (nicht der captions-Default-Name).
+
+`/video-captions` transkribiert den Cut neu, baut die SRT 1:1 aus diesem Transkript (kein Offset), wendet Safe-Zone + feste Caption-Oberkante (kein Springen) + CI-Farbe/Font an und brennt ein. So lebt die Caption-Logik an **einer** Stelle. (Soll der Short keine Untertitel haben: Phase 7 überspringen, `cut.mp4` direkt als `{slug}.mp4` ablegen.)
+
+---
+
+### Phase 8: Self-Eval + Ablegen
+
+- **Self-Eval (einmal):** fertiges `{slug}.mp4` stichprobenartig gegen die EDL pruefen (Schnitt-im-Wort) per `timeline_view` an den Schnitt-Raendern. Zusätzlich: Text-Hook + Untertitel in der Safe Zone, Caption-Oberkante springt nicht, **erstes + letztes Frame sind Content (nie Schwarz)**. Nicht pro Render.
+- **Ablage (OS-Convention):** `_index.md` neben das Raw-File schreiben (getrackt), `{slug}.mp4` daneben, Media/Cache bleibt in `_work/` (gitignored):
 
 ```markdown
 # {Titel}
@@ -181,5 +185,5 @@ Landet IMMER im selben Ordner wie das Roh-Video (kein neuer datierter Ordner):
 
 ### Abgrenzung
 
-- Baut das **postfertige** Reel/Short. Wer im NLE finishen will → `/video-roughcut` (Rohschnitt + DaVinci/Premiere-Export). Nur Untertitel auf ein fertiges Video → `/video-captions`. Footage sichten/Highlights finden → `/video-footage-mining`.
+- Baut das **postfertige** Reel/Short. Den Untertitel-Schritt **delegiert** shortform an `/video-captions` (beatgenau auf dem fertigen Cut). Wer im NLE finishen will → `/video-roughcut` (Rohschnitt + DaVinci/Premiere-Export). Nur Untertitel auf ein fertiges Video → `/video-captions` direkt. Footage sichten/Highlights finden → `/video-footage-mining`.
 - CI anlegen → `/brand-ci`, Voice-Profil → `/brand-voice`, ICP → `/icp`, statische Karussells → `/carousel`.

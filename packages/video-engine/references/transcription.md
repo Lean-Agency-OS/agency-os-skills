@@ -79,6 +79,10 @@ scribe
   Bei Multi-Speaker-Material fehlt die Sprecher-Trennung : pruefe das `engine`-
   bzw. `fallback_from`-Feld im JSON, bevor du dich auf Diarisierung verlaesst.
 
+## Captions: immer das fertige Video transkribieren
+
+Untertitel für ein geschnittenes Video (der `video-captions`-Skill, und der Untertitel-Schritt von `video-shortform`) entstehen aus einem Transkript des **fertig geschnittenen Videos**, nicht aus dem Roh-Transkript mit hochgerechneten Schnitt-Offsets. Padding, Fades und frame-genaues Extrahieren lassen die berechnete Timeline driften; ein zweiter Transcribe des fertigen Cuts misst die Wort-Zeiten direkt auf der finalen Timeline und sitzt damit beatgenau. (Der EDL-Offset-Pfad in `render.py --build-subtitles` ist nur im Single-Segment-Fall korrekt - genau so nutzt ihn `video-captions`.)
+
 ## Caching
 
 Pro Source ein Transkript (`<stem>.json`). Existiert es, wird nicht neu

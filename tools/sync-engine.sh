@@ -67,7 +67,7 @@ sync_skill() {
 # Only footage-mining transcribes locally (text-only pass); the Scribe cut skills stay lean.
 
 sync_skill video-shortform \
-  "$COMMON_HELPERS render.py grade.py broll.py timeline_view.py ci_read.py" \
+  "$COMMON_HELPERS render.py grade.py broll.py timeline_view.py" \
   "cut-standards.md hard-rules.md transcription.md motion-style.md safe-zone.md" \
   yes no
 

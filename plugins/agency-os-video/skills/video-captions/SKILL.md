@@ -65,6 +65,8 @@ $PY $SK/helpers/transcribe.py "{video}" --edit-dir "$EDIT"
 
 Transkript ist gecached (Word-Timestamps). Scribe-only - ist Scribe nicht erreichbar, stoppt der Lauf mit klarer Meldung (Policy: `$SK/references/transcription.md`).
 
+**Beatgenau:** Weil hier das **fertig geschnittene** Video transkribiert wird, sitzen die Wort-Zeiten direkt auf der finalen Timeline - kein Hochrechnen aus Schnitt-Offsets, kein Drift. Genau deshalb ruft `/video-shortform` für seine Untertitel diesen Skill auf dem fertigen Cut auf.
+
 ---
 
 ### Phase 3: Untertitel einbrennen
