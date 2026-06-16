@@ -67,7 +67,7 @@ sync_skill() {
 
 sync_skill video-shortform \
   "$COMMON_HELPERS render.py grade.py broll.py timeline_view.py" \
-  "cut-standards.md hard-rules.md transcription.md motion-style.md" \
+  "cut-standards.md hard-rules.md transcription.md motion-style.md safe-zone.md" \
   yes no
 
 sync_skill video-roughcut \
@@ -77,7 +77,7 @@ sync_skill video-roughcut \
 
 sync_skill video-captions \
   "$COMMON_HELPERS render.py" \
-  "transcription.md" \
+  "transcription.md safe-zone.md" \
   no no
 
 sync_skill video-footage-mining \

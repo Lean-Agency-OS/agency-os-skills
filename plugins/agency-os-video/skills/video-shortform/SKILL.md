@@ -1,7 +1,7 @@
 ---
 name: video-shortform
-version: 1.0.0
-description: Schneidet ein Roh-Video zum postfertigen Reel/Short - Transkript, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "postfertiges Reel", "/video-shortform". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
+version: 1.1.0
+description: Schneidet Roh-Video(s) zu postfertigen Reels/Shorts - Transkript, scroll-stopping Text-Hook drueber, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Einzeln oder ein ganzer Ordner auf einmal. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "schneid alle Videos in dem Ordner", "postfertiges Reel", "/video-shortform". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 
 # Skill: video-shortform
@@ -14,7 +14,7 @@ Du schneidest als **Senior Short-Form-Editor**: du denkst in Hook, Pacing und Da
 
 **Brand-Pfade & CI:** `{context}/brands/{brand}/` ist ein Default - existiert `.agency-os/architecture.md` im Projekt-Root (Rolle→Pfad-Map vom `agency-os-start`-Skill), den `context`-Pfad daraus nehmen. Die Brand-CI liegt als **`ci.md` mit YAML-Frontmatter** (`colors`, `fonts`, `handle`, `name`, `assets_dir`, `logo`) im Brand-Ordner - dieselbe Datei und dasselbe Schema nutzt `/carousel`. Werte aus dem Frontmatter lesen und an die Helfer (ffmpeg/PIL) durchreichen.
 
-**Zwei Phasen:** Phase 1 = Schnitt + Untertitel (reines ffmpeg). Phase 5 = Motion Graphics via hyperframes (braucht Chromium).
+**Kern:** Text-Hook + Schnitt + Untertitel laufen mit reinem ffmpeg. Motion Graphics (optional) via hyperframes braucht Chromium. Funktioniert für **ein einzelnes Video** oder **einen ganzen Ordner auf einmal**.
 
 ---
 
@@ -27,6 +27,7 @@ Du schneidest als **Senior Short-Form-Editor**: du denkst in Hook, Pacing und Da
 - `references/cut-standards.md` - **die** Quelle fuer Padding, Silence-Checks, Last-Word-Two-Step, EDL-Format.
 - `references/motion-style.md` - projekt-eigene Motion-Regeln (Anchor-Word-Sync, Render-Defaults). Foundation: hyperframes house-style.md / visual-styles.md in `node_modules`.
 - `references/hard-rules.md` - die Hard Rules der Schnitt-Engine (Referenz, kein eigener Trigger).
+- `references/safe-zone.md` - **Pflicht** fuer Text-Hook + Untertitel: wohin Text darf (9:16), feste obere Caption-Kante.
 - `references/transcription.md` - Transkriptions-Policy: Scribe als Pfad, Word-Level-Pflicht. Dieser Skill ist Scribe-only (kein lokaler Whisper-Fallback).
 
 Der Code ist aus der geteilten `video-engine`-Quelle gevendort (siehe `packages/video-engine/` im Repo). **Nicht hier editieren** - Änderungen in der Quelle machen und `tools/sync-engine.sh` laufen lassen.
@@ -47,27 +48,23 @@ Nur wenn Doctor sauber -> weiter.
 
 ---
 
-### Phase 1: Brief + Plan (Stop-Punkt, Deutsch)
+### Phase 1: Brief + Modus
 
-**1a. Inputs:** Roh-Video-Pfad; Brand (aktive Brand aus `{context}/brands/`); Format `9:16` (default), `16:9` oder `1:1`; Untertitel ja/nein; Motion Graphics ja/nein.
+**1a. Modus erkennen:**
+- **Einzel-Video:** ein konkreter Datei-Pfad. Die zwei Inputs (1c) kurz klären, dann los.
+- **Batch (ganzer Ordner):** Anweisung wie *"schneid alle Videos in {ordner}"*. Alle Video-Files im Ordner sammeln, die Inputs **einmal** klären (gelten dann für **alle**), **keine** Plan-Bestätigung. Pro Video laufen Phase 2-7 durch; der einzige Stop-Punkt bleibt der Text-Hook (Phase 3).
 
-**1b. Ordner:** Output landet IMMER im **selben Ordner wie das Roh-Video** (kein neuer datierter Ordner). Liegt das Raw-File z. B. in `<ordner-des-rohvideos>/IMG_8762.MOV`, dann:
-- `final.mp4` + `_index.md` direkt in `<ordner-des-rohvideos>/`
-- Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `<ordner-des-rohvideos>/_work/edit/` (gitignored)
+**1b. Format:** kein Input. Default **9:16** (vertikal); leitet sich aus dem Quell-Video ab (Seitenverhältnis per ffprobe). 16:9 / 1:1 nur, wenn das Material es klar vorgibt oder der User es ausdrücklich sagt.
+
+**1c. Inputs:** nur diese zwei: **Untertitel** ja/nein, **Motion Graphics** ja/nein. Brand = aktive Brand aus `{context}/brands/`. Keine weiteren Fragen, kein Plan zum Bestätigen.
+
+**1d. Skript prüfen:** Liegt ein Skript vor (z.B. ein `/reel-skript`-Output im Marketing-Ordner oder eine Skript-Datei beim Footage)? Wenn ja, dient es als Vorlage für Hook + Schnitt. Bei **mehreren** Videos die Skript-Struktur über die Clips abbilden (jeder Clip füllt seinen Beat).
+
+**1e. Ordner:** Output landet IMMER im **selben Ordner wie das Roh-Video** (kein neuer datierter Ordner):
+- `final.mp4` + `_index.md` direkt neben dem Raw-File
+- Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `<ordner>/_work/edit/` (gitignored)
 
 So bleiben Raw und fertiger Schnitt zusammen. Den Edit-Cache nie neu transkribieren, wenn das Raw-File unveraendert ist.
-
-**1c. Plan auf Deutsch bestaetigen lassen** (Pflicht - kein Schnitt ohne OK). Plain Language:
-
-```
-Kurz-Plan:
-- Video: {dateiname}  | Brand: {brand} | Format: {9:16} | Untertitel: {ja} | Motion Graphics: {ja/nein}
-- Ich transkribiere, schneide Fueller/Pausen/Versprecher raus, setze saubere Schnitt-Raender,
-  {brenne Untertitel ein,} {baue Overlays,} und rendere.
-Passt das so? Dann lege ich los.
-```
-
-Erst nach OK -> Phase 2.
 
 ---
 
@@ -86,17 +83,29 @@ Transkript ist gecached (kein Re-Transkribieren, ausser Source aenderte sich). D
 
 ---
 
-### Phase 3: Schnitt planen (LLM-Reasoning)
+### Phase 3: Text-Hook generieren (Stop-Punkt, Pflicht)
+
+Der **Text-Hook** ist der scroll-stopping On-Screen-Text, der übers Video gelegt wird. Er entscheidet in den ersten Sekunden über Weiterwischen oder Bleiben - **kein optionales Extra, sondern Pflicht** bei jedem Short.
+
+1. Aus dem Transkript (worum geht's, was ist der Payoff) + `icp.md` (was stoppt genau diese Zielgruppe) **3 Hook-Varianten** generieren. Liegt ein Skript vor (Phase 1d), den Hook daran ausrichten.
+2. Die 3 Varianten zeigen und **bestätigen lassen** (User wählt eine oder gibt eine Richtung vor). Das ist der **einzige** Bestätigungspunkt im Ablauf.
+3. **Batch:** für **jedes** Video eigene 3 Hooks generieren und **einzeln** bestätigen lassen.
+
+Der gewählte Hook wird in Phase 5 als Overlay über den Cut gelegt - Platzierung nach `$SK/references/safe-zone.md` (oberer/mittlerer Safe-Zone-Bereich, nie unter die Plattform-UI).
+
+---
+
+### Phase 4: Schnitt planen (LLM-Reasoning)
 
 **Pflicht-Lektuere zuerst:**
 - `$SK/references/cut-standards.md` - Padding-Tabelle, Pre-Cut-Checks, Last-Word-Two-Step, EDL-Format.
 - `$SK/references/hard-rules.md` - Hard Rules (nie im Wort schneiden, Subtitles zuletzt im Filter, 30ms Audio-Fades, etc.).
 
-Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slices laut cut-standards.md pruefen. EDL als JSON mit `_padding_params`-Block schreiben. Drill-down nur bei Bedarf via `timeline_view.py`.
+Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slices laut cut-standards.md pruefen. EDL als JSON mit `_padding_params`-Block schreiben. Drill-down nur bei Bedarf via `timeline_view.py`. **Liegt ein Skript vor (Phase 1d):** den Schnitt an der Skript-Struktur ausrichten; bei mehreren Videos jeden Clip auf seinen Skript-Beat schneiden.
 
 ---
 
-### Phase 4: Render
+### Phase 5: Render (Schnitt + Untertitel + Text-Hook)
 
 ```bash
 SK=.claude/skills/video-shortform
@@ -106,13 +115,17 @@ $PY $SK/helpers/render.py "{EDIT}/edl.json" \
   -o "$RAWDIR/final.mp4" --build-subtitles   # final.mp4 right next to the raw file
 ```
 
+**Safe Zone (Pflicht, `$SK/references/safe-zone.md`):** Untertitel + Text-Hook müssen innerhalb der Safe Zone liegen, nie unter der Plattform-UI.
+- **Untertitel:** feste **obere Kante** (Anchor), wachsen nach unten, **springen nie** vertikal - die obere Kante bleibt über alle Captions gleich. Im unteren Safe-Zone-Bereich, über dem unteren 19-%-Band.
+- **Text-Hook:** den in Phase 3 gewählten Hook als On-Screen-Text über den Cut legen (oberer/mittlerer Safe-Zone-Bereich), in der Brand-CI (`colors`/`fonts`). Als ffmpeg-Text-Overlay, oder bei aktiven Motion Graphics als Motion-Layer (Phase 6).
+
 Untertitel-Ton vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pruefen. Subtitle-Farbe/Font aus dem `ci.md`-Frontmatter (`colors.subtitle`, `fonts.subtitle` / `fonts.subtitle_path`).
 
 **Grade-Optionen** (EDL-Feld `grade`): Preset-Name (z.B. `warm_cinematic`), `auto` (datengetriebene Korrektur pro Segment), roher ffmpeg-Filter, oder ein 3D-LUT via `"grade": "lut:/pfad/look.cube"` (wird nach dem HDR->709-Tonemap angewandt). grade.py standalone: `--lut look.cube`.
 
 ---
 
-### Phase 5: Motion Graphics (optional, hyperframes)
+### Phase 6: Motion Graphics (optional, hyperframes)
 
 Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 
@@ -122,15 +135,15 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 
 ---
 
-### Phase 6: Self-Eval + Ablegen
+### Phase 7: Self-Eval + Ablegen
 
-- **Self-Eval (einmal):** fertigen Cut gegen die EDL pruefen (Schnitt-im-Wort + Untertitel-Leaks) per `timeline_view`-Stichproben an den Schnitt-Raendern. Nicht pro Render.
+- **Self-Eval (einmal):** fertigen Cut gegen die EDL pruefen (Schnitt-im-Wort + Untertitel-Leaks) per `timeline_view`-Stichproben an den Schnitt-Raendern. Zusätzlich pruefen: Text-Hook + Untertitel innerhalb der Safe Zone, Caption-Oberkante springt nicht. Nicht pro Render.
 - **Ablage (OS-Convention):** `_index.md` neben das Raw-File schreiben (getrackt), `final.mp4` daneben, Media/Cache bleibt in `_work/` (gitignored):
 
 ```markdown
 # {Titel}
 - Brand: {brand}  | Format: {9:16}
-- Hook: {1 Satz}
+- Text-Hook: {gewählter Hook}
 - Status: Postfertig
 - Render: final.mp4
 - Datum: {YYYY-MM-DD}

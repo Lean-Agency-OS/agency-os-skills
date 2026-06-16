@@ -21,6 +21,7 @@ Du arbeitest als **Senior Captions-Editor**: du denkst in Lesbarkeit und Timing,
 ### Struktur (self-contained Skill)
 
 - `helpers/` - Transkriptions-/Render-Helfer (Python, ElevenLabs Scribe, ffmpeg). Interpreter: `.venv/bin/python` (Setup baut das venv im Skill-Root).
+- `references/safe-zone.md` - **Pflicht:** wohin Untertitel dürfen (9:16), feste obere Caption-Kante, kein Springen.
 - `references/transcription.md` - Transkriptions-Policy. Scribe-only (kein lokaler Whisper-Fallback).
 
 Der Code ist aus der geteilten `video-engine`-Quelle gevendort. **Nicht hier editieren** - Änderungen in der Quelle machen und `tools/sync-engine.sh` laufen lassen.
@@ -81,6 +82,8 @@ $PY $SK/helpers/render.py "{EDIT}/edl.json" \
 
 - **Ton-Check:** Untertitel-Text vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pruefen (Schreibweisen, Begriffe).
 - **CI:** Subtitle-Farbe/Font aus dem `ci.md`-Frontmatter (`colors.subtitle`, `fonts.subtitle` / `fonts.subtitle_path`).
+- **Safe Zone (Pflicht, `$SK/references/safe-zone.md`):** bei 9:16 die Untertitel in den unteren Safe-Zone-Bereich, **über** dem unteren 19-%-Band, nie unter die Plattform-UI.
+- **Kein Springen:** feste **obere Kante** (Anchor), Captions wachsen nach unten. Die obere Kante bleibt über alle Captions hinweg auf derselben Linie, egal ob ein- oder mehrzeilig.
 - **Hard Rule:** Untertitel werden zuletzt in der Filter-Chain angewandt (kein Overlay verdeckt sie).
 
 ---
