@@ -61,7 +61,7 @@ Nur wenn Doctor sauber -> weiter.
 **1d. Skript prüfen:** Liegt ein Skript vor (z.B. ein `/reel-skript`-Output im Marketing-Ordner oder eine Skript-Datei beim Footage)? Wenn ja, dient es als Vorlage für Hook + Schnitt. Bei **mehreren** Videos die Skript-Struktur über die Clips abbilden (jeder Clip füllt seinen Beat).
 
 **1e. Ordner + Dateiname:** Output landet IMMER im **selben Ordner wie das Roh-Video** (kein neuer datierter Ordner):
-- **Sprechender Name**, nicht `final.mp4`: `{quell-stem}-{slug}.mp4` aus Quell-Dateiname + kurzem Thema-/Hook-Slug (z.B. `IMG_8762-funnel-fehler.mp4`). Das ist auch batch-sicher: mehrere Videos im selben Ordner überschreiben sich so nicht. Dazu `{quell-stem}-{slug}_index.md` daneben.
+- **Sprechender Name**, nicht `final.mp4`: `{slug}.mp4` aus einem kurzen Thema-/Hook-Slug (z.B. `funnel-fehler.mp4`). Den Slug pro Clip eindeutig wählen, dann ist es auch batch-sicher (kein Überschreiben, wenn mehrere Videos im selben Ordner liegen). Dazu `{slug}_index.md` daneben.
 - Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `<ordner>/_work/edit/` (gitignored)
 
 So bleiben Raw und fertiger Schnitt zusammen. Den Edit-Cache nie neu transkribieren, wenn das Raw-File unveraendert ist.
@@ -111,7 +111,7 @@ Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slic
 SK=.claude/skills/video-shortform
 PY=$SK/.venv/bin/python
 RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
-OUT="$RAWDIR/{quell-stem}-{slug}.mp4"   # speaking name (source stem + topic slug), batch-safe
+OUT="$RAWDIR/{slug}.mp4"   # speaking name (topic/hook slug), unique per clip = batch-safe
 $PY $SK/helpers/render.py "{EDIT}/edl.json" \
   -o "$OUT" --build-subtitles
 ```
@@ -146,7 +146,7 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 - Brand: {brand}  | Format: {9:16}
 - Text-Hook: {gewählter Hook}
 - Status: Postfertig
-- Render: {quell-stem}-{slug}.mp4
+- Render: {slug}.mp4
 - Datum: {YYYY-MM-DD}
 ```
 
@@ -157,7 +157,7 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 ## Output
 
 Landet IMMER im selben Ordner wie das Roh-Video (kein neuer datierter Ordner):
-- `{quell-stem}-{slug}.mp4` (postfertiges Reel/Short, sprechender Name) + getracktes `_index.md` direkt neben dem Raw-File.
+- `{slug}.mp4` (postfertiges Reel/Short, sprechender Name) + getracktes `_index.md` direkt neben dem Raw-File.
 - Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `_work/edit/` (gitignored).
 - Daily-Log-Notiz in `{logs}/{YYYY-MM-DD}.md`.
 
