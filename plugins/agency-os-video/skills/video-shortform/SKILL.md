@@ -126,6 +126,8 @@ Untertitel-Ton vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pr
 
 **Grade-Optionen** (EDL-Feld `grade`): Preset-Name (z.B. `warm_cinematic`), `auto` (datengetriebene Korrektur pro Segment), roher ffmpeg-Filter, oder ein 3D-LUT via `"grade": "lut:/pfad/look.cube"` (wird nach dem HDR->709-Tonemap angewandt). grade.py standalone: `--lut look.cube`.
 
+**Resumierbar + atomar:** render.py überspringt bereits gerenderte Segmente (ffprobe-Check) und schreibt atomar (`.part.mp4` -> rename). Bricht ein Lauf ab (Zeitlimit/Crash), denselben Befehl einfach erneut aufrufen, er macht beim nächsten Segment weiter, ohne korrupte Teildatei. Optional `--budget-seconds N`, um bewusst in Blöcken zu rendern.
+
 ---
 
 ### Phase 6: Motion Graphics (optional, hyperframes)

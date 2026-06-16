@@ -87,6 +87,7 @@ $PY $SK/helpers/render.py "{EDIT}/edl.json" \
 - **Safe Zone (Pflicht, `$SK/references/safe-zone.md`):** bei 9:16 die Untertitel in den unteren Safe-Zone-Bereich, **über** dem unteren 19-%-Band, nie unter die Plattform-UI.
 - **Kein Springen:** feste **obere Kante** (Anchor), Captions wachsen nach unten. Die obere Kante bleibt über alle Captions hinweg auf derselben Linie, egal ob ein- oder mehrzeilig.
 - **Hard Rule:** Untertitel werden zuletzt in der Filter-Chain angewandt (kein Overlay verdeckt sie).
+- **Resumierbar + atomar:** render.py überspringt fertige Segmente und schreibt atomar (`.part.mp4` -> rename). Bricht ein Lauf ab, denselben Befehl erneut aufrufen; optional `--budget-seconds N`.
 
 ---
 

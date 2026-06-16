@@ -26,6 +26,7 @@ import json
 import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 from ffmpeg_utils import run as ffrun
@@ -197,6 +198,28 @@ def is_portrait_source(video: Path) -> bool:
 # -------- Per-segment extraction (Rule 2 + Rule 3) --------------------------
 
 
+def media_is_valid(path: Path) -> bool:
+    """True if ffprobe reads a positive duration, i.e. the file has a moov atom and
+    is not a truncated/partial render. Used to skip already-rendered segments and to
+    reject corrupt leftovers from an interrupted run."""
+    if not path.exists() or path.stat().st_size == 0:
+        return False
+    try:
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+             "-of", "default=nw=1:nk=1", str(path)],
+            capture_output=True, text=True, timeout=30,
+        )
+    except Exception:
+        return False
+    if out.returncode != 0:
+        return False
+    try:
+        return float(out.stdout.strip() or 0) > 0
+    except ValueError:
+        return False
+
+
 def extract_segment(
     source: Path,
     seg_start: float,
@@ -243,6 +266,9 @@ def extract_segment(
     else:
         preset, crf = "fast", "20"
 
+    # Atomic: render to a .part.mp4, rename on success. An interrupted ffmpeg then
+    # never leaves a corrupt seg_NN.mp4 (moov atom not found) that a resume would trust.
+    tmp_path = out_path.with_suffix(".part.mp4")
     cmd = [
         "ffmpeg", "-y",
         "-ss", f"{seg_start:.3f}",
@@ -254,9 +280,10 @@ def extract_segment(
         "-pix_fmt", "yuv420p", "-r", "24",
         "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
         "-movflags", "+faststart",
-        str(out_path),
+        str(tmp_path),
     ]
     ffrun(cmd)
+    tmp_path.replace(out_path)
 
 
 def extract_all_segments(
@@ -264,9 +291,15 @@ def extract_all_segments(
     edit_dir: Path,
     preview: bool,
     draft: bool = False,
-) -> list[Path]:
+    budget_deadline: float | None = None,
+) -> tuple[list[Path], bool]:
     """Extract every EDL range into edit_dir/clips_graded/seg_NN.mp4.
-    Returns the ordered list of segment paths.
+    Returns (ordered segment paths, complete?).
+
+    Idempotent + resumable: a segment that already exists and is a valid media file
+    is skipped, so re-running the same command continues where an interrupted run
+    stopped. If `budget_deadline` (epoch seconds) is given, the loop stops after the
+    segment that crosses it and returns complete=False; the caller re-runs to resume.
 
     If the EDL `grade` is "auto", analyze each segment range with
     `auto_grade_for_clip` and apply a per-segment subtle correction.
@@ -288,11 +321,18 @@ def extract_all_segments(
         print("  (auto-grade per segment: analyzing each range)")
     for i, r in enumerate(ranges):
         src_name = r["source"]
+        out_path = clips_dir / f"seg_{i:02d}_{src_name}.mp4"
+
+        # Skip if already rendered and valid (resume after an interrupted run).
+        if media_is_valid(out_path):
+            print(f"  [{i:02d}] {src_name}  cached, skip")
+            seg_paths.append(out_path)
+            continue
+
         src_path = resolve_path(sources[src_name], edit_dir)
         start = float(r["start"])
         end = float(r["end"])
         duration = end - start
-        out_path = clips_dir / f"seg_{i:02d}_{src_name}.mp4"
 
         if is_auto:
             seg_filter, _stats = auto_grade_for_clip(src_path, start=start, duration=duration, verbose=False)
@@ -306,7 +346,10 @@ def extract_all_segments(
         extract_segment(src_path, start, duration, seg_filter, out_path, preview=preview, draft=draft)
         seg_paths.append(out_path)
 
-    return seg_paths
+        if budget_deadline is not None and time.time() >= budget_deadline:
+            return seg_paths, (i == len(ranges) - 1)
+
+    return seg_paths, True
 
 
 # -------- Lossless concat ----------------------------------------------------
@@ -667,6 +710,14 @@ def main() -> None:
         action="store_true",
         help="Skip audio loudness normalization. Default is on (-14 LUFS, -1 dBTP, LRA 11).",
     )
+    ap.add_argument(
+        "--budget-seconds",
+        type=float,
+        default=None,
+        help="Stop segment extraction after this many seconds and exit (resumable: "
+             "re-run the same command to continue). Useful where a single call is "
+             "time-limited; omit for a one-shot run.",
+    )
     args = ap.parse_args()
 
     edl_path = args.edl.resolve()
@@ -677,10 +728,16 @@ def main() -> None:
     edit_dir = edl_path.parent
     out_path = args.output.resolve()
 
-    # 1. Extract per-segment (auto-grade per range if EDL grade is "auto")
-    segment_paths = extract_all_segments(
-        edl, edit_dir, preview=args.preview, draft=args.draft
+    # 1. Extract per-segment (auto-grade per range if EDL grade is "auto").
+    #    Idempotent + resumable; honours an optional time budget.
+    budget_deadline = (time.time() + args.budget_seconds) if args.budget_seconds else None
+    segment_paths, complete = extract_all_segments(
+        edl, edit_dir, preview=args.preview, draft=args.draft, budget_deadline=budget_deadline
     )
+    if not complete:
+        print(f"\n[budget] {len(segment_paths)} Segment(e) fertig, weitere offen. "
+              f"Denselben Befehl erneut aufrufen - er macht beim naechsten Segment weiter.")
+        return
 
     # 2. Concat → base
     if args.draft:
@@ -706,16 +763,20 @@ def main() -> None:
 
     # 4. Composite (overlays + subtitles LAST) → intermediate (pre-loudnorm) path
     overlays = edl.get("overlays") or []
+    # Write the final output atomically: build it under .part.mp4, rename last — an
+    # interrupted composite/loudnorm never leaves a corrupt {slug}.mp4 behind.
+    final_tmp = out_path.with_suffix(".part.mp4")
     if args.no_loudnorm:
-        # Composite directly to final output
-        build_final_composite(base_path, overlays, subs_path, out_path, edit_dir)
+        build_final_composite(base_path, overlays, subs_path, final_tmp, edit_dir)
     else:
-        # Composite to a temp file, then run loudnorm → final output
+        # Composite to a temp file, then run loudnorm → final (atomic) output
         tmp_composite = out_path.with_suffix(".prenorm.mp4")
         build_final_composite(base_path, overlays, subs_path, tmp_composite, edit_dir)
         print("loudness normalization → social-ready (-14 LUFS / -1 dBTP / LRA 11)")
-        apply_loudnorm_two_pass(tmp_composite, out_path, preview=args.draft)
+        apply_loudnorm_two_pass(tmp_composite, final_tmp, preview=args.draft)
         tmp_composite.unlink(missing_ok=True)
+    final_tmp.replace(out_path)
+    print(f"done → {out_path.name}")
 
     size_mb = out_path.stat().st_size / (1024 * 1024)
     print(f"\ndone: {out_path} ({size_mb:.1f} MB)")
