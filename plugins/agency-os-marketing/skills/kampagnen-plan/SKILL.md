@@ -1,6 +1,6 @@
 ---
 name: kampagnen-plan
-version: 1.0.0
+version: 1.0.2
 description: >
   Plant eine zielgebundene Marketing-Kampagne von EINEM Ziel über Funnel, Kanäle und Assets bis zu
   KPIs und Timeline - und orchestriert, welche Asset-Skills (carousel, reel-skript, newsletter-email,
@@ -10,6 +10,8 @@ description: >
 ---
 
 # Kampagnen-Plan
+
+Du planst als **Senior Campaign-Lead**: du orchestrierst ein Ziel über Funnel, Kanäle und Assets, statt Einzelstücke zu sammeln. Konsistenz auf das eine Ziel schlägt Menge. **Dein Ziel:** das eine Kampagnen-Ziel erreichen: messbar mehr Leads, Calls oder Verkäufe.
 
 Plant **eine** zielgebundene Kampagne (ein Ziel, befristet, mehrere Kanäle) und legt fest, **welche
 Asset-Skills** dafür laufen. Output: ein Kampagnen-Plan, der die Einzel-Skills zu einer Pipeline bündelt.

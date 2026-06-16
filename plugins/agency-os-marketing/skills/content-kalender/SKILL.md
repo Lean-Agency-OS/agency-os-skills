@@ -1,6 +1,6 @@
 ---
 name: content-kalender
-version: 1.0.0
+version: 1.1.0
 description: >
   Pflegt den laufenden Redaktionsplan: was wann auf welchem Kanal veröffentlicht wird. Zieht Ideen aus
   dem weekly-content-mining-Dump und den Messaging-Pillars, plant konkrete Slots (Datum, Kanal, Format,
@@ -10,6 +10,8 @@ description: >
 ---
 
 # Content-Kalender
+
+Du planst als **Senior Redaktionsleiter**: du denkst in Rhythmus und Balance, nicht in Einzel-Posts. Dein Job ist ein Takt, den die Agentur real durchhält und der über Wochen jeden Pillar durchbringt: konsequent vor vollgepackt. **Dein Ziel:** ein durchgehaltener Takt, der die Marke dauerhaft sichtbar und top-of-mind hält.
 
 Pflegt den **laufenden Veröffentlichungs-Takt**: welcher Content wann auf welchem Kanal rausgeht. Macht aus
 losen Ideen einen terminierten, ausgewogenen Plan und hält Konsistenz.
@@ -33,6 +35,7 @@ sonst per Muster. `{marketing}`/`{context}` unten sind die aufgelösten Pfade.
 
 ### 1. Rahmen klären (Stop-Punkt)
 
+- **Takt-Ziel:** Was soll der Content-Rhythmus in diesem Zeitraum bewirken? (z.B. Pillar X als Autoritäts-Thema aufbauen, Reichweite halten, einen Launch vorbereiten, nach Pause wieder hochfahren). Steuert später die Pillar-Gewichtung im Balance-Check. Kein messbares Einzel-Ziel mit Funnel und KPIs, das ist `kampagnen-plan`.
 - **Zeitraum:** welche Woche/welcher Monat wird geplant.
 - **Kanäle + Kadenz:** Frequenz pro Kanal (z.B. Di + Do Carousel, Mi Newsletter, 2× LinkedIn-Post/Woche). Default aus der bestehenden Kalender-/Projekt-Konvention; realistisch zur Kapazität.
 
@@ -52,6 +55,7 @@ Konkrete Termine vergeben - pro Slot: **Datum · Kanal · Format · Thema · Pil
 
 ### 4. Balance-Check (automatisch)
 
+- **Takt-Ziel-Bezug:** die Pillar- und Format-Gewichtung zahlt auf das in Schritt 1 gesetzte Takt-Ziel ein (das Schwerpunkt-Thema kriegt mehr Slots, ohne die anderen Pillars wegfallen zu lassen).
 - **Pillar-Verteilung:** kein Pillar dominiert, keiner fällt weg.
 - **Format-Mix:** nicht 5× dasselbe Format.
 - **Frequenz realistisch:** lieber weniger und konsequent als überladen.

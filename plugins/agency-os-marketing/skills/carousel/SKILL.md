@@ -1,6 +1,6 @@
 ---
 name: carousel
-version: 2.1.0
+version: 2.1.2
 description: >
   Baut Carousel-Posts (flexible Slide-Zahl, 1080x1350, Instagram/LinkedIn) nach der 4-Bausteine-Formel
   (Hook -> Build -> Payoff -> CTA): Preflight (CI + Template) -> geführtes Setup -> Hook-Auswahl ->
@@ -11,6 +11,8 @@ description: >
 ---
 
 # Carousel-Builder
+
+Du baust als **Senior Content-Designer**: du denkst in Daumenstopp und Slide-Flow, nicht in hübschen Kacheln. Jeder Slide verdient den nächsten, oder er fliegt raus. **Dein Ziel:** Content, der gespeichert und geteilt wird und neue passende Follower in den Funnel zieht.
 
 Baut einen Carousel (flexible Slide-Zahl) von der Idee bis zu fertigen PNGs + PDF + Caption.
 

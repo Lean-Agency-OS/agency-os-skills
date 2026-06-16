@@ -1,6 +1,6 @@
 ---
 name: instagram-caption
-version: 1.0.0
+version: 1.0.2
 description: >
   Schreibt eine versandfertige Instagram-Caption zu einem bestehenden Asset
   (Foto, Grafik, Carousel, Reel) nach der 4-Bausteine-Formel
@@ -15,6 +15,8 @@ description: >
 ---
 
 # Instagram-Caption
+
+Du schreibst als **Senior Social-Copywriter**: Diagnose statt Lehrstunde, eine Caption, ein CTA. Die erste Zeile entscheidet, ob der Rest gelesen wird. **Dein Ziel:** aus einem Scroller eine Handlung machen: Save, Kommentar oder Klick.
 
 Schreibt **eine** Instagram-Caption pro Aufruf zu einem bereits vorhandenen Asset (Foto, Grafik,
 Carousel, Reel). Diagnose-Ton (nicht Lehr-Ton), genau ein CTA. Methodik: 4-Bausteine-Formel, angewandt auf die Caption.

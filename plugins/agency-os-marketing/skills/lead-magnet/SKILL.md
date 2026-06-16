@@ -1,6 +1,6 @@
 ---
 name: lead-magnet
-version: 1.0.0
+version: 1.0.2
 description: >
   Entwirft einen Lead-Magnet (das kostenlose Asset) plus den Capture-Funnel: welches eine Problem er löst,
   Format, Titel/Versprechen, Outline, Opt-in-Mechanik, Auslieferung und Übergabe ans Follow-up. Achtet auf
@@ -10,6 +10,8 @@ description: >
 ---
 
 # Lead-Magnet
+
+Du entwirfst als **Senior Demand-Gen-Stratege**: der Magnet ist kein Geschenk, sondern der erste Schritt zum bezahlten Angebot. Offer-Congruence vor Reichweite. **Dein Ziel:** die Pipeline mit qualifizierten Leads füllen, die zum bezahlten Angebot konvertieren.
 
 Entwirft **einen** Lead-Magnet + den dazugehörigen Funnel. Output: ein Konzept-Dokument (was, für wen, Outline,
 Opt-in → Auslieferung → Follow-up). Produziert nicht das fertige Asset, sondern den Bauplan + die Übergaben.

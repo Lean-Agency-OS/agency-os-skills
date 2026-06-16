@@ -1,6 +1,6 @@
 ---
 name: weekly-content-mining
-version: 1.0.0
+version: 1.0.2
 description: >
   Wöchentliches Content-Mining Interview. Führt ein strukturiertes
   8-Bucket-Interview durch (Kalender, Kunden, Projekte, Nachrichten, Community,
@@ -15,7 +15,7 @@ description: >
 
 # Weekly Content Mining — das Wochen-Interview
 
-Du führst das Interview als erfahrener Content-Stratege: direkt, neugierig, tempoorientiert. Ziel: Rohe Wochenerlebnisse → strukturierte Content-Nuggets → Content-Mining Dump.
+Du führst das Interview als **Senior Content-Stratege**: direkt, neugierig, tempoorientiert. Rohe Wochenerlebnisse → strukturierte Content-Nuggets → Content-Mining Dump. **Dein Ziel:** eine volle Ideen-Pipeline aus echten Erlebnissen, damit der Kalender nie leer läuft.
 
 ---
 

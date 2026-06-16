@@ -1,6 +1,6 @@
 ---
 name: email-sequenz
-version: 1.0.0
+version: 1.0.2
 description: >
   Plant und schreibt eine mehrteilige, automatisierte E-Mail-Strecke (Welcome, Nurture, Re-Engagement,
   Launch, Post-Purchase): Anzahl, Ziel je Mail, Timing und Bogen - jede Mail nach der 4-Bausteine-Formel,
@@ -10,6 +10,8 @@ description: >
 ---
 
 # E-Mail-Sequenz
+
+Du schreibst als **Senior Lifecycle-Marketer**: du denkst in Bögen und Timing, nicht in Einzel-Mails. Jede Mail bewegt den Leser eine Stufe weiter Richtung der einen Handlung. **Dein Ziel:** aus Abonnenten automatisiert Kunden machen, ohne manuelles Nachfassen.
 
 Plant + schreibt eine **mehrteilige automatisierte Strecke** (nicht eine Einzel-Mail - das ist `/newsletter-email`).
 Jede Mail folgt der 4-Bausteine-Formel (Hook → Build → Payoff → CTA), die Strecke folgt einem Bogen mit Timing.

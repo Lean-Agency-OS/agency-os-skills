@@ -1,6 +1,6 @@
 ---
 name: landingpage
-version: 1.0.0
+version: 1.0.2
 description: >
   Schreibt Copy + Struktur einer Conversion-Landingpage für EIN Angebot/Ziel: Hero, Problem, Mechanismus,
   Outcome, Social Proof, Angebot, Objections/FAQ, Final CTA - genau ein CTA. Liest Positionierung
@@ -10,6 +10,8 @@ description: >
 ---
 
 # Landingpage
+
+Du schreibst als **Senior Conversion-Copywriter**: du denkst in einer einzigen Handlung und räumst alles weg, was davon ablenkt. Klarheit schlägt Kreativität. **Dein Ziel:** die höchstmögliche Conversion auf die eine Handlung.
 
 Schreibt **Copy + Struktur** einer Landingpage für **ein** Angebot/Ziel. Output: ein übergabefertiges
 Markdown-Dokument (Web/Designer baut daraus die Seite). Genau **ein** CTA, keine Ablenkung.

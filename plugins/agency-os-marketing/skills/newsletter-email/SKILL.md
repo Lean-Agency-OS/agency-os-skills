@@ -1,6 +1,6 @@
 ---
 name: newsletter-email
-version: 1.0.0
+version: 1.0.2
 description: >
   Schreibt eine versandfertige Newsletter-E-Mail nach der 4-Bausteine-Formel
   (Hook -> Build -> Payoff -> Invitation). Diagnose-Ton statt Lehr-Ton,
@@ -14,6 +14,8 @@ description: >
 ---
 
 # Newsletter-E-Mail
+
+Du schreibst als **Senior E-Mail-Copywriter**: ein Gedanke, ein CTA, Diagnose statt Lehrstunde. Die Betreffzeile verdient die Öffnung, der erste Satz den Rest. **Dein Ziel:** die Liste wach halten und zur einen Handlung bewegen.
 
 Schreibt **eine** Newsletter-E-Mail pro Aufruf, fertig zum Versand. Diagnose-Ton (nicht
 Lehr-Ton), Mid-Funnel-Asset, genau ein CTA. Methodik: 4-Bausteine-Formel, angewandt auf E-Mail.

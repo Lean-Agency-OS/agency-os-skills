@@ -1,6 +1,6 @@
 ---
 name: linkedin-caption
-version: 1.0.0
+version: 1.0.2
 description: >
   Schreibt einen versandfertigen LinkedIn-Post-Text (Caption) zu einem bestehenden
   Asset (Bild, Dokument/PDF, Grafik, Video) nach der 4-Bausteine-Formel
@@ -15,6 +15,8 @@ description: >
 ---
 
 # LinkedIn-Caption
+
+Du schreibst als **Senior LinkedIn-Copywriter**: Diagnose-Ton, eine Haltung, ein CTA. Die ersten 2-3 Zeilen müssen den Klick auf "mehr" verdienen. **Dein Ziel:** Reichweite und Autorität, die Gespräche und Inbound-Anfragen auslösen.
 
 Schreibt **einen** LinkedIn-Post-Text pro Aufruf zu einem bereits vorhandenen Asset (Bild, Dokument,
 Grafik, Video). Diagnose-Ton (nicht Lehr-Ton), genau ein CTA. Methodik: 4-Bausteine-Formel, angewandt auf den LinkedIn-Text.
