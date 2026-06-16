@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# sync-engine.sh - vendort die Engine aus packages/video-engine/ in jeden video-* Skill.
-# Dev-Tool, wird NICHT ausgeliefert. Nach jeder Aenderung an packages/video-engine/ ausfuehren,
-# dann Quelle + gevendorte Kopien committen.
+# sync-engine.sh - vendor the engine from packages/video-engine/ into each video-* skill.
+# Dev-only tool, never shipped. Run after every change to packages/video-engine/, then commit
+# the source AND the vendored copies (the copies are what gets distributed).
 #
-# Aufruf (vom Repo-Root oder beliebig): bash tools/sync-engine.sh
+# Call (from anywhere): bash tools/sync-engine.sh
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SRC="$ROOT/packages/video-engine"
 SKILLS="$ROOT/plugins/agency-os-video/skills"
 
-# Basis, die jeder Skill braucht (transcribe importiert ffmpeg_utils; pack haengt am Transkript).
+# Base every skill needs (transcribe imports ffmpeg_utils; pack depends on the transcript).
 COMMON_HELPERS="ffmpeg_utils.py transcribe.py pack_transcripts.py"
 
 sync_skill() {
@@ -19,7 +19,7 @@ sync_skill() {
   echo "[sync] $name"
   mkdir -p "$dst"
 
-  # --- helpers (autoritativ: alter Stand wird verworfen) ---
+  # --- helpers (authoritative: previous state is discarded) ---
   rm -rf "$dst/helpers"; mkdir -p "$dst/helpers"
   cp "$SRC/helpers/LICENSE" "$dst/helpers/"
   for h in $helpers; do
@@ -32,11 +32,16 @@ sync_skill() {
     cp "$SRC/references/$r" "$dst/references/$r"
   done
 
-  # --- deps (gleicher Satz fuer alle Skills) ---
+  # --- shared scripts + deps (same for every skill) ---
+  mkdir -p "$dst/scripts"
+  cp "$SRC/scripts/setup.sh" "$dst/scripts/setup.sh"
+  cp "$SRC/scripts/doctor.sh" "$dst/scripts/doctor.sh"
+  chmod +x "$dst/scripts/setup.sh" "$dst/scripts/doctor.sh"
   cp "$SRC/pyproject.toml" "$dst/pyproject.toml"
   cp "$SRC/uv.lock" "$dst/uv.lock"
+  cp "$SRC/secrets.env.example" "$dst/secrets.env.example"
 
-  # --- Motion-Graphics-Engine nur wo gebraucht ---
+  # --- motion-graphics engine only where needed ---
   if [ "$hyperframes" = "yes" ]; then
     mkdir -p "$dst/engines/hyperframes"
     cp "$SRC/engines/hyperframes/package.json" "$dst/engines/hyperframes/package.json"
@@ -45,8 +50,8 @@ sync_skill() {
   fi
 }
 
-# ---- Manifest: Skill | zusaetzliche Helfer | References | hyperframes ----
-# render.py importiert grade.py lazy mit Fallback -> ohne grade.py laeuft Subtitle-Render trotzdem.
+# ---- Manifest: skill | extra helpers | references | hyperframes ----
+# render.py imports grade.py lazily with a fallback -> subtitle-only render works without grade.py.
 
 sync_skill video-final \
   "$COMMON_HELPERS render.py grade.py broll.py timeline_view.py" \
@@ -68,4 +73,4 @@ sync_skill video-footage-mining \
   "transcription.md" \
   no
 
-echo "[sync] fertig. Nicht vergessen: Quelle + gevendorte Kopien committen."
+echo "[sync] done. Commit the source AND the vendored copies."

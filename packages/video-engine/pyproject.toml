@@ -1,7 +1,7 @@
 [project]
 name = "video-engine"
 version = "0.1.0"
-description = "Geteilte Schnitt-/Transkriptions-/Render-Engine fuer die agency-os-video Skills"
+description = "Shared cut/transcription/render engine for the agency-os-video skills"
 license = { file = "helpers/LICENSE" }
 requires-python = ">=3.10"
 dependencies = [
