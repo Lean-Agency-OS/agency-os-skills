@@ -18,12 +18,19 @@ ffmpeg -version 2>/dev/null | grep -q 'enable-libass' || echo "[setup] WARN ffmp
 [ "$fail" = 1 ] && { echo "[setup] Abbruch: Pflicht-Tools fehlen."; exit 1; }
 
 # --- 2. Python env (uv, local .venv in the skill root) ---
-# Install the [whisper] extra too: footage-mining needs local Whisper for its text-only
-# pass, and the other skills need it as the offline fallback when Scribe / the ElevenLabs
-# API is unreachable (common in the sandbox).
-echo "[setup] installiere Python-Deps inkl. lokalem Whisper-Fallback (uv)..."
-( uv venv --quiet && uv pip install -e '.[whisper]' ) \
-  && echo "[setup] OK   Python-Env bereit (mit Whisper-Fallback)." \
+# The [whisper] extra (heavy: faster-whisper + a model download) is only installed for skills
+# that bundle local transcription - marked by .needs-whisper (the sync script writes it for
+# footage-mining, whose text-only pass runs on local Whisper). The Scribe-based cut skills stay
+# lean and use the ElevenLabs API.
+if [ -f .needs-whisper ]; then
+  echo "[setup] installiere Python-Deps inkl. lokalem Whisper (uv)..."
+  PIP_TARGET='.[whisper]'
+else
+  echo "[setup] installiere Python-Deps (uv)..."
+  PIP_TARGET='.'
+fi
+( uv venv --quiet && uv pip install -e "$PIP_TARGET" ) \
+  && echo "[setup] OK   Python-Env bereit." \
   || { echo "[setup] FEHLER Python-Install"; exit 1; }
 
 # --- 3. motion-graphics engine (only when this skill bundles hyperframes) ---

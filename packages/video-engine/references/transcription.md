@@ -70,8 +70,11 @@ scribe
 - Steuerung: `--no-fallback` erzwingt scribe-only (harter Abbruch statt
   stillem Qualitaetsverlust).
 - Voraussetzung fuer den Fallback: das `.[whisper]`-Extra muss installiert
-  sein. `setup.sh` installiert es by default, der Fallback steht also out of
-  the box. Fehlt es doch, bricht der Fallback mit klarer Meldung ab.
+  sein. Das ist **nur beim Skill mit lokaler Transkription** der Fall
+  (`video-footage-mining`, Marker `.needs-whisper`). Die Scribe-Cut-Skills
+  (`video-final`, `video-roughcut`, `video-captions`) installieren es bewusst
+  nicht und sind Scribe-only: ist Scribe nicht erreichbar, brechen sie mit
+  klarer Meldung ab, statt leise auf lokales Whisper zu degradieren.
 - **Folge fuer den Schnitt:** Ein Fallback-Transkript hat keine Sprecher-IDs.
   Bei Multi-Speaker-Material fehlt die Sprecher-Trennung : pruefe das `engine`-
   bzw. `fallback_from`-Feld im JSON, bevor du dich auf Diarisierung verlaesst.
