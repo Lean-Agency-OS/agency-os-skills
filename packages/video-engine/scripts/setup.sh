@@ -18,9 +18,12 @@ ffmpeg -version 2>/dev/null | grep -q 'enable-libass' || echo "[setup] WARN ffmp
 [ "$fail" = 1 ] && { echo "[setup] Abbruch: Pflicht-Tools fehlen."; exit 1; }
 
 # --- 2. Python env (uv, local .venv in the skill root) ---
-echo "[setup] installiere Python-Deps (uv)..."
-( uv venv --quiet && uv pip install -e . ) \
-  && echo "[setup] OK   Python-Env bereit." \
+# Install the [whisper] extra too: footage-mining needs local Whisper for its text-only
+# pass, and the other skills need it as the offline fallback when Scribe / the ElevenLabs
+# API is unreachable (common in the sandbox).
+echo "[setup] installiere Python-Deps inkl. lokalem Whisper-Fallback (uv)..."
+( uv venv --quiet && uv pip install -e '.[whisper]' ) \
+  && echo "[setup] OK   Python-Env bereit (mit Whisper-Fallback)." \
   || { echo "[setup] FEHLER Python-Install"; exit 1; }
 
 # --- 3. motion-graphics engine (only when this skill bundles hyperframes) ---

@@ -70,7 +70,8 @@ scribe
 - Steuerung: `--no-fallback` erzwingt scribe-only (harter Abbruch statt
   stillem Qualitaetsverlust).
 - Voraussetzung fuer den Fallback: das `.[whisper]`-Extra muss installiert
-  sein. Ist es nicht, bricht der Fallback mit klarer Meldung ab.
+  sein. `setup.sh` installiert es by default, der Fallback steht also out of
+  the box. Fehlt es doch, bricht der Fallback mit klarer Meldung ab.
 - **Folge fuer den Schnitt:** Ein Fallback-Transkript hat keine Sprecher-IDs.
   Bei Multi-Speaker-Material fehlt die Sprecher-Trennung : pruefe das `engine`-
   bzw. `fallback_from`-Feld im JSON, bevor du dich auf Diarisierung verlaesst.

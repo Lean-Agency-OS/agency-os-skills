@@ -27,6 +27,12 @@ echo
 echo "## Setup-Status"
 [ -f .ready ] && echo "OK    .ready ($(cat .ready))" || echo "OFFEN .ready fehlt -> setup.sh ausfuehren"
 [ -d .venv ] && echo "OK    Python-Env (.venv)" || echo "OFFEN .venv fehlt -> setup.sh"
+# local Whisper fallback (required for footage-mining, offline fallback for the rest)
+if [ -x .venv/bin/python ]; then
+  .venv/bin/python -c "import faster_whisper" 2>/dev/null \
+    && echo "OK    faster-whisper (lokaler Fallback)" \
+    || echo "OFFEN faster-whisper fehlt -> setup.sh"
+fi
 if [ -d engines/hyperframes ]; then
   [ -d engines/hyperframes/node_modules/hyperframes ] && echo "OK    hyperframes installiert" || echo "OFFEN hyperframes node_modules fehlt -> setup.sh"
   [ -f engines/hyperframes/.chromium-path ] && echo "OK    Chromium ($(cat engines/hyperframes/.chromium-path))" || echo "OFFEN Chromium fehlt (nur fuer Motion Graphics noetig)"
