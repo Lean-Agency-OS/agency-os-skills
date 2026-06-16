@@ -40,7 +40,7 @@ Abkuerzung in den Befehlen unten: `SK=.claude/skills/video-shortform` (Aufruf vo
 
 ### Phase 0: Setup-Gate (PFLICHT, still)
 
-1. Existiert `$SK/.ready`? Nein -> `bash $SK/scripts/setup.sh`, Ausgabe zeigen.
+1. `DATA=$(bash $SK/scripts/resolve-datadir.sh)` (schreibbares Daten-Verzeichnis: Skill-Root in Claude Code, Cache in Cowork). Fehlt `$DATA/.ready` -> `bash $SK/scripts/setup.sh`, Ausgabe zeigen.
 2. `{context}` auflösen, dann `bash $SK/scripts/doctor.sh "{context}/secrets.env"`. Bei `OFFEN ELEVENLABS_API_KEY` -> Nutzer bitten, den Key in `{context}/secrets.env` einzutragen (Vorlage: `$SK/secrets.env.example`), dann stoppen.
 3. Bei `FEHLT ffmpeg/node/python` -> Hard-Stop (Sandbox ohne Tools).
 
@@ -72,7 +72,8 @@ So bleiben Raw und fertiger Schnitt zusammen. Den Edit-Cache nie neu transkribie
 
 ```bash
 SK=.claude/skills/video-shortform
-PY=$SK/.venv/bin/python
+DATA="$(bash "$SK/scripts/resolve-datadir.sh")"   # writable: skill root (Claude Code) or cache (Cowork)
+PY="$DATA/.venv/bin/python"
 RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
 EDIT="$RAWDIR/_work/edit"            # edit cache next to the raw file (gitignored)
 $PY $SK/helpers/transcribe.py "{video}" --edit-dir "$EDIT"
@@ -109,7 +110,8 @@ Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slic
 
 ```bash
 SK=.claude/skills/video-shortform
-PY=$SK/.venv/bin/python
+DATA="$(bash "$SK/scripts/resolve-datadir.sh")"   # writable: skill root (Claude Code) or cache (Cowork)
+PY="$DATA/.venv/bin/python"
 RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
 OUT="$RAWDIR/{slug}.mp4"   # speaking name (topic/hook slug), unique per clip = batch-safe
 $PY $SK/helpers/render.py "{EDIT}/edl.json" \
@@ -130,9 +132,10 @@ Untertitel-Ton vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pr
 
 Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 
-- Lektuere: `$SK/references/motion-style.md` (Anchor-Word-Sync, Render-Defaults) + hyperframes-Skill in `$SK/engines/hyperframes/node_modules/hyperframes/dist/skills/hyperframes/SKILL.md`.
+- `DATA=$(bash $SK/scripts/resolve-datadir.sh)` (dort liegen node_modules + Chromium, s. Phase 0).
+- Lektuere: `$SK/references/motion-style.md` (Anchor-Word-Sync, Render-Defaults) + hyperframes-Skill in `$DATA/engines/hyperframes/node_modules/hyperframes/dist/skills/hyperframes/SKILL.md`.
 - Brand: Farben/Fonts aus dem `ci.md`-Frontmatter (`colors`, `fonts`). **Kein Logo einblenden**, auch wenn die CI ein `logo` definiert. Hooks/CTA via `icp`-Skill.
-- Compositions bauen, Puppeteer-Render (Executable-Path aus `$SK/engines/hyperframes/.chromium-path`), Overlays nach cut-standards/motion-style ueber den Cut legen.
+- Compositions bauen, Puppeteer-Render (Executable-Path aus `$DATA/engines/hyperframes/.chromium-path`), Overlays nach cut-standards/motion-style ueber den Cut legen.
 
 ---
 

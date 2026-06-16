@@ -33,7 +33,7 @@ Abkuerzung: `SK=.claude/skills/video-footage-mining` (Aufruf vom OS-Root).
 
 ### Phase 0: Setup-Gate (PFLICHT, still)
 
-1. Existiert `$SK/.ready`? Nein -> `bash $SK/scripts/setup.sh`, Ausgabe zeigen (installiert lokalen Whisper).
+1. `DATA=$(bash $SK/scripts/resolve-datadir.sh)` (schreibbares Daten-Verzeichnis: Skill-Root in Claude Code, Cache in Cowork). Fehlt `$DATA/.ready` -> `bash $SK/scripts/setup.sh`, Ausgabe zeigen (installiert lokalen Whisper).
 2. `bash $SK/scripts/doctor.sh`. Bei `OFFEN faster-whisper` -> Setup nochmal laufen lassen. **`OFFEN ELEVENLABS_API_KEY` ist hier OK** (die Sichtung braucht keinen Key) - nur als Hinweis behandeln, nicht stoppen.
 3. Bei `FEHLT ffmpeg/python` -> Hard-Stop.
 
@@ -55,7 +55,8 @@ Nur wenn ffmpeg + Python + faster-whisper da sind -> weiter.
 
 ```bash
 SK=.claude/skills/video-footage-mining
-PY=$SK/.venv/bin/python
+DATA="$(bash "$SK/scripts/resolve-datadir.sh")"   # writable: skill root (Claude Code) or cache (Cowork)
+PY="$DATA/.venv/bin/python"
 RAWDIR="{footage_ordner}"
 $PY $SK/helpers/transcribe_batch.py "$RAWDIR" --text-only   # -> *.txt + gist.md (lokaler Whisper)
 ```

@@ -25,6 +25,7 @@ __pycache__/
 # video-* skill runtime artifacts (built by setup.sh, never committed)
 **/.venv/
 **/.ready
+**/.wtest
 **/.chromium-cache/
 **/.chromium-path
 **/secrets.env

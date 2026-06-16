@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 # Environment check for a video-* skill. Read-only, changes nothing.
-# Pass the resolved Brain secrets file so the API key can be verified:
+# Resolves the writable DATA dir (same logic as setup.sh) and checks the artifacts there.
+# Pass the resolved Brain secrets file to verify the API key:
 #   bash <skill>/scripts/doctor.sh {context}/secrets.env
 # Node/Chromium are only checked when this skill bundles the motion-graphics engine.
 set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$ROOT"
+DATA="$(bash "$ROOT/scripts/resolve-datadir.sh")"
 SECRETS="${1:-}"
 
 echo "# video Doctor"
+echo "(data dir: $DATA)"
 echo
 echo "## Pflicht-Tools"
 for bin in ffmpeg ffprobe python3 uv; do
@@ -17,7 +19,7 @@ done
 ffmpeg -version 2>/dev/null | grep -q 'enable-libass' && echo "OK    ffmpeg+libass (Untertitel)" || echo "WARN  ffmpeg ohne libass"
 
 # node/npm only matter when this skill ships the motion-graphics engine
-if [ -d engines/hyperframes ]; then
+if [ -d "$ROOT/engines/hyperframes" ]; then
   for bin in node npm; do
     command -v "$bin" >/dev/null 2>&1 && echo "OK    $bin ($($bin --version 2>&1 | head -1))" || echo "FEHLT $bin"
   done
@@ -25,17 +27,17 @@ fi
 
 echo
 echo "## Setup-Status"
-[ -f .ready ] && echo "OK    .ready ($(cat .ready))" || echo "OFFEN .ready fehlt -> setup.sh ausfuehren"
-[ -d .venv ] && echo "OK    Python-Env (.venv)" || echo "OFFEN .venv fehlt -> setup.sh"
+[ -f "$DATA/.ready" ] && echo "OK    .ready ($(cat "$DATA/.ready"))" || echo "OFFEN .ready fehlt -> setup.sh ausfuehren"
+[ -d "$DATA/.venv" ] && echo "OK    Python-Env (.venv)" || echo "OFFEN .venv fehlt -> setup.sh"
 # local Whisper is only expected for skills that bundle it (marker .needs-whisper)
-if [ -f .needs-whisper ] && [ -x .venv/bin/python ]; then
-  .venv/bin/python -c "import faster_whisper" 2>/dev/null \
+if [ -f "$ROOT/.needs-whisper" ] && [ -x "$DATA/.venv/bin/python" ]; then
+  "$DATA/.venv/bin/python" -c "import faster_whisper" 2>/dev/null \
     && echo "OK    faster-whisper (lokale Transkription)" \
     || echo "OFFEN faster-whisper fehlt -> setup.sh"
 fi
-if [ -d engines/hyperframes ]; then
-  [ -d engines/hyperframes/node_modules/hyperframes ] && echo "OK    hyperframes installiert" || echo "OFFEN hyperframes node_modules fehlt -> setup.sh"
-  [ -f engines/hyperframes/.chromium-path ] && echo "OK    Chromium ($(cat engines/hyperframes/.chromium-path))" || echo "OFFEN Chromium fehlt (nur fuer Motion Graphics noetig)"
+if [ -d "$ROOT/engines/hyperframes" ]; then
+  [ -d "$DATA/engines/hyperframes/node_modules/hyperframes" ] && echo "OK    hyperframes installiert" || echo "OFFEN hyperframes node_modules fehlt -> setup.sh"
+  [ -f "$DATA/engines/hyperframes/.chromium-path" ] && echo "OK    Chromium ($(cat "$DATA/engines/hyperframes/.chromium-path"))" || echo "OFFEN Chromium fehlt (nur fuer Motion Graphics noetig)"
 fi
 
 echo

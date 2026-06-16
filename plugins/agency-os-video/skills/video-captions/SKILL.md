@@ -34,7 +34,7 @@ Abkuerzung: `SK=.claude/skills/video-captions` (Aufruf vom OS-Root). Den `{conte
 
 ### Phase 0: Setup-Gate (PFLICHT, still)
 
-1. Existiert `$SK/.ready`? Nein -> `bash $SK/scripts/setup.sh`, Ausgabe zeigen.
+1. `DATA=$(bash $SK/scripts/resolve-datadir.sh)` (schreibbares Daten-Verzeichnis: Skill-Root in Claude Code, Cache in Cowork). Fehlt `$DATA/.ready` -> `bash $SK/scripts/setup.sh`, Ausgabe zeigen.
 2. `{context}` auflösen, dann `bash $SK/scripts/doctor.sh "{context}/secrets.env"`. Bei `OFFEN ELEVENLABS_API_KEY` -> Nutzer bitten, den Key in `{context}/secrets.env` einzutragen (Vorlage: `$SK/secrets.env.example`), dann stoppen.
 3. Bei `FEHLT ffmpeg/python` -> Hard-Stop. (Node/Chromium braucht dieser Skill nicht.)
 
@@ -56,7 +56,8 @@ Nur wenn Doctor sauber -> weiter.
 
 ```bash
 SK=.claude/skills/video-captions
-PY=$SK/.venv/bin/python
+DATA="$(bash "$SK/scripts/resolve-datadir.sh")"   # writable: skill root (Claude Code) or cache (Cowork)
+PY="$DATA/.venv/bin/python"
 RAWDIR="$(dirname "{video}")"        # video folder = output folder
 EDIT="$RAWDIR/_work/edit"            # cache next to the file (gitignored)
 $PY $SK/helpers/transcribe.py "{video}" --edit-dir "$EDIT"
@@ -72,7 +73,8 @@ Da nicht geschnitten wird, ist die EDL ein **einziges Segment über die volle La
 
 ```bash
 SK=.claude/skills/video-captions
-PY=$SK/.venv/bin/python
+DATA="$(bash "$SK/scripts/resolve-datadir.sh")"   # writable: skill root (Claude Code) or cache (Cowork)
+PY="$DATA/.venv/bin/python"
 RAWDIR="$(dirname "{video}")"
 EDIT="$RAWDIR/_work/edit"
 # write {EDIT}/edl.json: one full-length segment, no grade, then:
