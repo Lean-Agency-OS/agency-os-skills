@@ -137,7 +137,7 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 
 ### Phase 7: Self-Eval + Ablegen
 
-- **Self-Eval (einmal):** fertigen Cut gegen die EDL pruefen (Schnitt-im-Wort + Untertitel-Leaks) per `timeline_view`-Stichproben an den Schnitt-Raendern. Zusätzlich pruefen: Text-Hook + Untertitel innerhalb der Safe Zone, Caption-Oberkante springt nicht. Nicht pro Render.
+- **Self-Eval (einmal):** fertigen Cut gegen die EDL pruefen (Schnitt-im-Wort + Untertitel-Leaks) per `timeline_view`-Stichproben an den Schnitt-Raendern. Zusätzlich pruefen: Text-Hook + Untertitel innerhalb der Safe Zone, Caption-Oberkante springt nicht, und **erstes + letztes Frame sind Content (nie Schwarz)**. Nicht pro Render.
 - **Ablage (OS-Convention):** `_index.md` neben das Raw-File schreiben (getrackt), `final.mp4` daneben, Media/Cache bleibt in `_work/` (gitignored):
 
 ```markdown

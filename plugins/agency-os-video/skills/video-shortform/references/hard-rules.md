@@ -31,6 +31,7 @@ Das sind die Dinge, bei denen Abweichung zu stillen Fehlern oder kaputtem Output
 10. **Parallele Sub-Agents für mehrere Animationen.** Nie sequentiell. Spawne N gleichzeitig über das `Agent`-Tool; Gesamt-Wandzeit ≈ langsamster.
 11. **Strategie-Bestätigung vor Ausführung.** Fass den Schnitt nie an, bevor der Nutzer den Klartext-Plan freigegeben hat.
 12. **Alle Session-Outputs in `<videos_dir>/edit/`.** Schreibe nie in das Skill-Verzeichnis.
+13. **Nie auf Schwarz starten oder enden.** Erstes und letztes Frame ist Content, kein schwarzer Leader/Tail, kein Fade-from-/to-black. Die erste/letzte Schnittkante entsprechend setzen und nach dem Render erstes + letztes Frame stichprobenartig prüfen.
 
 Alles andere in diesem Dokument ist ein durchgespieltes Beispiel. Weiche ab, wann immer das Material es verlangt.
 
