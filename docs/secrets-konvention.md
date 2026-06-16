@@ -10,7 +10,8 @@ Wie Plugins in diesem Marketplace mit API-Keys, Tokens und Environment-Variablen
 
 | Ebene | Beispiel | Ort |
 |---|---|---|
-| **Plugin-eigene Secrets** (nur dieses Plugin braucht sie) | ELEVENLABS_API_KEY (video-studio), GitHub-Token (github-cowork) | `${CLAUDE_PLUGIN_DATA}/.env` bzw. Config-Datei dort |
+| **Brain-residente Secrets** (Brain-aware agency-os-Skills) | ELEVENLABS_API_KEY (video-*) | `{context}/secrets.env` im Brain (committet, private Repos), aufgelöst über `.agency-os/architecture.md` Rolle `context` |
+| **Plugin-eigene Secrets** (nur dieses Plugin braucht sie) | GitHub-Token (github-cowork) | `${CLAUDE_PLUGIN_DATA}/.env` bzw. Config-Datei dort |
 | **OS-globale Variablen** (mehrere Skills brauchen sie) | Auto-DM-Tool-Key, Notion-Token | `.env` im OS-Root des Kunden (gitignored, `.env.example` als Inventar) |
 | **Persönliche Secrets des Betreibers** | Markus' eigene Tokens | Keychain-Pattern (nur Claude Code / Host-Shell — in der Cowork-Sandbox nicht verfügbar) |
 
@@ -43,7 +44,7 @@ data_dir = os.environ.get("CLAUDE_PLUGIN_DATA",
 - `.env.example` im Plugin dokumentiert, welche Variablen das Plugin braucht — die echte `.env` entsteht erst beim Setup im Daten-Verzeichnis
 - Setup-Marker (`.ready`) trägt die Plugin-Version → Doctor erkennt nach einem Update, dass Dependencies neu installiert werden müssen, **ohne** dass der User seinen Key neu eintragen muss
 - Secrets nie in Ausgaben, Logs oder committete Dateien — in Bestätigungen maskieren
-- Referenz-Implementierung: `plugins/agency-os-video/skills/video-studio/scripts/setup.sh` (Bash)
+- Referenz-Implementierung: `plugins/agency-os-video/skills/video-shortform/scripts/{setup,doctor}.sh` (Bash). Der Key wird hier aus `{context}/secrets.env` im Brain gelesen, nicht aus dem Plugin-Daten-Verzeichnis.
 
 ## Offen / zu verifizieren
 

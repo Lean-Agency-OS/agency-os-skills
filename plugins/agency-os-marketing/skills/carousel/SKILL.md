@@ -27,7 +27,7 @@ Keine hartkodierten Pfade. Ordner werden über ihre **Rolle** aus `.agency-os/ar
 diese aufgelösten Pfade.
 
 - **Brand:** aktive Brand unter `{context}/brands/`. Nur eine → die; mehrere → die mit `brand-config.md` `status: active`. Kein fester Default-Name.
-- **Brand-CI:** `{context}/brands/{brand}/ci.md` (Frontmatter: `colors`, `fonts`, `handle`, `name`, `assets_dir`, `logo`). Angelegt/gepflegt von `/brand-ci` (dort liegt das Schema + Beispiel). Gleiche `ci.md` nutzt auch `/video-studio`. Die CI fließt beim **Template-Generieren** ins Layout (s.u.); beim Bauen liefert sie `assets_dir`/`handle`/`name` für den Render.
+- **Brand-CI:** `{context}/brands/{brand}/ci.md` (Frontmatter: `colors`, `fonts`, `handle`, `name`, `assets_dir`, `logo`). Angelegt/gepflegt von `/brand-ci` (dort liegt das Schema + Beispiel). Gleiche `ci.md` nutzt auch `/video-shortform`. Die CI fließt beim **Template-Generieren** ins Layout (s.u.); beim Bauen liefert sie `assets_dir`/`handle`/`name` für den Render.
 - **ICP:** `{context}/brands/{brand}/icp.md` (Fallback projektweites ICP). Auf alle Texte anwenden.
 - **Voice:** `{context}/brands/{brand}/voice-profile.md` (Fallback projektweit). Auf alle Texte anwenden.
 
@@ -152,7 +152,7 @@ Kein automatisches Posten. Kurzer Eintrag im Tages-Log `{logs}/[YYYY-MM-DD].md` 
 **Abgrenzung:**
 
 - Kein automatisches Posten - Export ist PNG + PDF + Caption.
-- Keine Reels/Videos (`/reel-skript` bzw. `/video-studio`), keine Caption-only-Posts (`/instagram-caption`, `/linkedin-caption`).
+- Keine Reels/Videos (`/reel-skript` bzw. `/video-shortform`), keine Caption-only-Posts (`/instagram-caption`, `/linkedin-caption`).
 - Comment-for-X braucht ein Auto-DM-Tool - ohne das den Direktlink-CTA wählen.
 
 ## Hard-Stops

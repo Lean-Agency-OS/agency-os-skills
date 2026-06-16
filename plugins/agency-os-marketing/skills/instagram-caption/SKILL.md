@@ -167,7 +167,7 @@ nicht als Skill-zu-Skill-Aufruf.
 **Abgrenzung:**
 
 - **Schreibt nur die Caption** zu einem bestehenden Asset — erstellt kein Bild/Video und keine Slides.
-- Slides/Carousel-Aufbau ist `/carousel`, Reel-Skript ist `/reel-skript`, Video-Produktion ist `/video-studio`.
+- Slides/Carousel-Aufbau ist `/carousel`, Reel-Skript ist `/reel-skript`, Video-Produktion ist `/video-shortform`.
 - Kein Newsletter (`/newsletter-email`), keine LinkedIn-Caption (`/linkedin-caption`).
 - Eine einzelne Caption pro Aufruf.
 

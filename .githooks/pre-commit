@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# pre-commit: keep the vendored video-engine copies in sync with packages/video-engine.
+# Re-vendors all video-* skills and stages the result, so a change to the engine source
+# can never be committed without its synced copies. Enable once with:
+#   git config core.hooksPath .githooks
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+[ -f "$ROOT/tools/sync-engine.sh" ] || exit 0
+
+bash "$ROOT/tools/sync-engine.sh" >/dev/null
+git add "$ROOT/plugins/agency-os-video/skills"

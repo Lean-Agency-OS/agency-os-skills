@@ -4,7 +4,7 @@ version: 1.0.0
 description: >
   Legt die Brand-CI an oder aktualisiert sie: schreibt `ci.md` (YAML-Frontmatter) mit Farben, Fonts,
   Logo, Handle, Brand-Name und Asset-Ordner in den Brand-Kontext. Die `ci.md` ist die gemeinsame
-  Quelle für `/carousel` und `/video-studio`. Geführtes Interview, schreibt erst nach Bestätigung.
+  Quelle für `/carousel` und `/video-shortform`. Geführtes Interview, schreibt erst nach Bestätigung.
   Triggern bei: "CI einrichten", "Brand-CI anlegen", "ci.md erstellen", "Corporate Identity festlegen",
   "Farben und Fonts festlegen", "Markenfarben hinterlegen", "CI aktualisieren", "/brand-ci".
 ---
@@ -13,7 +13,7 @@ description: >
 
 Schreibt die **Brand-CI** als `ci.md` (YAML-Frontmatter) in den Brand-Ordner. Die Datei ist die
 **eine Quelle** für Farben, Fonts, Logo, Handle, Brand-Name und Asset-Ordner und wird von `/carousel`
-(Layout-CI) und `/video-studio` (Untertitel, Overlays, Logo) gelesen. Ton/Stimme gehören NICHT hierher,
+(Layout-CI) und `/video-shortform` (Untertitel, Overlays, Logo) gelesen. Ton/Stimme gehören NICHT hierher,
 die liegen in `voice-profile.md` (`/brand-voice`).
 
 ## Pfade & Fundament
@@ -74,12 +74,12 @@ aktualisieren (Update-Modus, übrige Felder + Prosa unverändert lassen). Ordner
 
 ### 5. Abschluss
 
-Pfad ausgeben. Hinweis: `/carousel` und `/video-studio` nutzen die `ci.md` ab jetzt automatisch. Falls
+Pfad ausgeben. Hinweis: `/carousel` und `/video-shortform` nutzen die `ci.md` ab jetzt automatisch. Falls
 ein `assets_dir` gesetzt wurde, das aber noch nicht existiert: kurz erwähnen, dass dort Logo/Fotos abgelegt werden sollten.
 
 ## Output
 
-Schreibt (nach "go") `{context}/brands/{brand}/ci.md` (YAML-Frontmatter + optionale Prosa-Notizen). Im Update-Modus nur die geänderten Felder, Rest unverändert. `/carousel` und `/video-studio` lesen die Datei ab dann automatisch.
+Schreibt (nach "go") `{context}/brands/{brand}/ci.md` (YAML-Frontmatter + optionale Prosa-Notizen). Im Update-Modus nur die geänderten Felder, Rest unverändert. `/carousel` und `/video-shortform` lesen die Datei ab dann automatisch.
 
 ## Verwandte Skills
 

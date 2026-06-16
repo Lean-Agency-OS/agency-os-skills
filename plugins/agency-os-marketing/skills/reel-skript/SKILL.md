@@ -9,7 +9,7 @@ description: >
   Draft (gesprochenes Skript + On-Screen-Text + Shot-Regie + Caption) ->
   3 Hook-Varianten + Qualitäts-/ICP-Check -> Approval -> Speichern + Log.
   Liest das Voice-/ICP-/Positionierungs-Profil des Projekts, falls vorhanden.
-  Plant nur (kein Rendern, das macht video-studio). Triggern bei: "plan mir ein Reel",
+  Plant nur (kein Rendern, das macht video-shortform). Triggern bei: "plan mir ein Reel",
   "Reel planen", "Reel-Skript", "Reel-Idee", "Reel-Konzept", "Short planen",
   "Instagram Reel", "TikTok-Video planen", "YouTube Short planen", "Reel optimieren".
 ---
@@ -142,7 +142,7 @@ geänderten Bereich neu schreiben, Rest unverändert lassen. **"Go" → Phase 6.
    Frontmatter: Status, geplantes Datum, Plattform, Format, Thema, Payoff-Typ, Build-Typ, CTA. Darunter
    die 3 Hook-Varianten + Begründung und das vollständige Skript + Caption.
 2. **Ausgabe an den User:** Link/Pfad zur Datei, plus genutzte Story-Quellen (falls Phase 2).
-   Hinweis: Produktion/Schnitt aus Rohmaterial läuft über `/video-studio` (Plugin agency-os-video).
+   Hinweis: Produktion/Schnitt aus Rohmaterial läuft über `/video-shortform` (Plugin agency-os-video).
 3. **Log** — falls das Projekt ein Tages-/Aktivitäts-Log führt (`{logs}/{YYYY-MM-DD}.md`),
    einen kurzen Eintrag ergänzen: Thema, Payoff-Typ, Build-Typ, CTA, Hook-Wahl, Output-Pfad.
 
@@ -153,7 +153,7 @@ geänderten Bereich neu schreiben, Rest unverändert lassen. **"Go" → Phase 6.
 Eine Markdown-Datei im in der Ablage bestimmten Ziel-Ordner (z.B. `{marketing}/content/reels/`),
 Naming `{YYYY}-w{KW}-reel{N}-{slug}.md`. Frontmatter (Status, geplantes Datum, Plattform, Format, Thema,
 Payoff-Typ, Build-Typ, CTA) + 3 Hook-Varianten mit Begründung + vollständiges Skript (Gesprochen /
-On-Screen-Text / Shot pro Beat) + Post-Caption. Kein Rendern/Schnitt (das macht `/video-studio`).
+On-Screen-Text / Shot pro Beat) + Post-Caption. Kein Rendern/Schnitt (das macht `/video-shortform`).
 Optional ein Log-Eintrag im Tages-Log.
 
 ---
@@ -172,7 +172,7 @@ Gemeinsame Frameworks gehören als Projekt-Note, nicht als Skill-zu-Skill-Aufruf
 **Abgrenzung:**
 
 - **Kein Rendern/Schnitt** — dieser Skill plant nur das Skript. Das fertige Video aus Rohmaterial
-  produziert `/video-studio` (Plugin agency-os-video).
+  produziert `/video-shortform` (Plugin agency-os-video).
 - Keine statischen Slides (das ist `/carousel`).
 - Keine E-Mail/Newsletter (das ist `/newsletter-email`).
 - Keine LinkedIn-/Text-Social-Variante (das ist `/linkedin-content`).

@@ -36,7 +36,7 @@
     {
       "name": "agency-os-video",
       "source": "./plugins/agency-os-video",
-      "description": "KI-Video-Editing: Roh-Video zu Reel/Short plus lokale Schnell-Triage ganzer Video-Ordner ohne API",
+      "description": "KI-Video-Editing als vier Use-Case-Skills: postfertiges Reel/Short, Rohschnitt + NLE-Export, Untertitel einbrennen, Footage-Triage lokal ohne API",
       "category": "content",
       "author": {
         "name": "Markus Vieghofer"

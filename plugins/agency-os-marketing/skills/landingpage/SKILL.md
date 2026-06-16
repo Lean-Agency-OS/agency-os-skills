@@ -81,7 +81,7 @@ Final CTA).
 
 ## Verwandte Skills
 
-- Liefert **Copy + Struktur**, kein gerendertes HTML/Design (das baut Web/Designer; ein Asset-Bild macht `/carousel`/`/video-studio` nicht).
+- Liefert **Copy + Struktur**, kein gerendertes HTML/Design (das baut Web/Designer; ein Asset-Bild macht `/carousel`/`/video-shortform` nicht).
 - Der Lead-Magnet dahinter ist `/lead-magnet`, die Follow-up-Strecke `/email-sequenz`, der Traffic-Plan `/kampagnen-plan`.
 - Eine Seite = ein Ziel. Mehrere Ziele → mehrere Seiten.
 

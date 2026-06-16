@@ -1,7 +1,7 @@
 {
   "name": "agency-os-video",
-  "description": "Agency OS Video: KI-Video-Editing von Roh-Video zu Reel/Short (Transkript, Schnitt, Untertitel, Motion Graphics, Render) plus lokale Schnell-Triage ganzer Video-Ordner ohne API. Braucht einmalig setup.sh + ElevenLabs-Key",
-  "version": "1.2.0",
+  "description": "Agency OS Video: vier Use-Case-Skills auf geteilter Engine - video-shortform (Rohvideo zu postfertigem Reel/Short), video-roughcut (Rohschnitt + DaVinci/Premiere-Export), video-captions (Untertitel einbrennen), video-footage-mining (Footage-Triage lokal ohne API). Braucht einmalig setup.sh + ElevenLabs-Key in {context}/secrets.env",
+  "version": "2.0.0",
   "author": {
     "name": "Markus Vieghofer",
     "email": "hallo@markusvieghofer.com"
