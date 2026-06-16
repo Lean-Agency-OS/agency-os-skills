@@ -17,6 +17,7 @@ Daraus ergibt sich die Safe-Zone-Box: **x von ~70 bis ~1010, y von ~265 bis ~155
 - **Untertitel:** feste **obere Kante** (Anchor), die Captions wachsen nach **unten**. Die Captions dürfen **nie vertikal springen** - die obere Kante bleibt über alle Captions hinweg auf derselben Linie, egal ob ein- oder mehrzeilig. Den Anchor so hoch im unteren Safe-Zone-Bereich setzen, dass auch die längste (mehrzeilige) Caption noch **über** dem unteren 19-%-Band bleibt (nie tiefer als y ~1555 @1080x1920).
 - **Text-Hook:** im oberen bis mittleren Bereich der Safe Zone, **unter** dem oberen 14-%-Band. Scroll-stopping, gut lesbar, bricht nie an den Seitenrändern um.
 - **Seiten:** Text nie über die seitlichen 6.5-%-Ränder hinaus (rechts sitzen die Action-Buttons).
+- **Caption-Maximalbreite:** Untertitel haben zusätzlich eine feste Maximalbreite über seitliche Ränder (`MarginL`/`MarginR` im force_style, ~12% je Seite ≈ 130px auf 1080-breit). Zu breite Cues **brechen um** statt randvoll zu laufen. Die Ränder liegen innerhalb der Safe Zone, sind aber enger als die 6.5-%-Hartgrenze, damit Captions angenehm lesbar bleiben.
 
 ## Andere Formate
 

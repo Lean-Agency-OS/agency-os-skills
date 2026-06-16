@@ -71,12 +71,17 @@ def _color_to_ass(value: str | None) -> str:
 def build_sub_style(color: str | None = None, font: str | None = None) -> str:
     """Build the libass force_style from optional CI values. MarginV/Bold/Outline are
     the proven safe-zone defaults (do not lower MarginV below ~75). Colour accepts hex
-    or ASS; font falls back to a widely available family when none is given."""
+    or ASS; font falls back to a widely available family when none is given.
+
+    MarginL/MarginR enforce a caption max width: without them long cues run almost to
+    the frame edge. Values are in libass' default 384x288 script space (same space as
+    MarginV=90), so 46 ≈ 12% per side ≈ 130px on a 1080-wide frame — inside the safe
+    zone. libass then wraps cues that exceed the remaining width instead of overflowing."""
     return (
         f"FontName={font or 'Helvetica'},FontSize=18,Bold=1,"
         f"PrimaryColour={_color_to_ass(color)},OutlineColour=&H00000000,BackColour=&H00000000,"
         "BorderStyle=1,Outline=2,Shadow=0,"
-        "Alignment=2,MarginV=90"
+        "Alignment=2,MarginV=90,MarginL=46,MarginR=46"
     )
 
 
