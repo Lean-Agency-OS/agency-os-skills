@@ -46,7 +46,7 @@ Nur wenn Doctor sauber -> weiter.
 
 **1a. Inputs:** Pfad zum **fertig geschnittenen** Video; Brand (für CI-Farbe/Font); Sprache, falls nicht offensichtlich.
 
-**1b. Ordner:** Output landet IMMER im **selben Ordner wie das Video**. Transkript/Cache in `<ordner>/_work/edit/` (gitignored), `final_captioned.mp4` direkt daneben.
+**1b. Ordner:** Output landet IMMER im **selben Ordner wie das Video**. Transkript/Cache in `<ordner>/_work/edit/` (gitignored), `{quell-stem}-captioned.mp4` direkt daneben.
 
 **1c. Bestaetigen** (Pflicht): *"Ich transkribiere das Video und brenne die Untertitel in {brand}-CI ein. Kein Schnitt. Passt das?"* Erst nach OK -> Phase 2.
 
@@ -77,7 +77,7 @@ RAWDIR="$(dirname "{video}")"
 EDIT="$RAWDIR/_work/edit"
 # write {EDIT}/edl.json: one full-length segment, no grade, then:
 $PY $SK/helpers/render.py "{EDIT}/edl.json" \
-  -o "$RAWDIR/final_captioned.mp4" --build-subtitles
+  -o "$RAWDIR/{quell-stem}-captioned.mp4" --build-subtitles
 ```
 
 - **Ton-Check:** Untertitel-Text vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pruefen (Schreibweisen, Begriffe).
@@ -91,13 +91,13 @@ $PY $SK/helpers/render.py "{EDIT}/edl.json" \
 ### Phase 4: Self-Eval + Ablegen
 
 - **Self-Eval (einmal):** Stichproben pruefen, dass keine Caption im Wort bricht / über den Rand laeuft / verrutscht ist.
-- **Ablage (OS-Convention):** `_index.md` neben das Video (getrackt), `final_captioned.mp4` daneben, Cache in `_work/` (gitignored):
+- **Ablage (OS-Convention):** `_index.md` neben das Video (getrackt), `{quell-stem}-captioned.mp4` daneben, Cache in `_work/` (gitignored):
 
 ```markdown
 # {Titel} (Untertitel)
 - Brand: {brand}
 - Status: Untertitel eingebrannt
-- Render: final_captioned.mp4
+- Render: {quell-stem}-captioned.mp4
 - Datum: {YYYY-MM-DD}
 ```
 
@@ -108,7 +108,7 @@ $PY $SK/helpers/render.py "{EDIT}/edl.json" \
 ## Output
 
 Im selben Ordner wie das Video:
-- `final_captioned.mp4` (Video + eingebrannte Untertitel) + getracktes `_index.md`.
+- `{quell-stem}-captioned.mp4` (Video + eingebrannte Untertitel) + getracktes `_index.md`.
 - Transkript/Cache in `_work/edit/` (gitignored).
 - Daily-Log-Notiz in `{logs}/{YYYY-MM-DD}.md`.
 

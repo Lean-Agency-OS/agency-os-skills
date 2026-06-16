@@ -409,8 +409,8 @@ def build_master_srt(edl: dict, edit_dir: Path, out_path: Path) -> None:
             local_end = min(seg_end, chunk[-1].get("end", seg_end))
             out_start = max(0.0, local_start - seg_start) + seg_offset
             out_end = max(0.0, local_end - seg_start) + seg_offset
-            if out_end <= out_start:
-                out_end = out_start + 0.4
+            if out_end < out_start:
+                out_end = out_start
             text = " ".join((w.get("text") or "").strip() for w in chunk)
             text = re.sub(r"\s+", " ", text).strip()
             # Strip trailing punctuation for cleaner uppercase look
@@ -420,8 +420,22 @@ def build_master_srt(edl: dict, edit_dir: Path, out_path: Path) -> None:
 
         seg_offset += seg_duration
 
-    # Sort and write as SRT
+    # Sort, then give each cue a minimum on-screen time WITHOUT ever overlapping
+    # the next one. Extending a short cue toward the next cue is fine, but it must
+    # never run past the next cue's start: overlapping cues make libass stack them
+    # and a caption appears to "jump" upward. Touching (end == next start) is safe.
     entries.sort(key=lambda e: e[0])
+    MIN_CUE = 0.3
+    fixed: list[tuple[float, float, str]] = []
+    for i, (a, b, t) in enumerate(entries):
+        end = max(b, a + MIN_CUE)
+        if i + 1 < len(entries):
+            end = min(end, entries[i + 1][0])  # never overlap the next cue
+        if end < a:
+            end = a
+        fixed.append((a, end, t))
+    entries = fixed
+
     lines: list[str] = []
     for i, (a, b, t) in enumerate(entries, start=1):
         lines.append(str(i))

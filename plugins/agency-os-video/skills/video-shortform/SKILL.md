@@ -60,8 +60,8 @@ Nur wenn Doctor sauber -> weiter.
 
 **1d. Skript prüfen:** Liegt ein Skript vor (z.B. ein `/reel-skript`-Output im Marketing-Ordner oder eine Skript-Datei beim Footage)? Wenn ja, dient es als Vorlage für Hook + Schnitt. Bei **mehreren** Videos die Skript-Struktur über die Clips abbilden (jeder Clip füllt seinen Beat).
 
-**1e. Ordner:** Output landet IMMER im **selben Ordner wie das Roh-Video** (kein neuer datierter Ordner):
-- `final.mp4` + `_index.md` direkt neben dem Raw-File
+**1e. Ordner + Dateiname:** Output landet IMMER im **selben Ordner wie das Roh-Video** (kein neuer datierter Ordner):
+- **Sprechender Name**, nicht `final.mp4`: `{quell-stem}-{slug}.mp4` aus Quell-Dateiname + kurzem Thema-/Hook-Slug (z.B. `IMG_8762-funnel-fehler.mp4`). Das ist auch batch-sicher: mehrere Videos im selben Ordner überschreiben sich so nicht. Dazu `{quell-stem}-{slug}_index.md` daneben.
 - Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `<ordner>/_work/edit/` (gitignored)
 
 So bleiben Raw und fertiger Schnitt zusammen. Den Edit-Cache nie neu transkribieren, wenn das Raw-File unveraendert ist.
@@ -111,8 +111,9 @@ Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slic
 SK=.claude/skills/video-shortform
 PY=$SK/.venv/bin/python
 RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
+OUT="$RAWDIR/{quell-stem}-{slug}.mp4"   # speaking name (source stem + topic slug), batch-safe
 $PY $SK/helpers/render.py "{EDIT}/edl.json" \
-  -o "$RAWDIR/final.mp4" --build-subtitles   # final.mp4 right next to the raw file
+  -o "$OUT" --build-subtitles
 ```
 
 **Safe Zone (Pflicht, `$SK/references/safe-zone.md`):** Untertitel + Text-Hook müssen innerhalb der Safe Zone liegen, nie unter der Plattform-UI.
@@ -130,7 +131,7 @@ Untertitel-Ton vor dem Burn-in via `brand-voice`-Skill gegen das Brand-Profil pr
 Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 
 - Lektuere: `$SK/references/motion-style.md` (Anchor-Word-Sync, Render-Defaults) + hyperframes-Skill in `$SK/engines/hyperframes/node_modules/hyperframes/dist/skills/hyperframes/SKILL.md`.
-- Brand: Farben/Fonts/Logo aus dem `ci.md`-Frontmatter (`colors`, `fonts`, `logo`). Hooks/CTA via `icp`-Skill.
+- Brand: Farben/Fonts aus dem `ci.md`-Frontmatter (`colors`, `fonts`). **Kein Logo einblenden**, auch wenn die CI ein `logo` definiert. Hooks/CTA via `icp`-Skill.
 - Compositions bauen, Puppeteer-Render (Executable-Path aus `$SK/engines/hyperframes/.chromium-path`), Overlays nach cut-standards/motion-style ueber den Cut legen.
 
 ---
@@ -145,7 +146,7 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 - Brand: {brand}  | Format: {9:16}
 - Text-Hook: {gewählter Hook}
 - Status: Postfertig
-- Render: final.mp4
+- Render: {quell-stem}-{slug}.mp4
 - Datum: {YYYY-MM-DD}
 ```
 
@@ -156,7 +157,7 @@ Nur wenn in Phase 1 gewuenscht. Voraussetzung: Chromium (Doctor zeigt OK).
 ## Output
 
 Landet IMMER im selben Ordner wie das Roh-Video (kein neuer datierter Ordner):
-- `final.mp4` (postfertiges Reel/Short) + getracktes `_index.md` direkt neben dem Raw-File.
+- `{quell-stem}-{slug}.mp4` (postfertiges Reel/Short, sprechender Name) + getracktes `_index.md` direkt neben dem Raw-File.
 - Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `_work/edit/` (gitignored).
 - Daily-Log-Notiz in `{logs}/{YYYY-MM-DD}.md`.
 
