@@ -62,7 +62,7 @@ Setup + Umgebungs-Check laufen über `scripts/setup.sh` und `scripts/doctor.sh` 
 - `ELEVENLABS_API_KEY` auflösbar: er liegt extern im Brain unter `{context}/secrets.env` (committet, nie im Skill-Verzeichnis, nie im `<videos_dir>` des Nutzers). Fehlt er, bitte den Nutzer, ihn dort einzutragen (Vorlage: `secrets.env.example`).
 - `ffmpeg` + `ffprobe` im PATH.
 - Python-Deps installiert (`scripts/setup.sh` baut das venv im Skill-Root).
-- Node.js + npm + Chromium nur für Motion-Graphics nötig, und nur im `video-final`-Skill gebündelt.
+- Node.js + npm + Chromium nur für Motion-Graphics nötig, und nur im `video-shortform`-Skill gebündelt.
 
 Die Helfer (`helpers/transcribe.py`, `helpers/render.py`, etc.) liegen im Skill-Root, eine Ebene über dieser `references/`-Datei.
 

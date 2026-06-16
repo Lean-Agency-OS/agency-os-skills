@@ -25,7 +25,7 @@ Siehe Manifest in `tools/sync-engine.sh`. Kurzfassung:
 
 | Skill | Helfer (zzgl. ffmpeg_utils + transcribe + pack) | hyperframes |
 |---|---|---|
-| video-final | render, grade, broll, timeline_view | ja |
+| video-shortform | render, grade, broll, timeline_view | ja |
 | video-roughcut | export_nle, timeline_view | nein |
 | video-captions | render | nein |
 | video-footage-mining | transcribe_batch | nein |

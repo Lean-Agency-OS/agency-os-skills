@@ -65,7 +65,7 @@ sync_skill() {
 # render.py imports grade.py lazily with a fallback -> subtitle-only render works without grade.py.
 # Only footage-mining transcribes locally (text-only pass); the Scribe cut skills stay lean.
 
-sync_skill video-final \
+sync_skill video-shortform \
   "$COMMON_HELPERS render.py grade.py broll.py timeline_view.py" \
   "cut-standards.md hard-rules.md transcription.md motion-style.md" \
   yes no

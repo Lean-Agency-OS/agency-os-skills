@@ -72,7 +72,7 @@ scribe
 - Voraussetzung fuer den Fallback: das `.[whisper]`-Extra muss installiert
   sein. Das ist **nur beim Skill mit lokaler Transkription** der Fall
   (`video-footage-mining`, Marker `.needs-whisper`). Die Scribe-Cut-Skills
-  (`video-final`, `video-roughcut`, `video-captions`) installieren es bewusst
+  (`video-shortform`, `video-roughcut`, `video-captions`) installieren es bewusst
   nicht und sind Scribe-only: ist Scribe nicht erreichbar, brechen sie mit
   klarer Meldung ab, statt leise auf lokales Whisper zu degradieren.
 - **Folge fuer den Schnitt:** Ein Fallback-Transkript hat keine Sprecher-IDs.

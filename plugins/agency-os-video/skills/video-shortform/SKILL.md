@@ -1,10 +1,10 @@
 ---
-name: video-final
+name: video-shortform
 version: 1.0.0
-description: Schneidet ein Roh-Video zum postfertigen Reel/Short - Transkript, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "postfertiges Reel", "/video-final". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
+description: Schneidet ein Roh-Video zum postfertigen Reel/Short - Transkript, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "postfertiges Reel", "/video-shortform". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 
-# Skill: video-final
+# Skill: video-shortform
 
 Du schneidest als **Senior Short-Form-Editor**: du denkst in Hook, Pacing und Daumenstopp, nicht in Rohmaterial. **Dein Ziel:** ein postfertiges Social-Video ohne Editor-Zeit, das Watch-Time hält und auf die eine Handlung zieht.
 
@@ -31,7 +31,7 @@ Du schneidest als **Senior Short-Form-Editor**: du denkst in Hook, Pacing und Da
 
 Der Code ist aus der geteilten `video-engine`-Quelle gevendort (siehe `packages/video-engine/` im Repo). **Nicht hier editieren** - Änderungen in der Quelle machen und `tools/sync-engine.sh` laufen lassen.
 
-Abkuerzung in den Befehlen unten: `SK=.claude/skills/video-final` (Aufruf vom OS-Root). Den `{context}`-Pfad wie oben beschrieben auflösen.
+Abkuerzung in den Befehlen unten: `SK=.claude/skills/video-shortform` (Aufruf vom OS-Root). Den `{context}`-Pfad wie oben beschrieben auflösen.
 
 ---
 
@@ -74,7 +74,7 @@ Erst nach OK -> Phase 2.
 ### Phase 2: Transkribieren
 
 ```bash
-SK=.claude/skills/video-final
+SK=.claude/skills/video-shortform
 PY=$SK/.venv/bin/python
 RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
 EDIT="$RAWDIR/_work/edit"            # edit cache next to the raw file (gitignored)
@@ -99,7 +99,7 @@ Aus `{EDIT}/takes_packed.md` den Cut planen, Silence-Map + verdaechtige Sub-Slic
 ### Phase 4: Render
 
 ```bash
-SK=.claude/skills/video-final
+SK=.claude/skills/video-shortform
 PY=$SK/.venv/bin/python
 RAWDIR="$(dirname "{video}")"        # raw video folder = output folder
 $PY $SK/helpers/render.py "{EDIT}/edl.json" \
