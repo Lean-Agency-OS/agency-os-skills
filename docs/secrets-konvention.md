@@ -1,51 +1,36 @@
 # Secrets-Konvention für Agency-OS-Plugins
 
-Wie Plugins in diesem Marketplace mit API-Keys, Tokens und Environment-Variablen umgehen. Gilt für jedes Plugin — bestehende und künftige.
+Wie die agency-os-Plugins mit API-Keys und Tokens umgehen. Gilt für jedes Plugin — bestehende und künftige.
 
 ## Grundsatz
 
-**Nie Secrets in den Plugin-Ordner schreiben.** Der Plugin-Ordner ist der Cache (`~/.claude/plugins/cache/{marketplace}/{plugin}/{version}/`) — er wird bei jedem Update ersetzt. Alles, was eine Installation "besitzt", gehört ins persistente Daten-Verzeichnis.
+Secrets liegen im **Brain**, nie im Plugin-Ordner. Zwei Gründe:
 
-## Drei Ebenen
+- Der Plugin-Ordner ist der Cache (`~/.claude/plugins/cache/{marketplace}/{plugin}/{version}/`) und wird bei jedem Update ersetzt. Was eine Installation "besitzt", darf dort nicht liegen.
+- Das Brain ist zur Laufzeit ohnehin gemountet (die Skills lösen `{context}` auf, wie sie auch ihre anderen Kontext-Pfade auflösen) und liegt in einem **privaten** Repo. Ein committeter Key ist dort sicher genug und an **einem** Ort für alle Spokes.
 
-| Ebene | Beispiel | Ort |
-|---|---|---|
-| **Brain-residente Secrets** (Brain-aware agency-os-Skills) | ELEVENLABS_API_KEY (video-*) | `{context}/secrets.env` im Brain (committet, private Repos), aufgelöst über `.agency-os/architecture.md` Rolle `context` |
-| **Plugin-eigene Secrets** (nur dieses Plugin braucht sie) | GitHub-Token (github-cowork) | `${CLAUDE_PLUGIN_DATA}/.env` bzw. Config-Datei dort |
-| **OS-globale Variablen** (mehrere Skills brauchen sie) | Auto-DM-Tool-Key, Notion-Token | `.env` im OS-Root des Kunden (gitignored, `.env.example` als Inventar) |
-| **Persönliche Secrets des Betreibers** | Markus' eigene Tokens | Keychain-Pattern (nur Claude Code / Host-Shell — in der Cowork-Sandbox nicht verfügbar) |
+## Ort: `{context}/secrets.env`
 
-## `${CLAUDE_PLUGIN_DATA}`
+- Eine `KEY=VALUE`-Datei im Brain, aufgelöst über `.agency-os/architecture.md` (Rolle `context`), sonst per Muster `*context*`.
+- **Committet** im privaten Brain-Repo (kein gitignore nötig). Vorlage: `secrets.env.example` im jeweiligen Skill.
+- Beispiel: `ELEVENLABS_API_KEY=...` für die `video-*`-Skills.
 
-- Auflösung: Umgebungsvariable `CLAUDE_PLUGIN_DATA`; falls nicht gesetzt, dokumentierter Pfad `~/.claude/plugins/data/{plugin-name}/`
-- Wird beim ersten Zugriff angelegt, **überlebt Plugin-Updates** (Cache tut das nicht)
-- Gehört dort auch hin: installierte Dependencies (venv, node_modules), Caches, Setup-Marker
+## Auflösungs-Reihenfolge (für jeden Skill, der einen Key braucht)
 
-In Skripten immer mit Fallback auflösen:
+1. Bereits gesetzte Umgebungsvariable (z.B. vom Host injiziert).
+2. `{context}/secrets.env` im Brain.
+3. Fehlt → Setup-Flow: User bitten, den Key in `{context}/secrets.env` einzutragen (Vorlage zeigen). **Nie** in den Skill-Ordner schreiben.
 
-```bash
-DATA="${CLAUDE_PLUGIN_DATA:-$HOME/.claude/plugins/data/<plugin-name>}"
-```
+## Dependencies & Caches (kein Secret, aber verwandt)
 
-```python
-data_dir = os.environ.get("CLAUDE_PLUGIN_DATA",
-    os.path.expanduser("~/.claude/plugins/data/<plugin-name>"))
-```
+venv, `node_modules`, Chromium und der `.ready`-Marker liegen im **Skill-Root** und werden von `setup.sh` gebaut (gitignored). Ersetzt ein Update den Cache, fehlt `.ready` → `setup.sh` baut idempotent neu.
 
-## Auflösungs-Reihenfolge (für jeden Skill, der eine Variable braucht)
-
-1. Bereits gesetzte Umgebungsvariable
-2. `${CLAUDE_PLUGIN_DATA}/.env` (plugin-eigen)
-3. `<os-root>/.env` (OS-global)
-4. Fehlt → Setup-Flow: User fragen, an den richtigen Ort schreiben (global, wenn mehrere Skills die Variable brauchen, sonst plugin-lokal)
+> Tradeoff: schwere Deps (z.B. Chromium) werden nach einem Update neu geladen. Ein persistentes Daten-Verzeichnis (`${CLAUDE_PLUGIN_DATA}`) wäre eine spätere Optimierung, ist aktuell aber nicht implementiert.
 
 ## Regeln für Plugin-Autoren
 
-- `.env.example` im Plugin dokumentiert, welche Variablen das Plugin braucht — die echte `.env` entsteht erst beim Setup im Daten-Verzeichnis
-- Setup-Marker (`.ready`) trägt die Plugin-Version → Doctor erkennt nach einem Update, dass Dependencies neu installiert werden müssen, **ohne** dass der User seinen Key neu eintragen muss
-- Secrets nie in Ausgaben, Logs oder committete Dateien — in Bestätigungen maskieren
-- Referenz-Implementierung: `plugins/agency-os-video/skills/video-shortform/scripts/{setup,doctor}.sh` (Bash). Der Key wird hier aus `{context}/secrets.env` im Brain gelesen, nicht aus dem Plugin-Daten-Verzeichnis.
-
-## Offen / zu verifizieren
-
-- Verhalten von `${CLAUDE_PLUGIN_DATA}` in der Cowork-Sandbox (Host-Home vs. Sandbox) — Teil des E2E-Tests
+- `secrets.env.example` im Skill dokumentiert die gebrauchten Variablen — die echte Datei lebt im Brain.
+- `setup.sh` / `doctor.sh` lesen den Key über den aufgelösten `{context}`-Pfad (vom Skill als Argument übergeben), nie aus dem Skill-Ordner.
+- Setup-Marker (`.ready`) trägt die Plugin-Version → Doctor erkennt nach einem Update, dass Dependencies neu installiert werden müssen, **ohne** dass der User seinen Key neu eintragen muss.
+- Secrets nie in Ausgaben, Logs oder committete Skill-Dateien — in Bestätigungen maskieren.
+- Referenz-Implementierung: `plugins/agency-os-video/skills/video-shortform/scripts/{setup,doctor}.sh` (Bash).

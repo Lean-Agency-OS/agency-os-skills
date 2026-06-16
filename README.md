@@ -56,7 +56,7 @@ plugins/
 
 ## Secrets & Environment-Variablen
 
-Kein Plugin speichert Keys oder Tokens im Plugin-Ordner — der wird bei Updates ersetzt. Plugin-eigene Secrets liegen im persistenten Daten-Verzeichnis (`${CLAUDE_PLUGIN_DATA}`, d.h. `~/.claude/plugins/data/{plugin}/`), OS-globale Variablen in der gitignorten `.env` im OS-Root. Details und Regeln für neue Plugins: [docs/secrets-konvention.md](docs/secrets-konvention.md).
+Kein Plugin speichert Keys oder Tokens im Plugin-Ordner — der wird bei Updates ersetzt. Secrets liegen im **Brain** unter `{context}/secrets.env` (committet im privaten Repo, aufgelöst über `.agency-os/architecture.md`), z.B. der `ELEVENLABS_API_KEY` für die `video-*`-Skills. Details und Regeln für neue Plugins: [docs/secrets-konvention.md](docs/secrets-konvention.md).
 
 ## Entwicklung & Release
 
