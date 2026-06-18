@@ -20,27 +20,43 @@ Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
 
 ## Pfade & Fundament
 
-> **Brain-Pfade:** Keine festen Ordnernamen. Pfade unten (`{projects}`, `{ip}`, `{logs}` …) sind Platzhalter für die Rollen aus `.agency-os/architecture.md`; fehlt eine, gilt der Standard-Name. Die mitgelieferten Skripte lösen die Rollen selbst über die `architecture.md` auf (gemeinsamer Helper `resources/_arch.py`, Fallback auf die Standard-Namen) und scannen das Arbeitsverzeichnis (Brain-Root) als Wurzel.
+> **Brain-Pfade:** Keine festen Ordnernamen. Die Skripte tragen keine Pfad-Logik mehr — **du** löst die Ordner in Schritt 1 auf (LLM) und reichst sie als Config `.agency-os/lint-config.json` rein. Fehlt die Config, greifen die Standard-Namen. `.git`/`node_modules` werden immer übersprungen. Die Skripte scannen das Arbeitsverzeichnis (Brain-Root) als Wurzel und lesen die Config von dort automatisch.
 
-**Aufruf der Skripte:** vom Brain-Root aus. Abkürzung unten: `LINT="${CLAUDE_PLUGIN_ROOT:-.}/skills/agency-os-lint"`. Die Skripte nehmen das aktuelle Verzeichnis als Brain-Root; optional lässt sich der Root als erstes Argument übergeben.
-
-## Architektur aktuell halten
-
-Vor den Checks die `.agency-os/architecture.md` gegen die echte Top-Level-Struktur abgleichen (normalerweise pflegt der `agency-os-start`-Skill sie). Bei Drift - Ordner umbenannt/neu/entfernt - die betroffenen Zeilen aktualisieren; fehlt die Datei, aus der erkannten Struktur neu schreiben. Das ist Infrastruktur (wie `.agency-os/state.md`): ohne Rückfrage schreiben, im Report eine Zeile vermerken. So scannen die Lint-Skripte danach die richtigen Ordner.
-
----
+**Aufruf der Skripte:** vom Brain-Root aus. Abkürzung unten: `LINT="${CLAUDE_PLUGIN_ROOT:-.}/skills/agency-os-lint"`. Die Skripte nehmen das aktuelle Verzeichnis als Brain-Root und `.agency-os/lint-config.json` als Config; beides lässt sich optional via Argument bzw. `--config` überschreiben.
 
 ## Workflow
 
-### 1. Broken-Links-Check
+### 1. Architektur auflösen + Lint-Config bauen
+
+Die Skripte sind bewusst „dumm" und kennen keine Ordnernamen. Du löst die Struktur einmal auf und legst sie ab:
+
+- **architecture.md abgleichen.** `.agency-os/architecture.md` gegen die echte Top-Level-Struktur prüfen (normalerweise pflegt der `agency-os-start`-Skill sie). Bei Drift - Ordner umbenannt/neu/entfernt - die betroffenen Zeilen aktualisieren; fehlt die Datei, aus der erkannten Struktur neu schreiben. Ohne Rückfrage (Infrastruktur), im Report eine Zeile vermerken.
+- **Lint-Config schreiben.** Aus den aufgelösten Rollen **und der echten Struktur** mit dem `Write`-Tool `.agency-os/lint-config.json` erzeugen:
+
+   ```json
+   {
+     "skip": ["00-inbox", "11-archive"],
+     "content": ["01-context", "02-strategy", "03-marketing", "04-sales", "05-clients", "06-projects", "07-org", "08-wiki", "09-ip"],
+     "projects": "06-projects",
+     "archive": "11-archive"
+   }
+   ```
+
+   - `skip` = Ordner, die nie durchsucht werden (inbox + archive).
+   - `content` = alle Inhalts-Ordner außer inbox/logs/archive, in denen Orphans zählen. **Wichtig:** Hat der Kunde seinen Context-Layer erweitert und eigene Ordner angelegt (über die Standard-Rollen hinaus), nimm sie hier mit auf — sonst werden Orphans dort übersehen.
+   - `projects` / `archive` = die jeweiligen Rollen-Ordner (für den Stale-Check).
+
+   Die Skripte lesen diese Datei selbst aus dem Brain-Root. Fehlt sie, greifen die Standard-Defaults.
+
+### 2. Broken-Links-Check
 
 ```bash
 python3 "$LINT/resources/lint_broken_links.py"
 ```
 
-Output: pro Datei eine Sektion mit `L{zeile}: {pfad}` für jeden Treffer, plus Total-Zähler. Excludes: `{inbox}`, `{archive}`, `.git/`, `node_modules/` (Rollen aus der architecture.md). Inkludiert das Log (`{logs}`) bewusst (auch dort verrotten Links).
+Output: pro Datei eine Sektion mit `L{zeile}: {pfad}` für jeden Treffer, plus Total-Zähler. Excludes: `skip` aus der Lint-Config (inbox + archive) plus `.git/`, `node_modules/` (immer). Inkludiert das Log bewusst (auch dort verrotten Links).
 
-### 2. Orphan-Pages
+### 3. Orphan-Pages
 
 Notes ohne eingehende Links sind ein Lint-Signal. Atomare Notes leben durch Verknüpfung.
 
@@ -48,9 +64,9 @@ Notes ohne eingehende Links sind ein Lint-Signal. Atomare Notes leben durch Verk
 python3 "$LINT/resources/lint_orphans.py"
 ```
 
-Scope: Inhalts-Ordner laut architecture.md (alle Rollen außer inbox/logs/archive, flach + verschachtelt). Das Skript filtert automatisch: `_index.md`, Files jünger als 7 Tage. Outgoing-Links werden über das ganze Brain gesammelt (auch das Log, damit Erwähnungen aus Tageslogs als incoming zählen).
+Scope: die `content`-Ordner aus der Lint-Config (flach + verschachtelt). Das Skript filtert automatisch: `_index.md`, Files jünger als 7 Tage. Outgoing-Links werden über das ganze Brain gesammelt (auch das Log, damit Erwähnungen aus Tageslogs als incoming zählen).
 
-### 3. Stale Projekt-Hubs + veraltete Claims
+### 4. Stale Projekt-Hubs + veraltete Claims
 
 ```bash
 python3 "$LINT/resources/lint_stale_projekte.py"
@@ -63,7 +79,7 @@ Status-Frontmatter-Check für Projekt-Hubs im `{projects}`-Ordner. Drei Klassen:
 
 Widersprüche und veraltete inhaltliche Claims, die kein Skript abdeckt, beim Lesen der betroffenen Files mitnehmen und im Report unter "Widersprüche / veraltete Claims" aufführen.
 
-### 4. Befund-Report formatieren
+### 5. Befund-Report formatieren
 
 ```markdown
 ## Lint-Befund Stand {YYYY-MM-DD}
@@ -87,11 +103,11 @@ Widersprüche und veraltete inhaltliche Claims, die kein Skript abdeckt, beim Le
 4. **Niedrig:** {z.B. Themen-Kandidat}
 ```
 
-### 5. Mit dem User durchgehen
+### 6. Mit dem User durchgehen
 
 Pro Punkt: *"Soll ich das fixen, oder ist das beabsichtigt?"*. Mach **nichts** autonom Destruktives. Auch keine Mass-Renames ohne explizite Zustimmung.
 
-### 6. Log-Eintrag
+### 7. Log-Eintrag
 
 Sektion `## [YYYY-MM-DD] lint` ins zentrale Tageslog (`{logs}/YYYY-MM-DD.md`), mit 1-2 Zeilen über die Anzahl der Findings (inkl. ggf. korrigierter architecture.md).
 

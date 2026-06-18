@@ -4,54 +4,77 @@
 Findet Notes ohne eingehende Links. Atomare Notes leben durch Verknuepfung,
 ein Orphan ist ein Lint-Signal.
 
-Scope: Inhalts-Ordner laut .agency-os/architecture.md (alle Rollen ausser inbox/logs/archive), ohne _index.md
-Excludes: _index.md, Files juenger als 7 Tage, inbox/, archive/, .git/, node_modules/
+Pfade kommen aus einer vom Lint-Skill (LLM) gebauten Config
+`<root>/.agency-os/lint-config.json` (oder via --config):
+  skip    - Ordner, die nie durchsucht werden (inbox, archive)
+  content - Inhalts-Ordner, in denen Orphans zaehlen (inkl. Custom-Ordner)
+Fehlt die Config, greifen die Standard-Defaults. `.git`/`node_modules` immer skip.
 Outgoing-Links werden ueber das ganze Brain gesammelt (auch das Log, damit
 Erwaehnungen aus Tageslogs als incoming zaehlen).
 
 Aufruf aus Brain-Root: python3 <skill>/resources/lint_orphans.py
-Optional: python3 lint_orphans.py /pfad/zum/brain-root
+Optional: python3 lint_orphans.py /pfad/zum/brain-root --config pfad/config.json
 """
 from __future__ import annotations
+import argparse
+import json
 import os
 import re
 import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _arch import load_arch, skip_dirs, content_dirs
-
-ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.cwd()
-ARCH = load_arch(ROOT)
-SKIP_DIRS = skip_dirs(ARCH)
-CONTENT_DIRS = content_dirs(ARCH)
+DEFAULT_CONFIG = {
+    "skip": ["00-inbox", "11-archive"],
+    "content": ["01-context", "02-strategy", "03-marketing", "04-sales",
+                "05-clients", "06-projects", "07-org", "08-wiki", "09-ip"],
+}
+ALWAYS_SKIP = {".git", "node_modules"}
 LINK_RE = re.compile(r"\]\(([^)]+)\)")
 NEW_FILE_THRESHOLD_DAYS = 7
 
-def iter_md(root: Path):
+
+def load_config(root: Path, cfg_path: Path | None) -> dict:
+    cfg = dict(DEFAULT_CONFIG)
+    p = cfg_path or (root / ".agency-os" / "lint-config.json")
+    if p.exists():
+        try:
+            cfg.update(json.loads(p.read_text(encoding="utf-8")))
+        except Exception:
+            pass
+    return cfg
+
+
+def iter_md(root: Path, skip: set):
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS and not d.startswith(".")]
+        dirnames[:] = [d for d in dirnames if d not in skip and not d.startswith(".")]
         for fn in filenames:
             if fn.endswith(".md"):
                 yield Path(dirpath) / fn
 
-def in_scope(md: Path) -> bool:
-    """Inhalts-Ordner laut architecture.md (inbox/logs/archive ausgenommen, kein _index.md)."""
-    rel = md.relative_to(ROOT)
-    if rel.name == "_index.md":
-        return False
-    return rel.parts[0] in CONTENT_DIRS
 
-def is_recent(md: Path) -> bool:
-    age_seconds = time.time() - md.stat().st_mtime
-    return age_seconds < NEW_FILE_THRESHOLD_DAYS * 86400
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("root", nargs="?", default=None)
+    ap.add_argument("--config", default=None)
+    args = ap.parse_args()
+    root = Path(args.root).resolve() if args.root else Path.cwd()
+    cfg = load_config(root, Path(args.config) if args.config else None)
+    skip = ALWAYS_SKIP | set(cfg.get("skip", []))
+    content = set(cfg.get("content", []))
 
-def collect_incoming() -> set[Path]:
-    """Resolve alle Outgoing-Links zu absoluten Paths. Was kein Ziel hat
-    (broken), zaehlt nicht."""
+    def in_scope(md: Path) -> bool:
+        rel = md.relative_to(root)
+        if rel.name == "_index.md":
+            return False
+        return rel.parts[0] in content
+
+    def is_recent(md: Path) -> bool:
+        return (time.time() - md.stat().st_mtime) < NEW_FILE_THRESHOLD_DAYS * 86400
+
+    # Outgoing-Links ueber das ganze Brain zu absoluten Paths aufloesen.
     incoming: set[Path] = set()
-    for f in iter_md(ROOT):
+    for f in iter_md(root, skip):
         try:
             text = f.read_text(encoding="utf-8")
         except Exception:
@@ -63,34 +86,28 @@ def collect_incoming() -> set[Path]:
             target = (f.parent / path).resolve()
             if target.exists() and target.is_file() and target != f:
                 incoming.add(target)
-    return incoming
 
-def main():
-    incoming = collect_incoming()
     orphans: list[Path] = []
-    for md in iter_md(ROOT):
-        if not in_scope(md):
-            continue
-        if md.resolve() in incoming:
-            continue
-        if is_recent(md):
+    for md in iter_md(root, skip):
+        if not in_scope(md) or md.resolve() in incoming or is_recent(md):
             continue
         orphans.append(md)
 
     orphans.sort()
     by_dir: dict[str, list[Path]] = {}
     for o in orphans:
-        rel = o.relative_to(ROOT)
+        rel = o.relative_to(root)
         by_dir.setdefault(str(rel.parent), []).append(o)
 
     for d in sorted(by_dir):
         files = by_dir[d]
         print(f"\n{d}/ ({len(files)})")
         for f in files:
-            print(f"  {f.relative_to(ROOT)}")
+            print(f"  {f.relative_to(root)}")
 
     print(f"\n--- {len(orphans)} orphans (in scope, >{NEW_FILE_THRESHOLD_DAYS}d alt, nicht _index.md)")
     return 0 if not orphans else 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
