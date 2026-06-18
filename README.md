@@ -41,11 +41,27 @@ Dann die gewünschten Plugins installieren:
 /plugin install agency-os-video@agency-os
 ```
 
-Updates holen:
+Updates holen (zwei Stufen, beide nötig):
 
 ```
-/plugin marketplace update agency-os
+# 1. Marketplace-Cache auf den neuesten Repo-Stand bringen
+claude plugin marketplace update agency-os
+
+# 2. Installierte Plugins anheben — Schritt 1 allein reicht NICHT
+claude plugin update agency-os-core@agency-os --scope project
+claude plugin update agency-os-brand@agency-os --scope project
+claude plugin update agency-os-marketing@agency-os --scope project
+claude plugin update agency-os-video@agency-os --scope project
 ```
+
+Danach **Claude Code neu starten**, damit die neuen Skill-Versionen geladen werden (die Update-Befehle melden selbst "Restart to apply changes").
+
+Schnell prüfen, was installiert ist: `claude plugin list`.
+
+> **Stolperfallen:**
+> - Der `@agency-os`-Suffix ist Pflicht. Ohne ihn sucht die CLI nur im user-Scope und meldet `Plugin not found`.
+> - `--scope project` passt für Template-/Brain-Installs (Plugins in `.claude/settings.json` des Brains). Bei globaler Installation stattdessen `--scope user`.
+> - Ein Update greift nur, wenn die Plugin-`version` im Repo hochgezählt wurde, siehe [Entwicklung & Release](#️-entwicklung--release). Ohne Bump bleibt der Client auf dem Cache-Stand.
 
 > Wer das [Agency-OS-Template](https://github.com/markusvieghofer/agency-os-brain) nutzt, bekommt den Marketplace beim Öffnen automatisch vorgeschlagen, die Schritte oben sind dann nicht nötig.
 
@@ -150,6 +166,7 @@ Kein Plugin speichert Keys im Plugin-Ordner (der wird bei Updates ersetzt). Secr
 - **Faustregel:** Skills nur in einem Plugin geändert → Bump dort. Mehrere Plugins → jedes einzeln bumpen.
 - **Validierung:** `claude plugin validate .` im Repo-Root (prüft `marketplace.json`), bzw. `claude plugin validate ./plugins/<plugin>` für ein einzelnes Plugin.
 - **Geteilte Video-Engine:** Der Code der `video-*`-Skills lebt einmal in `packages/video-engine/` und wird per `tools/sync-engine.sh` in jeden Skill gevendort (die Sandbox lädt zur Laufzeit nur den Skill-Ordner). Ein Pre-Commit-Hook (`.githooks/pre-commit`) hält die Kopien in sync, einmal aktivieren mit `git config core.hooksPath .githooks`.
+- **Release-Loop:** `version` bumpen → committen + pushen → im Ziel-Workspace die Update-Befehle aus [Installation](#-installation) laufen lassen → Claude Code neu starten. Erst dann sehen Clients die Änderung.
 
 ---
 
