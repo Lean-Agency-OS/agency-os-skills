@@ -24,8 +24,9 @@ liefert Kontext, Spannung oder den Gedanken dahinter.
 
 ## Hook (erste 1-2 Zeilen)
 
-- **Entscheidet vor der Truncation.** LinkedIn bricht nach **~210 Zeichen** (2-3 Zeilen) mit "… mehr"
-  um. Nur diese Zeilen ziehen ins Auf-Klappen. Der Hook muss dort zünden.
+- **Entscheidet vor der Truncation.** LinkedIn bricht nach **~140 Zeichen** (2-3 Zeilen) mit "… mehr"
+  um. Immer für diese **~140 Zeichen** schreiben, das ist das engste Limit (mobil). Nur diese Zeilen
+  ziehen ins Auf-Klappen, der Hook muss dort zünden.
 - Kein Gruß, kein "Ich freue mich, zu teilen...". Die erste Zeile **ist** der Einstieg.
 - Eine Aussage/Spannung pro Zeile, dann Umbruch. Kein Schachtelsatz.
 
@@ -36,6 +37,10 @@ liefert Kontext, Spannung oder den Gedanken dahinter.
 - **List:** 3-7 Punkte, je kurzer Titel + 1 Satz. Roter Faden Pflicht.
 - **Steps:** 3-5 Schritte, je Nummer + 1-2 Sätze. Reihenfolge logisch zwingend.
 
+**List und Steps save-würdig bauen.** Frameworks, Checklisten und konkrete Schritt-Abfolgen werden
+gespeichert, und Saves treiben die Reichweite stärker als Likes. Den Build so verdichten, dass der
+Leser ihn aufheben will.
+
 ## Payoff (1-3 Sätze nach dem Build)
 
 Geht über eine Zusammenfassung hinaus:
@@ -45,10 +50,13 @@ Geht über eine Zusammenfassung hinaus:
 ## CTA (Schluss)
 
 1 Überleitungs-Satz + ein spezifischer CTA. **Genau einer.** LinkedIn-typische CTAs:
-- **Frage an die Leser** (treibt Kommentare): *"Wie löst du das in deiner Agentur?"*
-- **Kommentar-Trigger:** *"Schreib MEHR, dann schick ich dir die Vorlage."*
-- **Repost/DM** oder **Link im ersten Kommentar** (externe Links im Post-Text drücken die Reichweite,
-  daher meist in den ersten Kommentar).
+- **Offene Frage an die Leser** (treibt Kommentare): *"Wie löst du das in deiner Agentur?"* Sie muss
+  echte Diskussion auslösen, nicht nur "Toll!". Substanzielle Kommentare (15+ Wörter) und
+  Hin-und-Her-Threads treiben die Reichweite, generische Ein-Wort-Kommentare kaum noch.
+- **Kommentar-Trigger / Lead-Magnet:** *"Schreib MEHR, dann schick ich dir die Vorlage."* Verbindet
+  Reichweite (Kommentare) und Conversion (DM). Plumpes "Kommentiere JA, wenn du zustimmst" ist dagegen
+  Engagement-Bait und wird gedrosselt. Der Unterschied ist die Echtheit der ausgelösten Konversation.
+- **Repost oder DM:** *"Teile das mit deinem Team"* / *"Schreib mir eine DM."*
 - Schwach: *"Freue mich über Feedback."*
 
 ---
@@ -58,7 +66,7 @@ Geht über eine Zusammenfassung hinaus:
 Prinzipien:
 - **Scroll-Stopp + Zeigarnik.** Offene Schleife, die der Leser schließen MUSS.
 - **Spezifisch.** Zahlen, konkrete Situationen, direkte Ansprache. Nie vage.
-- **Vor der Truncation lesbar.** Kurze Zeile, harter Umbruch.
+- **Vor der Truncation lesbar (~140 Zeichen mobil).** Kurze Zeile, harter Umbruch.
 
 | Muster | Beispiel |
 |---|---|
@@ -76,12 +84,12 @@ Wahl: stärkste Wirkung, Begründung in 1-2 Sätzen.
 ## Plattform-Limits (LinkedIn, Stand 2026)
 
 - **Hashtags:** kein offizielles Limit, empfohlen **3-5**.
-- **Post:** max **3.000** Zeichen, sichtbar vor "… mehr" **~210** Zeichen.
-- **Externe Links** drücken die Reichweite → in den ersten Kommentar (siehe CTA).
+- **Post:** max **3.000** Zeichen. Sichtbar vor "… mehr": **~140** Zeichen (engstes Limit, mobil), darauf schreiben.
 
 ## Hashtags
 
-- **3-5, themen-/nischenspezifisch.** Keine Tag-Wand, kein generischer Spam.
+- **3-5, themen-/nischenspezifisch** (Faustregel: 1 breit + 2-3 Nische). Keine Tag-Wand, kein
+  generischer Spam. Hashtags sind nur noch Such-/Kategorisierungssignal, kein Reichweiten-Hebel.
 - Ans Ende des Post-Textes.
 - Markenspezifische/wiederkehrende Tags aus dem Voice-/Brand-Profil übernehmen, falls vorhanden.
 
@@ -89,24 +97,38 @@ Wahl: stärkste Wirkung, Begründung in 1-2 Sätzen.
 
 ## Qualitäts-Checkliste (intern, vor dem Approval)
 
-- [ ] Erste 1-2 Zeilen: zünden vor der Truncation? Zeigarnik? Nicht generisch?
+- [ ] Erste 1-2 Zeilen: zünden vor der Mobile-Truncation (~140 Zeichen)? Zeigarnik? Nicht generisch?
 - [ ] Text begleitet das Asset, wiederholt es nicht?
-- [ ] Build: klarer Subtyp? Whitespace, kurze Zeilen?
+- [ ] Build: klarer Subtyp? Whitespace, kurze Zeilen? Bei List/Steps save-würdig?
 - [ ] Payoff: mehr als Zusammenfassung? Echten neuen Wert?
-- [ ] CTA: logische Konsequenz? Spezifisch? Genau einer? Externe Links in den ersten Kommentar?
+- [ ] CTA: logische Konsequenz? Spezifisch? Genau einer?
 - [ ] Diagnostiziert, statt zu lehren? (Lehren = low authority, Diagnose = high authority)
 - [ ] Positionierung trifft das Profil der Marke? (aus ICP-/Positionierungs-Quelle, falls vorhanden)
 - [ ] Mindestens eine konkrete Zahl oder ein messbares Ergebnis?
+- [ ] Länge im Zielkorridor (~1.300-1.900 Zeichen)?
 - [ ] Hashtags: 3-5, relevant, keine Wand?
+- [ ] Siezen/Duzen konsequent, kein US-Cringe?
 - [ ] Klingt es nach der Marke? (Voice-Profile angewandt)
 
 ---
 
 ## Länge & Formatierung
 
-- **Länge:** mittel. Lang genug für Substanz, kurz genug, dass es gelesen wird. Erste Zeilen tragen die Hauptlast.
+- **Länge:** Ziel **1.300-1.900 Zeichen** für Standard-Textposts (genug Substanz für Dwell Time, kurz
+  genug zum Lesen). Manche Daten nennen 800-1.000 als Sweet Spot; im Zweifel kürzer und fokussierter.
+  Hartlimit 3.000 Zeichen. Erste Zeilen tragen die Hauptlast.
 - **Zeilen/Absätze:** kurz, viel Whitespace, oft 1-2 Sätze pro Block (LinkedIn zeigt Umbrüche).
 - **Emojis:** nur wenn das Voice-Profile sie zulässt, dann sparsam als Struktur, nie als Deko-Teppich.
+
+---
+
+## DACH-Ton
+
+- **Siezen oder Duzen konsequent durchhalten**, nie mischen. Die Wahl kommt aus dem Voice-/ICP-Profil
+  (DACH-B2B tendiert zum Du, aber zielgruppenabhängig).
+- **Kein US-"Cringe":** keine "I'm humbled and excited"-Selbstinszenierung, keine erfundenen
+  Vulnerabilitäts-Stories. Authority entsteht im DACH-Raum über nachprüfbare Fachsubstanz, eigene Daten
+  und klare Haltung, nicht über Selbstbeweihräucherung.
 
 ---
 
@@ -115,7 +137,6 @@ Wahl: stärkste Wirkung, Begründung in 1-2 Sätzen.
 - Erfundene Stories, Zahlen oder Kundenergebnisse
 - Generischer Einstieg ("Ich freue mich, zu teilen...", "Spannende News:")
 - Mehrere CTAs (ein Post, ein Ziel)
-- Externer Link mitten im Post-Text (drückt Reichweite, in den ersten Kommentar)
 - Hashtag-Wand / generischer Tag-Spam
 - Engagement-Bait ohne Substanz
 - Übertriebene Erfolgsversprechen

@@ -1,6 +1,6 @@
 ---
 name: linkedin-caption
-version: 1.0.2
+version: 1.1.0
 description: >
   Schreibt einen versandfertigen LinkedIn-Post-Text (Caption) zu einem bestehenden
   Asset (Bild, Dokument/PDF, Grafik, Video) nach der 4-Bausteine-Formel
@@ -16,7 +16,7 @@ description: >
 
 # LinkedIn-Caption
 
-Du schreibst als **Senior LinkedIn-Copywriter**: Diagnose-Ton, eine Haltung, ein CTA. Die ersten 2-3 Zeilen müssen den Klick auf "mehr" verdienen. **Dein Ziel:** Reichweite und Autorität, die Gespräche und Inbound-Anfragen auslösen.
+Du schreibst als **Senior LinkedIn-Copywriter**: Diagnose-Ton, eine Haltung, ein CTA. Die ersten ~140 Zeichen (mobil sichtbar vor "… mehr") müssen den Klick verdienen. **Dein Ziel:** Reichweite und Autorität, die Gespräche und Inbound-Anfragen auslösen.
 
 Schreibt **einen** LinkedIn-Post-Text pro Aufruf zu einem bereits vorhandenen Asset (Bild, Dokument,
 Grafik, Video). Diagnose-Ton (nicht Lehr-Ton), genau ein CTA. Methodik: 4-Bausteine-Formel, angewandt auf den LinkedIn-Text.
@@ -25,7 +25,7 @@ Grafik, Video). Diagnose-Ton (nicht Lehr-Ton), genau ein CTA. Methodik: 4-Bauste
 
 **Kanonische Methodik (Pflicht lesen vor Phase 1):**
 - [`references/caption-anatomy.md`](references/caption-anatomy.md) — Hook/Build/Payoff/CTA auf den
-  LinkedIn-Text, Build-Subtypen, Hook-Muster (Truncation nach 2-3 Zeilen), Hashtags, Qualitäts-Checkliste, No-Gos, Länge.
+  LinkedIn-Text, Build-Subtypen, Hook-Muster (Truncation ~140 Zeichen), Hashtags, Qualitäts-Checkliste, No-Gos, Länge.
 
 ---
 
@@ -87,7 +87,7 @@ Danach die 4 Bausteine in **Denk-Reihenfolge** (Hook zuletzt):
 **Frage 2 — Build:** *"Wie willst du dahin kommen? Story, einzelne Punkte, oder ein kurzer Prozess? Gib mir den Input."*
 → ableiten: **Story**, **List** oder **Steps**.
 
-**Frage 3 — CTA:** *"Was ist der nächste Schritt? Wohin soll der CTA führen (z.B. Kommentar-Trigger, Repost, DM, Link im ersten Kommentar)?"*
+**Frage 3 — CTA:** *"Was ist der nächste Schritt? Wohin soll der CTA führen (z.B. Kommentar-Trigger, offene Frage, Repost, DM)?"*
 
 **Frage 4 — Hook:** *"Gibt es einen Satz oder eine Situation, die die ersten zwei Zeilen auf den Punkt bringt?"*
 → Kein Hook-Input? OK — der Hook wird in Phase 3 aus fertigem Build + Payoff abgeleitet.
@@ -106,10 +106,10 @@ Bei **List** oder **Steps**: Phase 2 überspringen → Phase 3.
 ### Phase 3: Draft schreiben (automatisch)
 
 1. **Voice laden** — `/brand-voice` (oder das gefundene Voice-Profile) anwenden.
-2. **Post-Text in LESE-Reihenfolge:** Hook (erste 1-2 Zeilen) → Build → Payoff → CTA. Struktur und
-   Regeln je Baustein stehen in [`references/caption-anatomy.md`](references/caption-anatomy.md).
-   LinkedIn bricht nach 2-3 Zeilen mit "… mehr" um — der Hook muss davor zünden. Viel Whitespace,
-   kurze Zeilen.
+2. **Post-Text in LESE-Reihenfolge:** Hook (erste 1-2 Zeilen) → Build → Payoff → CTA.
+   Struktur und Regeln je Baustein stehen in [`references/caption-anatomy.md`](references/caption-anatomy.md).
+   LinkedIn bricht nach ~140 Zeichen mit "… mehr" um, der Hook muss davor zünden.
+   Viel Whitespace, kurze Zeilen. Ziel-Länge ~1.300-1.900 Zeichen.
 3. **Hashtags** nach den Regeln in `references/caption-anatomy.md` (3-5, themen-/nischenspezifisch).
 
 ### Phase 4: Hook-Varianten + Qualitätscheck (automatisch)
