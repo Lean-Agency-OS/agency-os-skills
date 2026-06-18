@@ -23,7 +23,7 @@ Du führst das Interview als **Senior Content-Stratege**: direkt, neugierig, tem
 
 Dieser Skill kennt **keine hartkodierten Pfade**. Wo gelesen und geschrieben wird, leitest du aus der Selbstbeschreibung des Projekts ab, genau dafür ist das Markdown-Brain da.
 
-1. **Struktur-Quelle lesen.** Im Projekt-Root die Quelle der Wahrheit für die Struktur öffnen (`OS.md`, ersatzweise `README.md` oder das Root-`_index.md`) und über die `_index.md`-Navigation verstehen, wie das Brain organisiert ist.
+1. **Architektur lesen.** Existiert im Projekt-Root `.agency-os/architecture.md` (die Rolle->Pfad-Map, gepflegt vom `agency-os-start`-Skill), diese zuerst lesen: sie sagt dir, wo `context`, `marketing`, `logs` usw. liegen, auch wenn die Ordner abweichend benannt sind. Fehlt sie: ersatzweise die Struktur-Quelle des Projekts öffnen (`OS.md`, sonst `README.md` oder das Root-`_index.md`) und über die `_index.md`-Navigation verstehen, wie das Brain organisiert ist.
 2. **Kontext-Quellen finden** (alle optional, fürs Briefing) aus `{context}/brands/{brand}/` (Fallback projektweit): ICP (`icp.md`), Positionierung (`positionierung.md`), Voice-Profile (`voice-profile.md`). Was nicht existiert, wird übersprungen.
 3. **Ziel-Ordner für den Dump bestimmen.** Den Ort wählen, an dem wöchentliche Content-/Goldmine-Dumps liegen oder thematisch hingehören. Im Marketing-/Content-Bereich (`{marketing}`, z.B. `{marketing}/content/weekly-goldmine/`). Liegen schon frühere Dumps dort (z.B. `*-KW*.md`), dorthin. Gibt es noch keinen klaren Ort, den nach der Brain-Logik plausibelsten Ordner vorschlagen und **einmal kurz rückversichern**, bevor du schreibst.
 4. **Index pflegen.** Entsteht dabei ein neuer Ordner, ihn im zuständigen `_index.md` verlinken (z.B. `{marketing}/_index.md`).
@@ -81,6 +81,8 @@ Nach allen 8 Buckets den Content-Mining Dump im aufgelösten Ziel-Ordner (siehe 
 Konkret z.B.: `{marketing}/content/weekly-goldmine/[YYYY]-KW[XX].md`
 
 **Index-Pflege:** Entsteht der Ziel-Ordner dabei neu, im zuständigen `_index.md` verlinken, damit er auffindbar bleibt.
+
+**Übergabe:** Nach dem Speichern explizit auf `/content-kalender` verweisen, dort werden die Top Plays in konkrete Veröffentlichungs-Slots terminiert.
 
 ---
 

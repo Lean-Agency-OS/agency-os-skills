@@ -23,7 +23,7 @@ Opt-in → Auslieferung → Follow-up). Produziert nicht das fertige Asset, sond
 
 ## Pfade & Fundament
 
-Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`),
+Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`, `logs`),
 sonst per Muster.
 
 **Fundament lesen** (aus `{context}/brands/{brand}/`, Fallback projektweit):
@@ -71,6 +71,7 @@ Konzept + Funnel im Chat zeigen. *"Passt das? 'go' zum Speichern, sonst sag, was
 
 Nach "go" als `{marketing}/lead-magnets/[slug].md` (Konzept, Outline, Funnel, Übergaben). Nächste Schritte
 nennen: Opt-in-Seite → `/landingpage`, Follow-up → `/email-sequenz`, Bewerbung → `/kampagnen-plan` / Asset-Skills.
+Danach kurzer Eintrag im Tages-Log `{logs}/[YYYY-MM-DD].md` (Magnet-Titel, Ziel-Angebot, Format, Output-Pfad).
 
 ## Output
 

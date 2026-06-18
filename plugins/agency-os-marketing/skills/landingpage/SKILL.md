@@ -23,8 +23,8 @@ Markdown-Dokument (Web/Designer baut daraus die Seite). Genau **ein** CTA, keine
 
 ## Pfade & Fundament
 
-Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`),
-sonst per Muster. `{marketing}`/`{context}` sind die aufgelösten Pfade.
+Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`, `logs`),
+sonst per Muster. `{marketing}`/`{context}`/`{logs}` sind die aufgelösten Pfade.
 
 **Fundament lesen** (aus `{context}/brands/{brand}/`, Fallback projektweit):
 - `positionierung.md` - Angebot, Differenzierung/Mechanismus, Messaging-Pillars, Beweise.
@@ -68,10 +68,11 @@ konkret? Top-3-Objections behandelt? Proof echt? Voice angewandt? Optional ICP-C
 Komplette Seite (Sektion für Sektion) im Chat zeigen. Abschlussfrage: *"Passt das? 'go' zum Speichern, sonst sag, was anders soll."*
 Iteration pro Sektion, nur die geänderte neu schreiben.
 
-### 5. Speichern
+### 5. Speichern + Log
 
 Nach "go" als `{marketing}/landingpages/[slug].md` (Slug aus Angebot/Ziel). Frontmatter: Status, Ziel, Angebot, CTA, Traffic-Quelle. Darunter die Sektionen.
 Falls die Seite zu einer Kampagne gehört, im Kampagnen-Plan verlinken.
+Danach kurzer Eintrag im Tages-Log `{logs}/[YYYY-MM-DD].md` (Angebot, Ziel/CTA, Output-Pfad).
 
 ## Output
 

@@ -18,8 +18,8 @@ losen Ideen einen terminierten, ausgewogenen Plan und hält Konsistenz.
 
 ## Pfade & Fundament
 
-Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`),
-sonst per Muster. `{marketing}`/`{context}` unten sind die aufgelösten Pfade.
+Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`, `logs`),
+sonst per Muster. `{marketing}`/`{context}`/`{logs}` unten sind die aufgelösten Pfade.
 
 **Quellen lesen:**
 - **Ideen:** der neueste `weekly-content-mining`-Dump (Top Plays + Wildcard) und offene Content-Ideen im Marketing-Ordner.
@@ -70,6 +70,11 @@ Den geplanten Zeitraum als Tabelle zeigen. Abschlussfrage: *"Passt der Plan? 'go
 Nach "go" `{marketing}/content/kalender.md` fortschreiben: Sektion pro Monat/Woche mit der Slot-Tabelle.
 Bestehende Einträge nicht überschreiben, neue ergänzen, Status bestehender aktualisieren. Produzierte Assets
 beim jeweiligen Slot verlinken (sobald ein Asset-Skill gelaufen ist → Status `veröffentlicht` + Pfad).
+
+### 7. Abschluss + Übergabe
+
+- **Asset-Produktion anstoßen:** pro geplantem Slot den passenden Asset-Skill als nächsten Schritt explizit nennen: Carousel → `/carousel`, Reel → `/reel-skript`, Newsletter → `/newsletter-email`, Instagram-Caption → `/instagram-caption`, LinkedIn-Caption → `/linkedin-caption`. Kampagnen-Slots laufen über ihren `/kampagnen-plan`. Nicht abstrakt auf "die Asset-Skills" verweisen, sondern den konkreten Befehl pro Slot ausgeben.
+- **Log:** kurzer Eintrag im Tages-Log `{logs}/[YYYY-MM-DD].md` (geplanter Zeitraum, Anzahl Slots, Schwerpunkt-Pillar).
 
 ## Output
 

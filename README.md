@@ -59,63 +59,63 @@ Ausgelöst werden Skills per natürlicher Sprache ("guten morgen", "schreib mir 
 
 Die Workflows, die deinen Arbeitstag im Brain halten: Session-Start, Capture, Ingest, Planung, Review, Shutdown, Hygiene und Backup.
 
-| Skill | Job |
-|---|---|
-| `agency-os-start` | Session-Start: Kontext laden, Tag aufsetzen |
-| `agency-os-capture` | Schnelle Notiz/Idee ins Brain werfen |
-| `agency-os-ingest` | Rohquelle (PDF, Transkript, …) ins Brain einarbeiten |
-| `agency-os-plan` | Projekt planen und im Brain anlegen |
-| `agency-os-review` | Weekly Review |
-| `agency-os-shutdown` | Session sauber abschließen |
-| `agency-os-lint` | Brain-Hygiene (Struktur, Links, Konsistenz) |
-| `agency-os-github` | Brain auf GitHub sichern |
+| Skill | Job | Wann nutzen |
+|---|---|---|
+| `agency-os-start` | Session-Start: Kontext laden, Tag aufsetzen | Zu Beginn jeder Session ("guten morgen", "los gehts") |
+| `agency-os-capture` | Schnelle Notiz/Idee ins Brain werfen | Gedanke, Task oder Idee kommt zwischendurch und soll nicht verloren gehen |
+| `agency-os-ingest` | Rohquelle (PDF, Transkript, …) ins Brain einarbeiten | Neues Transkript oder Dokument soll strukturiert ins Brain |
+| `agency-os-plan` | Projekt planen und im Brain anlegen | Vor einem mehrstufigen Vorhaben oder einer Kampagne |
+| `agency-os-review` | Weekly Review | Wochenabschluss: Rückblick + nächste Woche aufsetzen |
+| `agency-os-shutdown` | Session sauber abschließen | Feierabend: lose Enden sichern, Log schreiben |
+| `agency-os-lint` | Brain-Hygiene (Struktur, Links, Konsistenz) | Brain fühlt sich unaufgeräumt an, tote Links/Widersprüche vermutet |
+| `agency-os-github` | Brain auf GitHub sichern | Änderungen sichern und verfügbar machen, neuesten Stand holen |
 
 ### 🎯 `agency-os-brand` · das Strategie-Fundament
 
 Die eine Quelle der Wahrheit für Marke und Zielgruppe. Alles darüber liest hier.
 
-| Skill | Schreibt | Job |
-|---|---|---|
-| `positionierung` | `positionierung.md` | Differenzierung, Messaging-Pillars, Angebot |
-| `icp` | `icp.md` | Wunschkunden-Profil: bewerten, Personas, qualifizieren |
-| `brand-voice` | `voice-profile.md` | Stimm-Profil, auf jeden Text angewendet |
-| `brand-ci` | `ci.md` | Farben, Fonts, Logo (geteilt mit Carousel + Video) |
+| Skill | Schreibt | Job | Wann nutzen |
+|---|---|---|---|
+| `positionierung` | `positionierung.md` | Differenzierung, Messaging-Pillars, Angebot | Ganz am Anfang, oder wenn Angebot/Differenzierung unscharf ist |
+| `icp` | `icp.md` | Wunschkunden-Profil: bewerten, Personas, qualifizieren | Bevor Content/Copy/Ads rausgehen, oder um einen Lead einzuschätzen |
+| `brand-voice` | `voice-profile.md` | Stimm-Profil, auf jeden Text angewendet | Bei jedem Text, der nach dir klingen soll (Mail, Post, Copy) |
+| `brand-ci` | `ci.md` | Farben, Fonts, Logo (geteilt mit Carousel + Video) | Einmal beim Setup, bevor Carousel/Video gebrandet werden |
 
 ### ✍️ `agency-os-marketing` · das Team aus Senior-Marketern
 
 Elf Skills, jeder mit eigener Senior-Rolle und einem Ziel, das dich nach vorne bringt. Strategie- und Conversion-Layer plus Asset-Produktion nach der 4-Bausteine-Formel (Hook → Build → Payoff → CTA).
 
-| Skill | Rolle | Ziel |
-|---|---|---|
-| `weekly-content-mining` | Senior Content-Stratege | Volle Ideen-Pipeline aus echten Erlebnissen |
-| `content-kalender` | Senior Redaktionsleiter | Ein Takt, der die Marke dauerhaft sichtbar hält |
-| `kampagnen-plan` | Senior Campaign-Lead | Das eine Kampagnen-Ziel: Leads, Calls, Verkäufe |
-| `landingpage` | Senior Conversion-Copywriter | Höchstmögliche Conversion auf die eine Handlung |
-| `lead-magnet` | Senior Demand-Gen-Stratege | Pipeline mit qualifizierten Leads füllen |
-| `email-sequenz` | Senior Lifecycle-Marketer | Aus Abonnenten automatisiert Kunden machen |
-| `newsletter-email` | Senior E-Mail-Copywriter | Die Liste wach halten und zur Handlung bewegen |
-| `carousel` | Senior Content-Designer | Content, der gespeichert und geteilt wird |
-| `reel-skript` | Senior Short-Form-Creator | Reichweite über die eigene Bubble hinaus |
-| `instagram-caption` | Senior Social-Copywriter | Aus einem Scroller eine Handlung machen |
-| `linkedin-caption` | Senior LinkedIn-Copywriter | Reichweite + Autorität, die Inbound auslösen |
+| Skill | Rolle | Ziel | Wann nutzen |
+|---|---|---|---|
+| `weekly-content-mining` | Senior Content-Stratege | Volle Ideen-Pipeline aus echten Erlebnissen | Wöchentlich, wenn dir Ideen für Posts fehlen |
+| `content-kalender` | Senior Redaktionsleiter | Ein Takt, der die Marke dauerhaft sichtbar hält | Wenn Posten planlos ist und einen Rhythmus braucht |
+| `kampagnen-plan` | Senior Campaign-Lead | Das eine Kampagnen-Ziel: Leads, Calls, Verkäufe | Vor einem Launch oder einer Aktion mit klarem Ziel |
+| `landingpage` | Senior Conversion-Copywriter | Höchstmögliche Conversion auf die eine Handlung | Wenn eine Seite ein Angebot oder Opt-in konvertieren soll |
+| `lead-magnet` | Senior Demand-Gen-Stratege | Pipeline mit qualifizierten Leads füllen | Wenn du etwas zum Verschenken brauchst, das Leads bringt |
+| `email-sequenz` | Senior Lifecycle-Marketer | Aus Abonnenten automatisiert Kunden machen | Für automatisierte Strecken (Welcome, Nurture, Launch) |
+| `newsletter-email` | Senior E-Mail-Copywriter | Die Liste wach halten und zur Handlung bewegen | Für eine einzelne, versandfertige Newsletter-Ausgabe |
+| `carousel` | Senior Content-Designer | Content, der gespeichert und geteilt wird | Für einen Instagram/LinkedIn-Carousel aus einer Idee |
+| `reel-skript` | Senior Short-Form-Creator | Reichweite über die eigene Bubble hinaus | Bevor du ein Reel/Short drehst — du brauchst das Skript |
+| `instagram-caption` | Senior Social-Copywriter | Aus einem Scroller eine Handlung machen | Du hast ein Asset (Foto/Grafik) und brauchst die Caption |
+| `linkedin-caption` | Senior LinkedIn-Copywriter | Reichweite + Autorität, die Inbound auslösen | Für den Text zu einem LinkedIn-Post oder -Asset |
 
 ### 🎬 `agency-os-video` · KI-Video, vier Use Cases auf einer Engine
 
 Aus Rohmaterial wird fertiger Content. Eine geteilte Schnitt-Engine (Transkript, Schnitt, Untertitel, Grade, Motion, NLE-Export), vier saubere Jobs darüber.
 
-| Skill | Rolle | Job |
-|---|---|---|
-| `video-shortform` | Senior Short-Form-Editor | Rohvideo → postfertiges Reel/Short |
-| `video-roughcut` | Senior Assistant Editor | Rohschnitt + DaVinci/Premiere-Export |
-| `video-captions` | Senior Captions-Editor | Markenkonforme Untertitel einbrennen |
-| `video-footage-mining` | Senior Footage-Logger | Footage-Triage lokal (ohne API), Highlights finden |
+| Skill | Rolle | Job | Wann nutzen |
+|---|---|---|---|
+| `video-shortform` | Senior Short-Form-Editor | Rohvideo → postfertiges Reel/Short | Rohclip soll fertig geschnittenes, gebrandetes Reel werden |
+| `video-roughcut` | Senior Assistant Editor | Rohschnitt + DaVinci/Premiere-Export | Cutter finisht nativ, du lieferst den Vorschnitt |
+| `video-captions` | Senior Captions-Editor | Markenkonforme Untertitel einbrennen | Fertig geschnittenes Video braucht nur noch Untertitel |
+| `video-footage-mining` | Senior Footage-Logger | Footage-Triage lokal (ohne API), Highlights finden | Ganzer Ordner Rohmaterial, du suchst die brauchbaren O-Töne |
 
 ---
 
 ## 🧠 Wie alles zusammenspielt
 
 ```
-                        ┌─────────────────────────┐
+                        ┌──────────────────────────┐
                         │   Brain (Markdown-Repo)  │
                         │  positionierung · icp ·  │
                         │  voice-profile · ci      │

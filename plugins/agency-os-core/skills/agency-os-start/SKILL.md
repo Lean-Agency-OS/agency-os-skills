@@ -2,6 +2,7 @@
 name: agency-os-start
 version: 1.0.0
 description: "Morgen-/Start-Briefing für den User. Verwende diesen Skill IMMER wenn der User 'guten morgen', 'morgen', 'start', 'gm', 'los gehts', 'was steht an', 'starten wir', 'lass uns starten', 'good morning' oder ähnliche Begrüßungen/Start-Signale sagt."
+allowed-tools: Bash(git pull) Bash(git pull *)
 ---
 
 # Start-Briefing
@@ -13,6 +14,14 @@ description: "Morgen-/Start-Briefing für den User. Verwende diesen Skill IMMER 
 Der User will in 30 Sekunden wissen was los ist. Keine Wand.
 
 ---
+
+## Bash-Regeln (Prompt-Vermeidung)
+
+Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
+- **Lesen** (Dateien, Verzeichnis-Listen, Suche) mit den Tools `Read`, `Glob`, `Grep` statt `cat`/`ls`/`grep` in Bash.
+- **Keine Command-Substitution** `$(...)` und keine Backticks in Bash. Zähl-/Filter-Ausgaben direkt per Pipe ausgeben (z.B. `… | wc -l` als eigene Zeile), nicht in einen `echo`-String verschachteln.
+- **Keine Interpreter** (`python3`/`node`/`perl`/`awk`) für Ad-hoc-Logik; JSON mit `jq` lesen. Mitgelieferte Skripte dieses Skills sind ausgenommen.
+- `git pull` (Schritt 1) und read-only Bash (`git status/log/diff`, `jq`) laufen prompt-frei. Bei Pull-Konflikt / divergenter Remote **nicht selbst** auflösen → `/agency-os-github` übernimmt. Dieser Skill committet/pusht nicht; `mv`/`rm` bleiben bestätigungspflichtig.
 
 ## Pfade & Fundament
 
@@ -36,6 +45,8 @@ Hole die neuesten Änderungen (eine Automatisierung, z.B. n8n, könnte über Nac
 ```bash
 git pull
 ```
+
+Konflikt oder divergente Remote? **Nicht selbst** mergen/rebasen → an `/agency-os-github` übergeben (dort liegt die Konflikt-Auflösung). Sonst normal weiter.
 
 ### 2. Neue Files in der Inbox prüfen
 

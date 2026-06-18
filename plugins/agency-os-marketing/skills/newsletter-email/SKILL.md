@@ -36,9 +36,11 @@ hat die zusätzlich Vorrang für die Marken-Substanz.
 Dieser Skill kennt **keine hartkodierten Pfade**. Wo gelesen und geschrieben wird, leitest du aus
 der Selbstbeschreibung des Projekts ab, genau dafür ist das Markdown-Brain da.
 
-1. **Struktur-Quelle lesen.** Im Projekt-Root die Quelle der Wahrheit für die Struktur öffnen
-   (`OS.md`, ersatzweise `README.md` oder das Root-`_index.md`) und über die `_index.md`-Navigation
-   verstehen, wie das Projekt organisiert ist.
+1. **Architektur lesen.** Existiert im Projekt-Root `.agency-os/architecture.md` (die Rolle->Pfad-Map,
+   gepflegt vom `agency-os-start`-Skill), diese zuerst lesen: sie sagt dir, wo `context`, `marketing`, `logs` usw.
+   liegen, auch wenn die Ordner abweichend benannt sind. Fehlt sie: ersatzweise die Struktur-Quelle
+   des Projekts öffnen (`OS.md`, sonst `README.md` oder das Root-`_index.md`) und über die
+   `_index.md`-Navigation verstehen, wie das Projekt organisiert ist.
 2. **Kontext-Quellen finden** (alle optional, fürs Briefing) aus `{context}/brands/{brand}/`
    (Fallback projektweit): ICP (`icp.md`), Positionierung (`positionierung.md`),
    Voice-Profile (`voice-profile.md`). Was nicht existiert, wird übersprungen.
@@ -68,8 +70,8 @@ Voice-Profil anzulegen (`/icp`, `/brand-voice`) — Positionierung und Ton leben
 
 ## Workflow
 
-Sechs Phasen. Stop-Punkte mit User-Entscheidung: **1** (Interview, frageweise), **4** (Betreffzeilen
-sind Teil von Phase 5), **5** (Approval). Alles andere läuft automatisch.
+Sechs Phasen. Stop-Punkte mit User-Entscheidung: **1** (Interview, frageweise), **5** (Approval).
+Alles andere läuft automatisch.
 
 ### Phase 1: Interview (Pflicht, Stop-Punkt frageweise)
 
@@ -157,7 +159,7 @@ Tages-Log.
 - `/icp` Modus *Bewerten* — Hook/Payoff/CTA gegen das ICP testen
 - `/story-context` (falls im Projekt vorhanden) — echte Stories + O-Töne (Phase 2)
 
-KEINE anderen spezifischen Content-Skills (z.B. `/linkedin-content`, `/carousel`). Gemeinsame
+KEINE anderen spezifischen Content-Skills (z.B. `/linkedin-caption`, `/carousel`). Gemeinsame
 Frameworks gehören als Projekt-Note, nicht als Skill-zu-Skill-Aufruf.
 
 **Abgrenzung:**
@@ -165,7 +167,7 @@ Frameworks gehören als Projekt-Note, nicht als Skill-zu-Skill-Aufruf.
 - Kein Versand — die fertige Mail versendet der User manuell über sein ESP.
 - Kein Cold-Email (anderer Use-Case, kalte Outreach).
 - Keine mehrteilige Sequenz/Drip — eine einzelne Newsletter-Mail pro Aufruf.
-- Keine LinkedIn-/Social-Variante (das ist `/linkedin-content` bzw. `/carousel`).
+- Keine LinkedIn-/Social-Variante (das ist `/linkedin-caption` bzw. `/carousel`).
 
 ## Hard-Stops
 

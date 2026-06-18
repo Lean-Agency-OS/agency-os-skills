@@ -2,11 +2,19 @@
 name: agency-os-github
 version: 1.0.0
 description: Offene Änderungen sauber auf GitHub sichern (committen + pullen mit Rebase + pushen) und Konflikte auflösen, damit alles für alle verfügbar und auf dem neuesten Stand ist. Verwende wenn der User "sichere die offenen Änderungen", "offene Änderungen sichern", "committen", "commit", "sichern", "verfügbar machen", "speichern für alle", "sauber machen", "aktualisieren", "neuesten Stand holen", "pull", "mergen", "Konflikt auflösen" oder den Copy-Paste-Prompt aus dem Session-Start-Hinweis nutzt.
+allowed-tools: Bash(git add *) Bash(git commit *) Bash(git push) Bash(git push *) Bash(git pull *) Bash(git rebase *)
 ---
 
 # Agency OS - Github
 
 Offene Änderungen sichern, damit sie nicht nur lokal liegen, sondern für alle verfügbar sind. Sprich in einfacher, nicht-technischer Sprache. "Sichern" statt "committen", "verfügbar machen" statt "pushen". Git-Begriffe nur, wenn der User sie selbst nutzt.
+
+## Bash-Regeln (Prompt-Vermeidung)
+
+Damit dieser Skill ohne unnötige Permission-Rückfragen läuft, beim Bauen von Befehlen:
+- **Lesen/Status** (`git status`, `git diff`, `git log`) ist read-only und läuft prompt-frei. Keine Command-Substitution `$(...)` und keine Backticks drumherum bauen.
+- **Keine Interpreter** (`python3`/`node`/`perl`/`awk`) für Ad-hoc-Logik.
+- Die Git-Schritte dieses Skills (`git add`, `git commit`, `git push`, `git pull --rebase`, `git rebase --continue/--abort`) sind über `allowed-tools` im Frontmatter **prompt-frei erlaubt**. Der Schutz ist hier **nicht** der Permission-Prompt, sondern die **Klartext-Rückfrage im Workflow**: erst Änderungen zusammenfassen + Commit-Vorschlag bestätigen lassen (Schritt 4 / Regel „nie ohne Bestätigung committen"), dann sichern. `mv`/`rm` und andere mutierende Shell-Befehle bleiben bestätigungspflichtig.
 
 ## Workflow
 

@@ -10,6 +10,14 @@ description: Brain-Hygiene-Check. Verwende wenn der User "lint", "räum auf", "c
 
 **Kritisch:** keine destruktiven Änderungen autonom. Keine Mass-Renames. Der User genehmigt jeden Fix einzeln.
 
+## Bash-Regeln (Prompt-Vermeidung)
+
+Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
+- **Lesen** (Dateien, Verzeichnis-Listen, Suche) mit den Tools `Read`, `Glob`, `Grep` statt `cat`/`ls`/`grep` in Bash.
+- **Keine Command-Substitution** `$(...)` und keine Backticks in Bash. Zähl-/Filter-Ausgaben direkt per Pipe ausgeben (z.B. `… | wc -l` als eigene Zeile), nicht in einen `echo`-String verschachteln.
+- **Keine Interpreter** (`python3`/`node`/`perl`/`awk`) für Ad-hoc-Logik; JSON mit `jq` lesen. Die mitgelieferten Lint-Skripte (`resources/*.py`) sind ausgenommen und werden bewusst per `python3` aufgerufen.
+- Mutierende Bash-Befehle (`mv`, `rm`) bleiben bestätigungspflichtig — keine autonomen Umbenennungen/Löschungen. Dieser Skill sichert nichts auf Git (das macht `/agency-os-github`).
+
 ## Pfade & Fundament
 
 > **Brain-Pfade:** Keine festen Ordnernamen. Pfade unten (`{projects}`, `{ip}`, `{logs}` …) sind Platzhalter für die Rollen aus `.agency-os/architecture.md`; fehlt eine, gilt der Standard-Name. Die mitgelieferten Skripte lösen die Rollen selbst über die `architecture.md` auf (gemeinsamer Helper `resources/_arch.py`, Fallback auf die Standard-Namen) und scannen das Arbeitsverzeichnis (Brain-Root) als Wurzel.

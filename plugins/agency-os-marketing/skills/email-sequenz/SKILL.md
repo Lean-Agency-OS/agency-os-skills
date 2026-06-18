@@ -23,7 +23,7 @@ Jede Mail folgt der 4-Bausteine-Formel (Hook → Build → Payoff → CTA), die 
 
 ## Pfade & Fundament
 
-Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`), sonst per Muster.
+Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`, `logs`), sonst per Muster.
 
 **Fundament lesen** (aus `{context}/brands/{brand}/`, Fallback projektweit):
 - `positionierung.md` - Angebot + Differenzierung (wohin die Strecke führt).
@@ -62,11 +62,12 @@ Voice anwenden. Über die Strecke einen roten Faden halten (Rückbezüge, steige
 Bogen-Übersicht (Mail-Liste mit Ziel + Timing) + alle Mails im Chat zeigen. *"Passt das? 'go' zum Speichern, sonst sag, was anders soll."*
 Iteration pro Mail/Bereich, nur das Geänderte neu schreiben.
 
-### 6. Speichern
+### 6. Speichern + Log
 
 Nach "go" als `{marketing}/email-sequenzen/[slug].md` (Slug aus Typ/Ziel). Frontmatter: Typ, Auslöser, Ziel,
 Mail-Anzahl, Timing. Darunter die Bogen-Übersicht + jede Mail als eigene Sektion (Betreff + Body + Versand-Offset).
 Falls Teil einer Kampagne/eines Lead-Magnets: dort verlinken.
+Danach kurzer Eintrag im Tages-Log `{logs}/[YYYY-MM-DD].md` (Sequenz-Typ, Ziel, Mail-Anzahl, Output-Pfad).
 
 ## Output
 

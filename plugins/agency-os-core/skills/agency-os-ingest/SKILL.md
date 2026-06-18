@@ -8,6 +8,14 @@ description: Rohquelle aus dem Inbox-Ordner ins Brain einarbeiten. Verwende wenn
 
 Arbeitet eine Rohquelle aus dem Inbox-Ordner tief ins Brain ein. Substanz, nicht Volumen.
 
+## Bash-Regeln (Prompt-Vermeidung)
+
+Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
+- **Lesen** (Dateien, Verzeichnis-Listen, Suche) mit den Tools `Read`, `Glob`, `Grep` statt `cat`/`ls`/`grep` in Bash.
+- **Keine Command-Substitution** `$(...)` und keine Backticks in Bash. Zähl-/Filter-Ausgaben direkt per Pipe ausgeben (z.B. `… | wc -l` als eigene Zeile), nicht in einen `echo`-String verschachteln.
+- **Keine Interpreter** (`python3`/`node`/`perl`/`awk`) für Ad-hoc-Logik; JSON mit `jq` lesen. Mitgelieferte Skripte dieses Skills sind ausgenommen.
+- Mutierende Bash-Befehle (`mv`, `rm`) bleiben bestätigungspflichtig. Dieser Skill sichert nichts auf Git (das macht `/agency-os-github`).
+
 ## Pfade & Fundament
 
 > **Brain-Pfade:** Keine festen Ordnernamen. Die Platzhalter unten (`{inbox}`, `{clients}`, `{projects}`, `{sales}`, `{marketing}`, `{ip}`, `{strategy}`, `{open-loops}`, `{working-memory}`, `{roles}`, `{logs}`) stehen für die Rollen aus `.agency-os/architecture.md` (`agency-os-start` pflegt die Map); fehlt eine, gilt der Standard-Name bzw. per Muster suchen, sonst Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`. Root-Navigation: `OS.md` (ersatzweise `README.md` / Root-`_index.md`).

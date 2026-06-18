@@ -1,7 +1,7 @@
 {
   "name": "agency-os-core",
   "description": "Agency OS Tages-Workflows: Session-Start, Capture, Ingest (Rohquelle ins Brain einarbeiten), Projektplanung, Weekly Review, Session-Shutdown, Lint (Brain-Hygiene) und GitHub-Sicherung in einfacher Sprache",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "author": {
     "name": "Markus Vieghofer",
     "email": "hallo@markusvieghofer.com"

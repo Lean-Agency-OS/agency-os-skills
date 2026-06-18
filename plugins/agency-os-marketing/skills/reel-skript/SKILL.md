@@ -166,7 +166,7 @@ Optional ein Log-Eintrag im Tages-Log.
 - `/icp` Modus *Bewerten* — Hook/Payoff/CTA gegen das ICP testen
 - `/story-context` (falls im Projekt vorhanden) — echte Stories + O-Töne (Phase 2)
 
-KEINE anderen spezifischen Content-Skills (z.B. `/linkedin-content`, `/carousel`, `/newsletter-email`).
+KEINE anderen spezifischen Content-Skills (z.B. `/linkedin-caption`, `/carousel`, `/newsletter-email`).
 Gemeinsame Frameworks gehören als Projekt-Note, nicht als Skill-zu-Skill-Aufruf.
 
 **Abgrenzung:**
@@ -175,7 +175,7 @@ Gemeinsame Frameworks gehören als Projekt-Note, nicht als Skill-zu-Skill-Aufruf
   produziert `/video-shortform` (Plugin agency-os-video).
 - Keine statischen Slides (das ist `/carousel`).
 - Keine E-Mail/Newsletter (das ist `/newsletter-email`).
-- Keine LinkedIn-/Text-Social-Variante (das ist `/linkedin-content`).
+- Keine LinkedIn-/Text-Social-Variante (das ist `/linkedin-caption`).
 - Ein einzelnes Reel pro Aufruf, keine ganze Serie.
 
 ## Hard-Stops

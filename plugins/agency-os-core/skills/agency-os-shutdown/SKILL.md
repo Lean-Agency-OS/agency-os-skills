@@ -2,6 +2,7 @@
 name: agency-os-shutdown
 version: 1.0.0
 description: "Session-Shutdown und Daily Log. Verwende diesen Skill IMMER wenn der User 'gute nacht', 'shutdown', 'fertig für heute', 'session ende', 'bis morgen', 'schluss für heute', 'feierabend', 'mach zu', 'good night', 'eod' oder ähnliche Abschluss-Signale sagt."
+allowed-tools: Bash(git add *) Bash(git commit *) Bash(git push) Bash(git push *)
 ---
 
 # Shutdown
@@ -11,6 +12,14 @@ description: "Session-Shutdown und Daily Log. Verwende diesen Skill IMMER wenn d
 **Output:** Brain-Updates (`{open-loops}`, `{working-memory}`, Daily Log) + Commit + Push + knappe Abschluss-Meldung im Chat.
 
 ---
+
+## Bash-Regeln (Prompt-Vermeidung)
+
+Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
+- **Lesen** (Dateien, Verzeichnis-Listen, Suche) mit den Tools `Read`, `Glob`, `Grep` statt `cat`/`ls`/`grep` in Bash.
+- **Keine Command-Substitution** `$(...)` und keine Backticks in Bash. Zähl-/Filter-Ausgaben direkt per Pipe ausgeben (z.B. `… | wc -l` als eigene Zeile), nicht in einen `echo`-String verschachteln.
+- **Keine Interpreter** (`python3`/`node`/`perl`/`awk`) für Ad-hoc-Logik; JSON mit `jq` lesen. Mitgelieferte Skripte dieses Skills sind ausgenommen.
+- Read-only Bash (`git status/log/diff`, `jq`) läuft prompt-frei. Die Sicher-Schritte (`git add`, `git commit`, `git push`) sind über `allowed-tools` **prompt-frei erlaubt** — gewollt: der Shutdown-Trigger IST die Zustimmung zu sichern (Schritt 7, keine „soll ich?"-Frage). Schlägt der Push fehl (divergente Remote/Konflikt), übernimmt `/agency-os-github` (Pull mit Rebase + Konflikt + Push), nicht shutdown selbst. `mv`/`rm` und destruktive Operationen bleiben bestätigungspflichtig (siehe „Was NICHT passiert").
 
 ## Pfade & Fundament
 
@@ -134,7 +143,7 @@ Bis zum nächsten Mal.
 - **Während der Session keine Brain-Änderungen, nur Sparring:** Trotzdem Bilanz-Eintrag mit Sparring-Thema und Beobachtung. Wenn `git status` clean ist und kein neuer Log-Eintrag nötig: Shutdown ohne Commit, nur Abschluss-Meldung.
 - **Pre-commit-Hook schlägt fehl:** Investigieren, nicht überspringen. Fixen, neu committen.
 - **Aging-Loops älter als 4 Wochen:** beim Shutdown explizit ansprechen (*"Loop X hängt seit {N} Wochen, noch aktuell?"*).
-- **Push schlägt fehl (z.B. divergente Remote):** Pull mit Rebase, neu pushen. Bei Konflikt: den User fragen, nicht autonom mergen.
+- **Push schlägt fehl (z.B. divergente Remote):** an `/agency-os-github` übergeben — der holt mit Rebase den neuesten Stand, löst Konflikte (fragt bei echten Widersprüchen den User) und pusht. shutdown merged/rebased nicht selbst.
 
 ---
 
