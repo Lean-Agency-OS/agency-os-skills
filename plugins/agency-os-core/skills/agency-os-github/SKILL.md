@@ -1,6 +1,6 @@
 ---
 name: agency-os-github
-version: 1.0.0
+version: 1.1.0
 description: Offene Änderungen sauber auf GitHub sichern (committen + pullen mit Rebase + pushen) und Konflikte auflösen, damit alles für alle verfügbar und auf dem neuesten Stand ist. Verwende wenn der User "sichere die offenen Änderungen", "offene Änderungen sichern", "committen", "commit", "sichern", "verfügbar machen", "speichern für alle", "sauber machen", "aktualisieren", "neuesten Stand holen", "pull", "mergen", "Konflikt auflösen" oder den Copy-Paste-Prompt aus dem Session-Start-Hinweis nutzt.
 allowed-tools: Bash(git add *) Bash(git commit *) Bash(git push) Bash(git push *) Bash(git pull *) Bash(git rebase *)
 ---
@@ -15,6 +15,26 @@ Damit dieser Skill ohne unnötige Permission-Rückfragen läuft, beim Bauen von 
 - **Lesen/Status** (`git status`, `git diff`, `git log`) ist read-only und läuft prompt-frei. Keine Command-Substitution `$(...)` und keine Backticks drumherum bauen.
 - **Keine Interpreter** (`python3`/`node`/`perl`/`awk`) für Ad-hoc-Logik.
 - Die Git-Schritte dieses Skills (`git add`, `git commit`, `git push`, `git pull --rebase`, `git rebase --continue/--abort`) sind über `allowed-tools` im Frontmatter **prompt-frei erlaubt**. Der Schutz ist hier **nicht** der Permission-Prompt, sondern die **Klartext-Rückfrage im Workflow**: erst Änderungen zusammenfassen + Commit-Vorschlag bestätigen lassen (Schritt 4 / Regel „nie ohne Bestätigung committen"), dann sichern. `mv`/`rm` und andere mutierende Shell-Befehle bleiben bestätigungspflichtig.
+
+## Schritt 0 - Zugang sicherstellen (still, Pflicht vor Pull/Push)
+
+Vor dem ersten Hochladen oder Aktualisieren einmal still den GitHub-Zugang herstellen. Das ist nötig, weil dieselbe Sicherung in zwei Umgebungen läuft:
+
+- **Claude Code (dein Rechner, egal ob macOS/Windows/Linux):** ist ein SSH-Schlüssel eingerichtet, gehen `git push`/`git pull` nativ über SSH. Hier ist nichts zu tun.
+- **In Cowork:** der Lauf passiert in einer isolierten Linux-Sandbox **ohne** SSH-Schlüssel. Ein Push über SSH scheitert dort. Lösung ist ein Personal Access Token (PAT) aus dem Brain.
+
+Das Script rät die Umgebung **nicht** (weder am OS noch sonstwie, denn Claude Code läuft unter macOS, Windows oder Linux und ist von der Linux-Sandbox nicht sicher zu unterscheiden). Es entscheidet **fähigkeitsbasiert**: ist ein SSH-Schlüssel da, wird SSH genutzt; sonst wird auf einen PAT zurückgefallen. So ist "beim Erst-Setup noch kein Key" kein Problem: ohne Key und ohne Token stoppt es einfach mit beiden Optionen, statt fälschlich Cowork anzunehmen. Der PAT-Zugang wird eingerichtet, **ohne** die Remote-Adresse im Repo (`.git/config`) anzufassen (die ist mit dem Mac geteilt und bleibt auf SSH) und **ohne** den Token in argv oder Logs zu schreiben. Aus dem Skill-Verzeichnis aufrufen, mit Repo-Pfad und (als Fallback) der aufgelösten `{context}/secrets.env`:
+
+```bash
+bash scripts/resolve-git-auth.sh "REPO_DIR" "{context}/secrets.env"
+```
+
+Der Token wird **local-first** gesucht: zuerst die Umgebungsvariable, dann die gitignorete lokale Datei `.agency-os/secrets.env`, erst zuletzt die committete `{context}/secrets.env` (mit Warnung). Die committete Datei ist **geteilt**, deshalb wird sie nur als letzter Ausweg und nur **innerhalb Cowork** genutzt: das Script erkennt Cowork über mehrere beobachtete Marker zusammen (Hostname `claude` + Fuse-Mounts `~/mnt/outputs` und `~/mnt/uploads` + `CLAUDE_CODE_TMPDIR`/`CLAUDE_TMPDIR`), nie über ein einzelnes Signal. Auf einem persönlichen Rechner ohne Key wird ein geteilter Token so nie still konfiguriert. Diese Cowork-Erkennung steuert nur den Fallback, nicht die primäre SSH-vs-PAT-Entscheidung. Das Script gibt **ein** Statuswort zurück:
+- `ssh` -> SSH-Schlüssel vorhanden, nativer Zugang, weiter mit dem Workflow.
+- `pat` -> Token-Zugang eingerichtet (kein SSH-Schlüssel gefunden), weiter mit dem Workflow. Die literalen `git pull`/`git push` unten laufen ab jetzt automatisch über HTTPS+Token.
+- `missing-secrets` / `missing-token` -> kein SSH-Schlüssel und kein Token. Zwei Wege nennen: **(a)** auf dem eigenen Rechner am besten einen SSH-Schlüssel einrichten und bei GitHub hinterlegen (bevorzugt für eine persönliche Maschine), oder **(b)** in einer Sandbox wie Cowork einen feingranularen PAT (Repo: nur das Brain-Repo, Berechtigung „Contents: Read and write") erstellen und als `GITHUB_TOKEN=...` in `.agency-os/secrets.env` eintragen. Dann stoppen. Sicherstellen, dass diese Datei gitignored ist (`.agency-os/` ist nur teilweise ignoriert; eine Regel `.agency-os/secrets.env` ergänzen, falls nicht vorhanden). Ein PAT ist persönlich und pro Arbeitskopie - niemals in die committete `{context}/secrets.env` oder eine Skill-Datei.
+
+Bei vorhandenem SSH-Schlüssel (`ssh`) bleiben alle Git-Befehle unverändert und prompt-frei über `allowed-tools`. Der Token-Pfad greift nur, wenn kein Schlüssel da ist.
 
 ## Workflow
 
@@ -83,4 +103,5 @@ Regeln für Konflikte:
 - `.claude/settings.local.json` und andere private/lokale Files bleiben außen vor (stehen i.d.R. in `.gitignore`).
 - Sensible oder versehentlich offene Files (Secrets, große Binaries, `.env`) vor dem Sichern flaggen statt mitcommitten.
 - Wenn die Branch nicht die Main-Branch ist oder ein offener Merge/Rebase läuft, kurz hinweisen bevor gesichert wird.
+- `GITHUB_TOKEN` nie in Ausgaben, Logs oder committete Dateien schreiben; in Bestätigungen maskieren (`ghp_****`). Der Token lebt nur in einer lokalen, gitignoreten Secrets-Datei (`.agency-os/secrets.env`) und in der ephemeren Sandbox-Config, nie in einer committeten Datei oder im Repo.
 - Klartext-Feedback nach dem Sichern: "Erledigt, ist jetzt gesichert" (+ Hinweis, falls noch nicht gepusht).
