@@ -15,6 +15,8 @@ Bevor du eine Frage stellst oder etwas präsentierst:
 - `{logs}/` — letzte 3-7 Tages-Files, neueste zuerst
 - Falls eine Rollen-/Org-Struktur mit Wetten existiert (z.B. `{roles}/<rolle>/_wetten.md`): aktive Wetten, ob sich was bewegt hat. Sonst überspringen.
 
+**Startup-Hygiene mitprüfen:** Beim Durchlesen der Logs jede `| startup`-Sektion daraufhin ansehen, ob sie eine `Updates:`-Zeile trägt (Nachweis, dass der Plugin-Update-Check lief: `geprüft, aktuell` / `Rückstand …` / `nicht geprüft, {Grund}`). Fehlt die Zeile in einer startup-Sektion, ist der Check still übersprungen worden - im Weekly Log (Schritt 5) unter „Was hakte" benennen, damit es nicht wieder unsichtbar durchrutscht.
+
 Erst lesen. Dann denken. Dann anfangen.
 
 ---

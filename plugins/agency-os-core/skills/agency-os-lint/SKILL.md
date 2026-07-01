@@ -1,6 +1,6 @@
 ---
 name: agency-os-lint
-version: 1.0.0
+version: 1.1.0
 description: Brain-Hygiene-Check. Verwende wenn der User "lint", "räum auf", "check brain", "wie geht's dem Wiki", "wiki-check" oder ähnliches sagt. Findet broken Links, Orphan-Pages, veraltete/widersprüchliche Claims und stale Projekt-Hubs. Liefert nur einen Befund-Report mit Empfehlungen, macht NICHTS autonom destruktives.
 ---
 
@@ -79,7 +79,19 @@ Status-Frontmatter-Check für Projekt-Hubs im `{projects}`-Ordner. Drei Klassen:
 
 Widersprüche und veraltete inhaltliche Claims, die kein Skript abdeckt, beim Lesen der betroffenen Files mitnehmen und im Report unter "Widersprüche / veraltete Claims" aufführen.
 
-### 5. Befund-Report formatieren
+### 5. Übersprungene Checks (startup-Log)
+
+Ein wiederkehrender Skill soll pro Lauf nachweisen, dass er gelaufen ist. Für den Start-Skill ist der Nachweis die `Updates:`-Zeile: jede startup-Log-Sektion muss den Update-Check-Status protokollieren (`geprüft, aktuell` / `Rückstand …` / `nicht geprüft, {Grund}`). Fehlt die Zeile, lässt sich ein stiller Skip nicht von „lief, nichts zu melden" unterscheiden - also ist die fehlende Zeile selbst der Befund.
+
+Prüfung (read-only, mit `Grep`/`Read`, kein Skript):
+
+1. In `{logs}/` alle Sektions-Header mit `| startup` sammeln (`Grep` nach `^## \[.*\| startup`), Datei + Zeile je Treffer.
+2. Pro Treffer die Sektion bis zum nächsten `## `-Header lesen und auf eine Zeile prüfen, die mit `Updates:` bzw. `**Updates:**` beginnt.
+3. Sektion **ohne** solche Zeile = Befund `startup {YYYY-MM-DD}: kein Update-Check protokolliert`.
+
+Nur die letzten ~14 startup-Sektionen prüfen (ältere sind Historie, kein handelbarer Befund). Findet sich keine startup-Sektion in dem Fenster, den Check still überspringen (kein Befund).
+
+### 6. Befund-Report formatieren
 
 ```markdown
 ## Lint-Befund Stand {YYYY-MM-DD}
@@ -96,6 +108,10 @@ Widersprüche und veraltete inhaltliche Claims, die kein Skript abdeckt, beim Le
 - {kurze Beschreibung mit Files}
 - ...
 
+### Übersprungene Checks ({N})
+- startup {YYYY-MM-DD}: kein Update-Check protokolliert ({logs}/YYYY-MM-DD.md)
+- ...
+
 ### Empfehlungen, sortiert nach Priorität
 1. **Kritisch:** {z.B. broken Link in CLAUDE.md}
 2. **Hoch:** {z.B. Pricing-Widerspruch zwischen 2 Files}
@@ -103,11 +119,11 @@ Widersprüche und veraltete inhaltliche Claims, die kein Skript abdeckt, beim Le
 4. **Niedrig:** {z.B. Themen-Kandidat}
 ```
 
-### 6. Mit dem User durchgehen
+### 7. Mit dem User durchgehen
 
 Pro Punkt: *"Soll ich das fixen, oder ist das beabsichtigt?"*. Mach **nichts** autonom Destruktives. Auch keine Mass-Renames ohne explizite Zustimmung.
 
-### 7. Log-Eintrag
+### 8. Log-Eintrag
 
 Sektion `## [YYYY-MM-DD] lint` ins zentrale Tageslog (`{logs}/YYYY-MM-DD.md`), mit 1-2 Zeilen über die Anzahl der Findings (inkl. ggf. korrigierter architecture.md).
 
@@ -115,8 +131,8 @@ Sektion `## [YYYY-MM-DD] lint` ins zentrale Tageslog (`{logs}/YYYY-MM-DD.md`), m
 
 ## Output
 
-- Befund-Report im Chat (keine eigene Datei): Broken Links, Orphans, Widersprüche/veraltete Claims, Empfehlungen nach Priorität.
-- Log-Eintrag `## [YYYY-MM-DD] lint` in `{logs}/YYYY-MM-DD.md` (Schritt 6). Fixes nur nach Einzel-Genehmigung durch den User, nichts autonom destruktiv.
+- Befund-Report im Chat (keine eigene Datei): Broken Links, Orphans, Widersprüche/veraltete Claims, übersprungene Checks (startup-Log ohne `Updates:`-Zeile), Empfehlungen nach Priorität.
+- Log-Eintrag `## [YYYY-MM-DD] lint` in `{logs}/YYYY-MM-DD.md` (Schritt 8). Fixes nur nach Einzel-Genehmigung durch den User, nichts autonom destruktiv.
 
 ---
 

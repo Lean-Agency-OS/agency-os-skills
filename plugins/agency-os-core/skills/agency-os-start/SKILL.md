@@ -1,6 +1,6 @@
 ---
 name: agency-os-start
-version: 1.1.0
+version: 1.1.1
 description: "Morgen-/Start-Briefing für den User. Verwende diesen Skill IMMER wenn der User 'guten morgen', 'morgen', 'start', 'gm', 'los gehts', 'was steht an', 'starten wir', 'lass uns starten', 'good morning' oder ähnliche Begrüßungen/Start-Signale sagt."
 allowed-tools: Bash(git rev-parse *)
 ---
@@ -45,7 +45,7 @@ Hole die neuesten Änderungen (eine Automatisierung, z.B. n8n, könnte über Nac
 - **Erst prüfen, ob der Arbeitsordner ein Git-Repo ist** (read-only, z.B. `git rev-parse --is-inside-work-tree`). Ist es **kein** Repo (oder kein Remote), überspringe diesen Schritt komplett.
 - Ist es ein Repo: den Pull **nicht selbst** ausführen. **Immer** an `/agency-os-github` delegieren - der holt den neuesten Stand (Pull mit Rebase) und löst Konflikte / divergente Remote. Dieser Skill führt selbst kein `git pull` aus.
 
-### 1b. Plugin-Updates prüfen (still, einmal pro Start)
+### 2. Plugin-Updates prüfen (still, einmal pro Start)
 
 Führe kurz den Update-Check durch (Skill `/agency-os-update`): installierte Plugin-Versionen vs. neuester Marketplace-Stand. Nur das Ergebnis merken, **nicht** die vollen Details/Update-Befehle hier ausgeben.
 
@@ -54,26 +54,26 @@ Führe kurz den Update-Check durch (Skill `/agency-os-update`): installierte Plu
 
 Netz/CLI nicht verfügbar oder Check schlägt fehl → still überspringen, Briefing nicht blockieren.
 
-### 2. Neue Files in der Inbox prüfen
+### 3. Neue Files in der Inbox prüfen
 
 Checke `{inbox}/` auf neue Brain-Ingest-Files oder Spoke-Einträge. Wenn ja: kurz melden was da ist (nicht ingesten, nur melden, das ist Job des `/ingest`-Skills).
 
-### 3. Arbeitsspeicher (hot.md) lesen
+### 4. Arbeitsspeicher (hot.md) lesen
 
 Lies `{working-memory}`, das ist der Arbeitsspeicher. Fasse Current Focus und Active Threads in 2-3 Sätzen zusammen. Wenn die Datei (noch) nicht existiert, überspringe den Punkt.
 
-### 4. Open Loops prüfen
+### 5. Open Loops prüfen
 
 Lies `{open-loops}`. Wenn die Datei (noch) nicht existiert, überspringe den Punkt. Sonst melde:
 - **Loops älter als 2 Wochen** (Aging-Check, sichtbar machen)
 - **Neue offene Entscheidungen** mit Marker `[?]`
 - **Erledigte** mit `[x]` die noch nicht ins Log verschoben wurden
 
-### 5. Daily Log heute prüfen
+### 6. Daily Log heute prüfen
 
 Prüfe `{logs}/` auf eine Datei mit dem heutigen Datum (`YYYY-MM-DD.md`). Wenn keine existiert, lege sie an mit dem Header `# YYYY-MM-DD` und ergänze später beim Briefing-Ende eine Sektion `## [YYYY-MM-DD] <name>-session | startup`.
 
-### 6. Tasks checken
+### 7. Tasks checken
 
 Ermittle die Task-Quelle des Users in dieser Reihenfolge und nutze die erste, die greift:
 
@@ -93,7 +93,7 @@ Ermittle die Task-Quelle des Users in dieser Reihenfolge und nutze die erste, di
 - Falls in der Konfiguration ein Board-Link hinterlegt ist, gib ihn aus.
 - Hinweis, wie man es einrichtet: Task-MCP verbinden (ClickUp, Notion, ...) oder einen Tasks-Export nach `{context}/` schreiben lassen.
 
-### 7. Kalender checken
+### 8. Kalender checken
 
 Ermittle die Kalender-Quelle in dieser Reihenfolge:
 
@@ -108,7 +108,7 @@ Ermittle die Kalender-Quelle in dieser Reihenfolge:
 - Optional eine Wochen-Summary als Zähler nach Termin-Typ (z.B. *"Diese Woche: 4 Calls, 1 Workshop, 1 Sales"*)
 - Bei einem Export: zeige wie alt er ist
 
-### 8. Rollen-/Persona-Status (optional)
+### 9. Rollen-/Persona-Status (optional)
 
 **Nur relevant, wenn der User mit Rollen/Personas arbeitet** (eine Org-Struktur im Brain, z.B. ein `{roles}/`-Ordner mit einem Unterordner pro Rolle). Existiert keine solche Struktur, **überspringe diesen Schritt komplett** und gib keine Rollen-Zeile im Briefing aus.
 
@@ -119,7 +119,7 @@ Wenn eine Rollen-Struktur existiert, ermittle die Rollen **dynamisch** (Unterord
 
 Nur prüfen ob sich was geändert hat, nicht alles lesen. Wenn aktiv: in 1 Zeile pro Rolle zusammenfassen.
 
-### 9. Briefing ausgeben
+### 10. Briefing ausgeben
 
 Ermittle zuerst die Anrede:
 - **Name:** aus dem Claude-Account des Users. Nicht hardcoden. Nutze den Vornamen.
@@ -141,7 +141,7 @@ Fasse dann alles in einem knappen Briefing zusammen:
 
 Kurz halten. Kein Essay. Der User will in 30 Sekunden wissen, was los ist.
 
-### 10. Log-Sektion für Startup
+### 11. Log-Sektion für Startup
 
 Ergänze die Datei `{logs}/YYYY-MM-DD.md` mit einer Sektion:
 
@@ -155,8 +155,8 @@ Briefing ausgegeben. Loops aging: {N}. Neue Inbox-Items: {N}. Aktive Rollen seit
 
 ## Output
 
-- Knappes Briefing im Chat (Schritt 9).
-- Eine Sektion `## [YYYY-MM-DD] <name>-session | startup` in `{logs}/YYYY-MM-DD.md` (Schritt 10; `<name>` = Vorname-Slug des Users).
+- Knappes Briefing im Chat (Schritt 10).
+- Eine Sektion `## [YYYY-MM-DD] <name>-session | startup` in `{logs}/YYYY-MM-DD.md` (Schritt 11; `<name>` = Vorname-Slug des Users).
 
 ---
 
