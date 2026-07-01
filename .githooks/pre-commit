@@ -1,20 +1,25 @@
 #!/usr/bin/env bash
-# pre-commit: keep the vendored video-engine copies in sync with packages/video-engine.
-# Re-vendors all video-* skills and stages the result, so a change to the engine source
-# can never be committed without its synced copies. Enable once with:
+# pre-commit hooks for this repo. Enable once with:
 #   git config core.hooksPath .githooks
 set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel)"
-[ -f "$ROOT/tools/sync-engine.sh" ] || exit 0
 
-# Only vendor when THIS commit actually touches the engine source or its vendored copies.
-# A commit that stages nothing under packages/video-engine or plugins/agency-os-video must
-# not drag in unrelated (possibly uncommitted) video changes via the sync.
-if ! git diff --cached --name-only \
-  | grep -qE '^(packages/video-engine/|plugins/agency-os-video/)'; then
-  exit 0
+# 1) Regenerate the versions manifest so .claude-plugin/versions.json always matches the
+#    plugin.json + SKILL.md versions. Output is idempotent (no timestamp) -> on a commit
+#    that changed no version this rewrites the same bytes and `git add` is a no-op. So it
+#    can run unconditionally and never needs a manual "don't forget to regenerate".
+if [ -f "$ROOT/tools/versions.sh" ]; then
+  bash "$ROOT/tools/versions.sh" >/dev/null
+  git add "$ROOT/.claude-plugin/versions.json"
 fi
 
-bash "$ROOT/tools/sync-engine.sh" >/dev/null
-git add "$ROOT/plugins/agency-os-video/skills"
+# 2) Keep the vendored video-engine copies in sync with packages/video-engine, but ONLY
+#    when this commit actually touches the engine source or its vendored copies. A commit
+#    that stages nothing under those paths must not drag in unrelated (possibly uncommitted)
+#    video changes via the sync.
+if [ -f "$ROOT/tools/sync-engine.sh" ] \
+   && git diff --cached --name-only | grep -qE '^(packages/video-engine/|plugins/agency-os-video/)'; then
+  bash "$ROOT/tools/sync-engine.sh" >/dev/null
+  git add "$ROOT/plugins/agency-os-video/skills"
+fi

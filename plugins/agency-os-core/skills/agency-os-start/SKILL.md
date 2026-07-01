@@ -1,8 +1,8 @@
 ---
 name: agency-os-start
-version: 1.0.0
+version: 1.1.0
 description: "Morgen-/Start-Briefing für den User. Verwende diesen Skill IMMER wenn der User 'guten morgen', 'morgen', 'start', 'gm', 'los gehts', 'was steht an', 'starten wir', 'lass uns starten', 'good morning' oder ähnliche Begrüßungen/Start-Signale sagt."
-allowed-tools: Bash(git pull) Bash(git pull *)
+allowed-tools: Bash(git rev-parse *)
 ---
 
 # Start-Briefing
@@ -21,7 +21,7 @@ Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
 - **Lesen** (Dateien, Verzeichnis-Listen, Suche) mit den Tools `Read`, `Glob`, `Grep` statt `cat`/`ls`/`grep` in Bash.
 - **Keine Command-Substitution** `$(...)` und keine Backticks in Bash. Zähl-/Filter-Ausgaben direkt per Pipe ausgeben (z.B. `… | wc -l` als eigene Zeile), nicht in einen `echo`-String verschachteln.
 - **Keine Interpreter** (`python3`/`node`/`perl`/`awk`) für Ad-hoc-Logik; JSON mit `jq` lesen. Mitgelieferte Skripte dieses Skills sind ausgenommen.
-- `git pull` (Schritt 1) und read-only Bash (`git status/log/diff`, `jq`) laufen prompt-frei. Bei Pull-Konflikt / divergenter Remote **nicht selbst** auflösen → `/agency-os-github` übernimmt. Dieser Skill committet/pusht nicht; `mv`/`rm` bleiben bestätigungspflichtig.
+- Dieser Skill macht **keine** Git-Schreib-/Sync-Operationen selbst (kein `git pull`/`commit`/`push`). Das Holen des neuesten Stands (Schritt 1) wird **immer** an `/agency-os-github` delegiert. Erlaubt sind nur read-only Checks (`git rev-parse` für den Repo-Test, `git status/log/diff`, `jq`). `mv`/`rm` bleiben bestätigungspflichtig.
 
 ## Pfade & Fundament
 
@@ -38,15 +38,21 @@ Das Schreiben ist Infrastruktur (wie `.agency-os/state.md` beim github-Skill), k
 
 ## Workflow
 
-### 1. Git Pull
+### 1. Neuesten Stand holen (delegiert, nur wenn Git-Repo)
 
-Hole die neuesten Änderungen (eine Automatisierung, z.B. n8n, könnte über Nacht Brain-Ingest-Files committed haben). Wenn das Brain kein Git-Repo ist oder kein Remote hat, überspringe diesen Schritt.
+Hole die neuesten Änderungen (eine Automatisierung, z.B. n8n, könnte über Nacht Brain-Ingest-Files committed haben).
 
-```bash
-git pull
-```
+- **Erst prüfen, ob der Arbeitsordner ein Git-Repo ist** (read-only, z.B. `git rev-parse --is-inside-work-tree`). Ist es **kein** Repo (oder kein Remote), überspringe diesen Schritt komplett.
+- Ist es ein Repo: den Pull **nicht selbst** ausführen. **Immer** an `/agency-os-github` delegieren - der holt den neuesten Stand (Pull mit Rebase) und löst Konflikte / divergente Remote. Dieser Skill führt selbst kein `git pull` aus.
 
-Konflikt oder divergente Remote? **Nicht selbst** mergen/rebasen → an `/agency-os-github` übergeben (dort liegt die Konflikt-Auflösung). Sonst normal weiter.
+### 1b. Plugin-Updates prüfen (still, einmal pro Start)
+
+Führe kurz den Update-Check durch (Skill `/agency-os-update`): installierte Plugin-Versionen vs. neuester Marketplace-Stand. Nur das Ergebnis merken, **nicht** die vollen Details/Update-Befehle hier ausgeben.
+
+- **Alles aktuell** → still, keine Zeile im Briefing.
+- **Rückstand** → im Briefing genau eine `**Updates:**`-Zeile (welche Plugins, ein Hinweis „Details/Schritte: `/agency-os-update`"). Nicht selbst aktualisieren.
+
+Netz/CLI nicht verfügbar oder Check schlägt fehl → still überspringen, Briefing nicht blockieren.
 
 ### 2. Neue Files in der Inbox prüfen
 
@@ -129,6 +135,7 @@ Fasse dann alles in einem knappen Briefing zusammen:
 **Tasks:** {High-Prio + fällige aus dem Task-Tool}
 **Offen:** {wichtigste Loops, besonders aging}
 **Inbox:** {X neue Files in {inbox}/}
+**Updates:** {nur falls Plugins veraltet: welche + "Schritte: /agency-os-update", sonst Zeile weglassen}
 **Rollen:** {nur falls eine Rollen-Struktur existiert: welche Rolle war aktiv, was hat sie getan, sonst Zeile weglassen}
 ```
 
