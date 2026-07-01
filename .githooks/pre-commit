@@ -8,5 +8,13 @@ set -euo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 [ -f "$ROOT/tools/sync-engine.sh" ] || exit 0
 
+# Only vendor when THIS commit actually touches the engine source or its vendored copies.
+# A commit that stages nothing under packages/video-engine or plugins/agency-os-video must
+# not drag in unrelated (possibly uncommitted) video changes via the sync.
+if ! git diff --cached --name-only \
+  | grep -qE '^(packages/video-engine/|plugins/agency-os-video/)'; then
+  exit 0
+fi
+
 bash "$ROOT/tools/sync-engine.sh" >/dev/null
 git add "$ROOT/plugins/agency-os-video/skills"
