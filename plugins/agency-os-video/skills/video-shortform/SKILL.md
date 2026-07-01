@@ -1,6 +1,6 @@
 ---
 name: video-shortform
-version: 1.1.0
+version: 1.1.1
 description: Schneidet Roh-Video(s) zu postfertigen Reels/Shorts - Transkript, scroll-stopping Text-Hook drueber, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Einzeln oder ein ganzer Ordner auf einmal. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "schneid alle Videos in dem Ordner", "postfertiges Reel", "/video-shortform". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 

@@ -195,7 +195,10 @@ def _sample_frame_stats(
             "sat_mean": sat_mean,
         }
     finally:
-        Path(metadata_path).unlink(missing_ok=True)
+        try:
+            Path(metadata_path).unlink(missing_ok=True)
+        except OSError:
+            pass  # Cowork mount may forbid unlink (EPERM); temp metadata is harmless if left
 
 
 def auto_grade_for_clip(

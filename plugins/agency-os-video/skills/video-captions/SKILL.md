@@ -1,6 +1,6 @@
 ---
 name: video-captions
-version: 1.0.0
+version: 1.0.1
 description: Brennt markenkonforme Untertitel auf ein bereits fertig geschnittenes Video - transkribiert, baut Caption-Chunks, Burn-in mit CI-Farbe/Font. Kein Schnitt. Triggert bei "Untertitel aufs Video", "Captions einbrennen", "Subtitles fuer das Video", "burn captions", "/video-captions". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + CI.
 ---
 

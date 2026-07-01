@@ -102,8 +102,24 @@ def call_scribe(
                 return resp.json()
             if resp.status_code == 429 or resp.status_code >= 500:
                 last_err = f"{resp.status_code}: {resp.text[:200]}"
+            elif resp.status_code == 401:
+                # Bad/expired key — no point retrying.
+                raise RuntimeError(
+                    "Scribe 401: ELEVENLABS_API_KEY ungueltig oder abgelaufen. "
+                    "Key in {context}/secrets.env pruefen."
+                )
+            elif resp.status_code == 403:
+                # Key is valid but lacks the Speech-to-Text scope — Mario's exact failure.
+                # Make it unmistakable so nobody re-diagnoses it as a 'sandbox/network' issue.
+                raise RuntimeError(
+                    "Scribe 403: dem ElevenLabs-Key fehlt die 'speech_to_text'-Berechtigung. "
+                    "Im ElevenLabs-Dashboard beim API-Key den Endpoint 'Sprache zu Text' "
+                    "(Speech to Text) auf Zugriff stellen ODER einen neuen Key mit diesem "
+                    "Scope erzeugen, dann in {context}/secrets.env eintragen. "
+                    "Das ist KEIN Netz-/Sandbox-Problem."
+                )
             else:
-                # Non-retryable (4xx other than 429): fail fast.
+                # Non-retryable (other 4xx): fail fast.
                 raise RuntimeError(f"Scribe returned {resp.status_code}: {resp.text[:500]}")
         except requests.RequestException as e:
             last_err = str(e)

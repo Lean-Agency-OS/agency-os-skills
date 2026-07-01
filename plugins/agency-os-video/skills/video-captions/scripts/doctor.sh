@@ -42,18 +42,35 @@ fi
 
 echo
 echo "## API-Key (extern im Brain)"
+key_src=""
 if [ -n "$SECRETS" ] && [ -f "$SECRETS" ]; then
   # source the Brain secrets file (KEY=VALUE lines)
   set -a; . "$SECRETS"; set +a
-  [ -n "${ELEVENLABS_API_KEY:-}" ] && echo "OK    ELEVENLABS_API_KEY gesetzt ($SECRETS)" || echo "OFFEN ELEVENLABS_API_KEY fehlt in $SECRETS"
+  key_src="$SECRETS"
 elif [ -n "${ELEVENLABS_API_KEY:-}" ]; then
-  echo "OK    ELEVENLABS_API_KEY aus Umgebung"
-else
+  key_src="Umgebung"
+fi
+if [ -n "${ELEVENLABS_API_KEY:-}" ]; then
+  echo "OK    ELEVENLABS_API_KEY gesetzt ($key_src)"
+  # The 'speech_to_text' scope can NOT be checked without a real (credit-spending) call:
+  # the Scribe endpoint validates the request body BEFORE auth, so a probe without audio
+  # returns 422 for any key. This stays read-only and just sets the right expectation.
+  echo "      Scope-Hinweis: wirft die Transkription HTTP 403, fehlt dem Key der"
+  echo "      'speech_to_text'-Scope -> im ElevenLabs-Dashboard 'Sprache zu Text' auf"
+  echo "      Zugriff stellen (Key ggf. neu erzeugen)."
+elif [ -z "$SECRETS" ]; then
   echo "OFFEN secrets.env nicht uebergeben -> Aufruf: bash scripts/doctor.sh {context}/secrets.env"
+else
+  echo "OFFEN ELEVENLABS_API_KEY fehlt in $SECRETS"
 fi
 
 echo
-echo "## Netzwerk (000=blockiert)"
+echo "## Netzwerk"
 for h in https://api.elevenlabs.io https://registry.npmjs.org; do
-  echo "$(curl -s -o /dev/null -w '%{http_code}' -m 8 "$h" 2>/dev/null)  $h"
+  code="$(curl -s -o /dev/null -w '%{http_code}' -m 8 "$h" 2>/dev/null)"
+  if [ "$code" = "000" ]; then
+    echo "BLOCKIERT  $h (HTTP 000 - kein Netz / Sandbox dicht)"
+  else
+    echo "erreichbar $h (HTTP $code - jede Antwort != 000 heisst: Netz offen)"
+  fi
 done

@@ -111,7 +111,10 @@ def compute_envelope(video: Path, start: float, end: float, samples: int = 2000)
             env = env / env.max()
         return env
     finally:
-        wav.unlink(missing_ok=True)
+        try:
+            wav.unlink(missing_ok=True)
+        except OSError:
+            pass  # Cowork mount may forbid unlink (EPERM); temp wav is harmless if left
 
 
 # -------- Transcript word overlays ------------------------------------------

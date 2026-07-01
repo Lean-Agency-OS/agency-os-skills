@@ -398,7 +398,10 @@ def concat_segments(segment_paths: list[Path], out_path: Path, edit_dir: Path) -
     ]
     print(f"concat → {out_path.name}")
     ffrun(cmd)
-    concat_list.unlink(missing_ok=True)
+    try:
+        concat_list.unlink(missing_ok=True)
+    except OSError:
+        pass  # Cowork mount may forbid unlink (EPERM); leftover is gitignored cache, harmless
 
 
 # -------- Master SRT (Rule 5) ------------------------------------------------
@@ -813,7 +816,10 @@ def main() -> None:
         build_final_composite(base_path, overlays, subs_path, tmp_composite, edit_dir, force_style=sub_style)
         print("loudness normalization → social-ready (-14 LUFS / -1 dBTP / LRA 11)")
         apply_loudnorm_two_pass(tmp_composite, final_tmp, preview=args.draft)
-        tmp_composite.unlink(missing_ok=True)
+        try:
+            tmp_composite.unlink(missing_ok=True)
+        except OSError:
+            pass  # Cowork mount may forbid unlink (EPERM); leftover is gitignored cache, harmless
     final_tmp.replace(out_path)
     print(f"done → {out_path.name}")
 

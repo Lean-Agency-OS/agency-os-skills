@@ -1,6 +1,6 @@
 ---
 name: video-roughcut
-version: 1.0.0
+version: 1.0.1
 description: Bereitet aus einem Roh-Video einen Rohschnitt vor und exportiert ihn nach DaVinci Resolve / Premiere - Transkript, Fueller/Pausen raus, sauberes Timing, NLE-Export (FCPXML / FCP7-XML). Kein Grade/Render, der Cutter finisht nativ. Triggert bei "Rohschnitt", "schneid vor", "Schnitt fuer DaVinci/Premiere", "exportier als FCPXML", "rough cut", "/video-roughcut". Brand-aware ueber {context}/brands/{brand}/.
 ---
 

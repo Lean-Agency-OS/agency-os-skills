@@ -21,16 +21,29 @@ done
 ffmpeg -version 2>/dev/null | grep -q 'enable-libass' || echo "[setup] WARN ffmpeg ohne libass - Untertitel-Burn-in koennte fehlschlagen"
 [ "$fail" = 1 ] && { echo "[setup] Abbruch: Pflicht-Tools fehlen."; exit 1; }
 
-# --- 2. Python env (uv) under DATA. Deps come from the (read-only) pyproject in ROOT;
-#        non-editable install so a read-only source dir is fine. The [whisper] extra is
-#        only installed for skills that transcribe locally (marker .needs-whisper). ---
+# --- 2. Python env (uv) under DATA. setuptools writes <pkg>.egg-info NEXT TO the
+#        pyproject.toml during the build, so the dir holding pyproject must be writable.
+#        In Claude Code the mount is writable (resolve-datadir returns ROOT == DATA) ->
+#        build in place, back-compat. In Cowork ROOT is a read-only mount (DATA != ROOT)
+#        -> build from a writable staging copy under DATA. resolve-datadir.sh stays the
+#        single source of truth for "is ROOT writable". The [whisper] extra is only
+#        installed for skills that transcribe locally (marker .needs-whisper). ---
 VENV="$DATA/.venv"
-PIP_TARGET="$ROOT"
-if [ -f "$ROOT/.needs-whisper" ]; then
-  echo "[setup] installiere Python-Deps inkl. lokalem Whisper (uv)..."
-  PIP_TARGET="$ROOT[whisper]"
+if [ "$DATA" = "$ROOT" ]; then
+  BUILD_SRC="$ROOT"                       # writable mount: build in place (back-compat)
 else
-  echo "[setup] installiere Python-Deps (uv)..."
+  BUILD_SRC="$DATA/src"                   # read-only mount: stage the build inputs
+  rm -rf "$BUILD_SRC"; mkdir -p "$BUILD_SRC"
+  cp "$ROOT/pyproject.toml" "$BUILD_SRC/"
+  [ -f "$ROOT/uv.lock" ] && cp "$ROOT/uv.lock" "$BUILD_SRC/"
+  cp -r "$ROOT/helpers" "$BUILD_SRC/helpers"   # holds the LICENSE that pyproject references
+fi
+PIP_TARGET="$BUILD_SRC"
+if [ -f "$ROOT/.needs-whisper" ]; then
+  echo "[setup] installiere Python-Deps inkl. lokalem Whisper (uv) aus: $BUILD_SRC"
+  PIP_TARGET="$BUILD_SRC[whisper]"
+else
+  echo "[setup] installiere Python-Deps (uv) aus: $BUILD_SRC"
 fi
 ( uv venv --quiet "$VENV" && uv pip install --python "$VENV/bin/python" "$PIP_TARGET" ) \
   && echo "[setup] OK   Python-Env bereit ($VENV)." \
