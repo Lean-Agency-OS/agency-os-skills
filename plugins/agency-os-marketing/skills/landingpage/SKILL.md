@@ -1,6 +1,6 @@
 ---
 name: landingpage
-version: 1.0.2
+version: 2.0.0
 description: >
   Schreibt Copy + Struktur einer Conversion-Landingpage für EIN Angebot/Ziel: Hero, Problem, Mechanismus,
   Outcome, Social Proof, Angebot, Objections/FAQ, Final CTA - genau ein CTA. Liest Positionierung
@@ -26,10 +26,10 @@ Markdown-Dokument (Web/Designer baut daraus die Seite). Genau **ein** CTA, keine
 Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`, `logs`),
 sonst per Muster. `{marketing}`/`{context}`/`{logs}` sind die aufgelösten Pfade.
 
-**Fundament lesen** (aus `{context}/brands/{brand}/`, Fallback projektweit):
-- `positionierung.md` - Angebot, Differenzierung/Mechanismus, Messaging-Pillars, Beweise.
-- `icp.md` - Schmerz, gewünschtes Ergebnis, Sprache.
-- `voice-profile.md` - Ton auf die ganze Seite anwenden.
+**Fundament lesen:**
+- `{context}/positionierung.md` - Angebot, Differenzierung/Mechanismus, Messaging-Pillars, Beweise.
+- `{context}/zielgruppe.md` - Schmerz, gewünschtes Ergebnis, Sprache.
+- `{context}/brand/voice-profile.md` - Ton auf die ganze Seite anwenden.
 
 Fehlen Positionierung/ICP: Seite trotzdem schreibbar, aber empfehlen, sie zu schärfen - eine LP ohne klares
 Angebot/ICP konvertiert nicht.

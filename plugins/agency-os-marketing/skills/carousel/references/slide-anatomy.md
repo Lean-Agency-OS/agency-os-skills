@@ -15,8 +15,8 @@ lang wie das Thema es braucht (Sweetspot gesamt ~8-10, geht aber auch kürzer). 
 ## Atomaritäts-Prinzip
 
 Jede Slide leistet zwei Dinge gleichzeitig:
-1. **Alleine stehen** — wer nur diese eine Slide sieht/screenshottet, hat einen kompletten Mini-Mehrwert.
-2. **Die nächste mitverkaufen** — Cliff-Hanger oder Pattern-Trigger zum Weiter-Swipen.
+1. **Alleine stehen:** wer nur diese eine Slide sieht/screenshottet, hat einen kompletten Mini-Mehrwert.
+2. **Die nächste mitverkaufen:** Cliff-Hanger oder Pattern-Trigger zum Weiter-Swipen.
 
 Schließt aus: "Slide 4 ergibt nur Sinn, wenn man Slide 3 gelesen hat." Grund: Instagram serviert bei einer
 zweiten Impression oft **die zweite Slide als Cover** statt der ersten, jede Slide kann also der Einstieg sein.
@@ -43,7 +43,7 @@ Jedes Carousel verkauft etwas. Vorab klären (sonst kein Aufbau):
 
 **Minimal-Carousel:** Hook (2) + Build (mind. 1) + Payoff (1) + CTA (1). Mehr Build nur, wenn das Thema es trägt.
 
-## Payoff-Slide(s) — Varianten
+## Payoff-Slide(s) - Varianten
 
 Die Payoff-Slide bringt EIN Insight ODER EINE Umsetzung. Eine **optionale** Slide direkt davor (Bridge/Stakes/Proof)
 bereitet den CTA vor (genau eine Variante wählen):
@@ -59,7 +59,7 @@ Ist das Thema knapp, entfällt diese Vorbereitungs-Slide und der Payoff steht di
 Genau ein CTA pro Carousel, auf der **letzten** Slide. Die Payoff-/Bridge-Slides davor enthalten **niemals**
 einen konkurrierenden CTA (kein Save-/Folge-/Send-Aufruf). Zwei CTAs = geteilte Aufmerksamkeit = beide underperformen.
 
-## CTA-Slide — Specs
+## CTA-Slide - Specs
 
 Foto (der Person/Marke) + EIN Comment-Wort + klares Angebot. Pattern:
 *"Willst du [JTBD-Framing]? Kommentiere [WORT] - ich schick's dir per DM."*

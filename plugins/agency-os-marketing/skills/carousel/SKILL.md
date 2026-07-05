@@ -1,6 +1,6 @@
 ---
 name: carousel
-version: 2.1.2
+version: 3.0.0
 description: >
   Baut Carousel-Posts (flexible Slide-Zahl, 1080x1350, Instagram/LinkedIn) nach der 4-Bausteine-Formel
   (Hook -> Build -> Payoff -> CTA): Preflight (CI + Template) -> geführtes Setup -> Hook-Auswahl ->
@@ -26,10 +26,10 @@ Keine hartkodierten Pfade. Ordner werden über ihre **Rolle** aus `.agency-os/ar
 (`agency-os-start` pflegt die Datei), sonst per Muster gesucht. `{context}`/`{marketing}`/`{logs}` unten sind
 diese aufgelösten Pfade.
 
-- **Brand:** aktive Brand unter `{context}/brands/`. Nur eine → die; mehrere → die mit `brand-config.md` `status: active`. Kein fester Default-Name.
-- **Brand-CI:** `{context}/brands/{brand}/ci.md` (Frontmatter: `colors`, `fonts`, `handle`, `name`, `assets_dir`, `logo`). Angelegt/gepflegt von `/brand-ci` (dort liegt das Schema + Beispiel). Gleiche `ci.md` nutzt auch `/video-shortform`. Die CI fließt beim **Template-Generieren** ins Layout (s.u.); beim Bauen liefert sie `assets_dir`/`handle`/`name` für den Render.
-- **ICP:** `{context}/brands/{brand}/icp.md` (Fallback projektweites ICP). Auf alle Texte anwenden.
-- **Voice:** `{context}/brands/{brand}/voice-profile.md` (Fallback projektweit). Auf alle Texte anwenden.
+- **Brand-CI:** `{context}/brand/ci.md` (Frontmatter: `colors`, `fonts`, `handle`, `name`, `assets_dir`, `logo`). Angelegt/gepflegt von `/brand-ci` (dort liegt das Schema + Beispiel). Gleiche `ci.md` nutzt auch `/video-shortform`. Die CI fließt beim **Template-Generieren** ins Layout (s.u.); beim Bauen liefert sie `assets_dir`/`handle`/`name` für den Render.
+- **ICP:** `{context}/zielgruppe.md`. Auf alle Texte anwenden.
+- **Voice:** `{context}/brand/voice-profile.md`. Auf alle Texte anwenden.
+- **Brand-Config (optional):** `{context}/brand/brand-config.md`, falls vorhanden. Liefert Carousel-Inputs wie `hashtags_base`, `cta_mode`/`cta_default_url`, `ig_handle`/`li_handle`, `slide_format`, `default_slide_count`. Vorhandene Werte nicht im Setup abfragen, sondern übernehmen; fehlt die Datei, alles im Setup klären.
 
 ### Templates (Layout, im Brain)
 
@@ -39,9 +39,9 @@ Render-Default aus dem Plugin; der Seed wird nur einmal benutzt, um das erste Te
 
 ### Resources (Plugin)
 
-- `resources/templates/standard.html` — **ein** Seed-Layout. Nur zur Erst-Generierung eines Brain-Templates.
-- `resources/preview-template.html` — IG-Mobile-Mockup, von `render.py` befüllt.
-- `resources/render.py` — schreibt standardmäßig nur `preview.html` (kein Chromium); mit `--final` zusätzlich pro Slide ein PNG (1080x1350) + PDF. Args `--handle`/`--brand`/`--assets-dir` aus der CI. Bettet Brand-Assets aus `--assets-dir` als base64 ein - in die Preview **und** beim Final-Render, sodass im HTML keine relativen Rück-Pfade nötig sind (Windows-safe).
+- `resources/templates/standard.html`: **ein** Seed-Layout. Nur zur Erst-Generierung eines Brain-Templates.
+- `resources/preview-template.html`: IG-Mobile-Mockup, von `render.py` befüllt.
+- `resources/render.py`: schreibt standardmäßig nur `preview.html` (kein Chromium); mit `--final` zusätzlich pro Slide ein PNG (1080x1350) + PDF. Args `--handle`/`--brand`/`--assets-dir` aus der CI. Bettet Brand-Assets aus `--assets-dir` als base64 ein - in die Preview **und** beim Final-Render, sodass im HTML keine relativen Rück-Pfade nötig sind (Windows-safe).
 
 ---
 
@@ -49,8 +49,8 @@ Render-Default aus dem Plugin; der Seed wird nur einmal benutzt, um das erste Te
 
 ### Preflight (Pflicht, vor Phase 1)
 
-1. **Pfade + Brand** auflösen (s.o.).
-2. **CI prüfen:** Existiert `{context}/brands/{brand}/ci.md`? Wenn **nein** → Warnung *"Keine Brand-CI gefunden - ohne CI wird das Ergebnis generisch. Empfehlung: mit `/brand-ci` eine `ci.md` anlegen."*
+1. **Pfade** auflösen (s.o.).
+2. **CI prüfen:** Existiert `{context}/brand/ci.md`? Wenn **nein** → Warnung *"Keine Brand-CI gefunden - ohne CI wird das Ergebnis generisch. Empfehlung: mit `/brand-ci` eine `ci.md` anlegen."*
 3. **Template prüfen:** Liegt mind. ein `*.html` in `{marketing}/content/carousels/00-templates/`?
    - **Keins/Ordner fehlt:** ein Template aus dem Seed `resources/templates/standard.html` **generieren** - Seed kopieren, `colors`/`fonts` aus der CI in den `:root` und `name`/`handle` in die Slides einbacken, unter sprechendem Namen in `{marketing}/content/carousels/00-templates/` ablegen, User informieren (wo es liegt, frei anpassbar). Ohne CI: generisch mit Platzhaltern.
    - **Genau eins:** das nehmen. **Mehrere:** in Phase 1 zur Auswahl stellen.
@@ -66,8 +66,7 @@ Eine Frage nach der anderen, nicht alles auf einmal:
 5. **Template:** falls mehrere in `{marketing}/content/carousels/00-templates/`, hier auswählen
 6. **Edition:** Light ODER Cinema (falls das gewählte Template beide Varianten hat)
 
-Zusammenfassung zeigen, auf OK warten. **Danach automatisch:** falls vorhanden `/story-context` mit dem Thema
-als Query aufrufen, relevante Stories/O-Töne für Phase 3 notieren. Keine Story-Quelle → echtes Material beim
+Zusammenfassung zeigen, auf OK warten. **Danach:** bei Build-Subtyp Story echtes Material für Phase 3 beim
 User erfragen, nichts erfinden.
 
 ### Phase 2: Hook-Auswahl (Stop-Punkt)
@@ -145,9 +144,8 @@ Kein automatisches Posten. Kurzer Eintrag im Tages-Log `{logs}/[YYYY-MM-DD].md` 
 
 **Erlaubte Skills:**
 
-- `/brand-voice` — Stimme der Brand auf alle Texte
-- `/icp` Modus *Bewerten* — Hook/CTA gegen ICP
-- `/story-context` (falls vorhanden) — echte Stories + O-Töne (Phase 1)
+- `/brand-voice`: Stimme der Brand auf alle Texte
+- `/icp` Modus *Bewerten*: Hook/CTA gegen ICP
 
 **Abgrenzung:**
 

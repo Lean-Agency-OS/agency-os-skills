@@ -1,6 +1,6 @@
 ---
 name: lead-magnet
-version: 1.0.2
+version: 2.0.0
 description: >
   Entwirft einen Lead-Magnet (das kostenlose Asset) plus den Capture-Funnel: welches eine Problem er löst,
   Format, Titel/Versprechen, Outline, Opt-in-Mechanik, Auslieferung und Übergabe ans Follow-up. Achtet auf
@@ -26,9 +26,9 @@ Opt-in → Auslieferung → Follow-up). Produziert nicht das fertige Asset, sond
 Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`, `logs`),
 sonst per Muster.
 
-**Fundament lesen** (aus `{context}/brands/{brand}/`, Fallback projektweit):
-- `positionierung.md` - das **bezahlte** Angebot + Differenzierung. Der Magnet muss darauf hinführen (Offer-Congruence).
-- `icp.md` - das eine dringende Problem, die Sprache.
+**Fundament lesen:**
+- `{context}/positionierung.md` - das **bezahlte** Angebot + Differenzierung. Der Magnet muss darauf hinführen (Offer-Congruence).
+- `{context}/zielgruppe.md` - das eine dringende Problem, die Sprache.
 
 ## Kernprinzipien
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Carousel Preview — IG Mobile View</title>
+<title>Carousel Preview - IG Mobile View</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
 <!-- {{CAROUSEL_STYLES}} -->
@@ -24,7 +24,7 @@ html, body {
   font-size: 14px;
   line-height: 1.4;
 }
-/* Slides initial verstecken — JS verschiebt sie in den Slider */
+/* Slides initial verstecken: JS verschiebt sie in den Slider */
 body > section.slide { display: none !important; }
 .snap > section.slide { display: flex !important; }
 
@@ -83,7 +83,7 @@ body > section.slide { display: none !important; }
 .slider::-webkit-scrollbar { display: none; }
 .snap {
   flex: 0 0 100%; width: 100%;
-  /* Korrekte 4:5-Ratio (1080x1350) — NICHT 3:4 */
+  /* Korrekte 4:5-Ratio (1080x1350), NICHT 3:4 */
   aspect-ratio: 4 / 5;
   scroll-snap-align: center;
   overflow: hidden; position: relative;

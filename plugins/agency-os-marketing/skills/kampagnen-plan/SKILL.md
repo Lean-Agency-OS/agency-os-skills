@@ -1,6 +1,6 @@
 ---
 name: kampagnen-plan
-version: 1.0.2
+version: 2.0.0
 description: >
   Plant eine zielgebundene Marketing-Kampagne von EINEM Ziel über Funnel, Kanäle und Assets bis zu
   KPIs und Timeline - und orchestriert, welche Asset-Skills (carousel, reel-skript, newsletter-email,
@@ -21,10 +21,10 @@ Asset-Skills** dafür laufen. Output: ein Kampagnen-Plan, der die Einzel-Skills 
 Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`,
 `logs`), sonst per Muster. `{marketing}`/`{context}`/`{logs}` unten sind die aufgelösten Pfade.
 
-**Fundament lesen** (aus `{context}/brands/{brand}/`, Fallback projektweit):
-- `positionierung.md` - Angebot, Differenzierung, Messaging-Pillars (der rote Faden der Kampagne).
-- `icp.md` - Zielgruppe, Spannungen, Sprache.
-- `voice-profile.md` - Ton für alle Texte.
+**Fundament lesen:**
+- `{context}/positionierung.md` - Angebot, Differenzierung, Messaging-Pillars (der rote Faden der Kampagne).
+- `{context}/zielgruppe.md` - Zielgruppe, Spannungen, Sprache.
+- `{context}/brand/voice-profile.md` - Ton für alle Texte.
 
 Fehlt die Positionierung: Kampagne trotzdem planbar, aber empfehlen, sie mit `/positionierung` zu schärfen -
 ohne klares Angebot zerfasert jede Kampagne.
@@ -35,7 +35,7 @@ ohne klares Angebot zerfasert jede Kampagne.
 
 Eine Frage nach der anderen:
 1. **Ziel:** *Ein* messbares Ziel (z.B. 50 Leads für Lead-Magnet X, 20 Erstgespräche, Launch von Y). Genau eines.
-2. **Zielgruppe:** welches ICP-Segment (aus `icp.md`).
+2. **Zielgruppe:** welches ICP-Segment (aus `zielgruppe.md`).
 3. **Angebot & CTA:** was wird angeboten, was ist die eine gewünschte Handlung (aus `positionierung.md`).
 4. **Zeitraum:** Start/Ende, grobe Phasen (z.B. Tease → Launch → Nachfass).
 5. **Kanäle:** wo gespielt wird (LinkedIn, Instagram, Newsletter, Paid, …) - realistisch zur Kapazität.

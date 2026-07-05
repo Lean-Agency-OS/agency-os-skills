@@ -1,6 +1,6 @@
 ---
 name: weekly-content-mining
-version: 1.0.2
+version: 2.0.0
 description: >
   Wöchentliches Content-Mining Interview. Führt ein strukturiertes
   8-Bucket-Interview durch (Kalender, Kunden, Projekte, Nachrichten, Community,
@@ -10,10 +10,10 @@ description: >
   Woche posten, lass uns die Woche durchgehen, 8 buckets, content ideen aus
   der woche, mining session, meine woche für content, goldmine session starten,
   was war diese woche interessant, wochenrückblick für content, brain dump für
-  content.
+  content, /weekly-content-mining.
 ---
 
-# Weekly Content Mining — das Wochen-Interview
+# Weekly Content Mining - das Wochen-Interview
 
 Du führst das Interview als **Senior Content-Stratege**: direkt, neugierig, tempoorientiert. Rohe Wochenerlebnisse → strukturierte Content-Nuggets → Content-Mining Dump. **Dein Ziel:** eine volle Ideen-Pipeline aus echten Erlebnissen, damit der Kalender nie leer läuft.
 
@@ -24,17 +24,17 @@ Du führst das Interview als **Senior Content-Stratege**: direkt, neugierig, tem
 Dieser Skill kennt **keine hartkodierten Pfade**. Wo gelesen und geschrieben wird, leitest du aus der Selbstbeschreibung des Projekts ab, genau dafür ist das Markdown-Brain da.
 
 1. **Architektur lesen.** Existiert im Projekt-Root `.agency-os/architecture.md` (die Rolle->Pfad-Map, gepflegt vom `agency-os-start`-Skill), diese zuerst lesen: sie sagt dir, wo `context`, `marketing`, `logs` usw. liegen, auch wenn die Ordner abweichend benannt sind. Fehlt sie: ersatzweise die Struktur-Quelle des Projekts öffnen (`OS.md`, sonst `README.md` oder das Root-`_index.md`) und über die `_index.md`-Navigation verstehen, wie das Brain organisiert ist.
-2. **Kontext-Quellen finden** (alle optional, fürs Briefing) aus `{context}/brands/{brand}/` (Fallback projektweit): ICP (`icp.md`), Positionierung (`positionierung.md`), Voice-Profile (`voice-profile.md`). Was nicht existiert, wird übersprungen.
+2. **Kontext-Quellen finden** (alle optional, fürs Briefing): Zielgruppe/ICP (`{context}/zielgruppe.md`), Positionierung (`{context}/positionierung.md`), Voice-Profile (`{context}/brand/voice-profile.md`). Was nicht existiert, wird übersprungen.
 3. **Ziel-Ordner für den Dump bestimmen.** Den Ort wählen, an dem wöchentliche Content-/Goldmine-Dumps liegen oder thematisch hingehören. Im Marketing-/Content-Bereich (`{marketing}`, z.B. `{marketing}/content/weekly-goldmine/`). Liegen schon frühere Dumps dort (z.B. `*-KW*.md`), dorthin. Gibt es noch keinen klaren Ort, den nach der Brain-Logik plausibelsten Ordner vorschlagen und **einmal kurz rückversichern**, bevor du schreibst.
 4. **Index pflegen.** Entsteht dabei ein neuer Ordner, ihn im zuständigen `_index.md` verlinken (z.B. `{marketing}/_index.md`).
 
-**Ausgabe-Stil:** Existiert ein Voice-Profile (`{context}/brands/{brand}/voice-profile.md`), wende es auf alle geschriebenen Outputs an (Nuggets, Top Plays, Wildcard).
+**Ausgabe-Stil:** Existiert ein Voice-Profile (`{context}/brand/voice-profile.md`), wende es auf alle geschriebenen Outputs an (Nuggets, Top Plays, Wildcard).
 
 ### Kontext laden (vor der ersten Frage)
 
 Die in der Ablage gefundenen Kontext-Quellen lesen, falls vorhanden:
-- **ICP / Zielgruppe** — für wen wird Content gemacht (`{context}/brands/{brand}/icp.md`)
-- **Positionierung** — wofür steht die Agentur (`{context}/brands/{brand}/positionierung.md`)
+- **ICP / Zielgruppe:** für wen wird Content gemacht (`{context}/zielgruppe.md`)
+- **Positionierung:** wofür steht die Agentur (`{context}/positionierung.md`)
 
 Fehlen beide: Session trotzdem starten, aber am Ende empfehlen, das ICP-Profil anzulegen (icp-Skill), weil die Top-Plays-Auswahl davon lebt.
 
@@ -47,7 +47,7 @@ Fehlen beide: Session trotzdem starten, aber am Ende empfehlen, das ICP-Profil a
 ```
 Alright. Starten wir das Content Mining.
 
-8 Buckets — je ~30 Sekunden. Roh reinkippen, ich extrahiere den Rest.
+8 Buckets, je ~30 Sekunden. Roh reinkippen, ich extrahiere den Rest.
 
 **Bucket 1: Kalender**
 Was war diese Woche in deinem Kalender? Meetings, Calls, Events, Reisen, alles zählt.
@@ -72,6 +72,8 @@ Wenn eine Antwort dünn ist, einmal nachfragen: *"Was war das Konkrete daran?"* 
 
 ### 3. Content-Mining Dump erstellen und speichern
 
+**Bewusst ohne Approval-Gate:** Wer diesen Skill startet, will den Dump ins Brain schreiben. Der Aufruf selbst ist die Schreib-Absicht (gleiche Logik wie beim Shutdown-Trigger), darum vor dem Speichern keine erneute Rückfrage.
+
 Nach allen 8 Buckets den Content-Mining Dump im aufgelösten Ziel-Ordner (siehe Ablage) speichern:
 
 ```
@@ -91,7 +93,7 @@ Konkret z.B.: `{marketing}/content/weekly-goldmine/[YYYY]-KW[XX].md`
 Ein Content-Mining Dump im aufgelösten Ziel-Ordner (z.B. `{marketing}/content/weekly-goldmine/[YYYY]-KW[XX].md`), Format:
 
 ```markdown
-# Content-Mining Dump — KW [XX] / [YYYY]
+# Content-Mining Dump - KW [XX] / [YYYY]
 
 > Mining Session: [Datum]
 
@@ -100,7 +102,7 @@ Ein Content-Mining Dump im aufgelösten Ziel-Ordner (z.B. `{marketing}/content/w
 ## Raw Material
 
 ### Kalender
-- **[Titel]:** [Nugget — Beobachtung zuerst, Prinzip danach, konkrete Zahlen wenn vorhanden]
+- **[Titel]:** [Nugget: Beobachtung zuerst, Prinzip danach, konkrete Zahlen wenn vorhanden]
 
 ### Kunden
 ### Projekte
@@ -114,8 +116,8 @@ Ein Content-Mining Dump im aufgelösten Ziel-Ordner (z.B. `{marketing}/content/w
 
 ## Top Content Plays
 
-### 1. [Titel — klingt wie der erste Satz eines Posts]
-**Warum stark:** [1 Satz — was macht das für die Zielgruppe treffsicher]
+### 1. [Titel, klingt wie der erste Satz eines Posts]
+**Warum stark:** [1 Satz: was macht das für die Zielgruppe treffsicher]
 **Rohmaterial:** [Bucket + konkrete Story]
 **Angles:** [2-3 Stichworte]
 
@@ -123,7 +125,7 @@ Ein Content-Mining Dump im aufgelösten Ziel-Ordner (z.B. `{marketing}/content/w
 ### 3. [Titel]
 
 ### Wildcard
-**[Titel]:** [Das unerwartete Stück — oft aus Privates oder Käufe. Warum es überraschend performen könnte.]
+**[Titel]:** [Das unerwartete Stück, oft aus Privates oder Käufe. Warum es überraschend performen könnte.]
 
 ---
 
@@ -134,9 +136,9 @@ Ein Content-Mining Dump im aufgelösten Ziel-Ordner (z.B. `{marketing}/content/w
 
 ## Gesprächsprinzipien
 
-- Einen Bucket nach dem anderen — nie mehrere Fragen auf einmal.
+- Einen Bucket nach dem anderen, nie mehrere Fragen auf einmal.
 - Tempo: max. 20-25 Minuten für die ganze Session.
 - Messy ist gut. Niemand muss perfekt formulieren.
 - Kurze Feedback-Momente nach jedem Bucket halten den Flow aufrecht.
-- Nur extrahieren was gesagt wurde — nichts dazuerfinden.
+- Nur extrahieren was gesagt wurde, nichts dazuerfinden.
 - Bei jedem Nugget gegen das ICP-Profil prüfen (siehe Ablage): Würde die Zielgruppe das aus ihrem eigenen Alltag kennen?

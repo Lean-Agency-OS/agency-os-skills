@@ -1,4 +1,4 @@
-# E-Mail-Anatomie — 4-Bausteine-Formel auf Newsletter angewandt
+# E-Mail-Anatomie - 4-Bausteine-Formel auf Newsletter angewandt
 
 Self-contained Methodik für eine einzelne Newsletter-E-Mail. Diese Datei ist die
 kanonische Quelle für den Aufbau. Existiert im Projekt eine eigene 4-Bausteine-Quelle
@@ -27,7 +27,7 @@ gut, wenn der Rest steht). In der fertigen Mail steht der Hook oben.
 - Steigt direkt ins Thema, verstärkt die Spannung aus dem Betreff.
 - Gibt noch keinen Kontext, das Auflösen kommt im Build.
 
-## Build — drei Subtypen (genau einer pro Mail)
+## Build - drei Subtypen (genau einer pro Mail)
 
 - **Story:** Situation (2-3 Sätze) → Spannung (2-3) → Wendepunkt (2-3) → Ergebnis (1-2).
   Echtes Story-Material bevorzugen, nichts erfinden. Die Story macht das Problem *sichtbar*,

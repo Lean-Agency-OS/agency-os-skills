@@ -1,4 +1,4 @@
-# Caption-Anatomie — 4-Bausteine-Formel auf Instagram-Caption angewandt
+# Caption-Anatomie - 4-Bausteine-Formel auf Instagram-Caption angewandt
 
 Self-contained Methodik für eine einzelne Instagram-Caption zu einem bestehenden Asset.
 Diese Datei ist die kanonische Quelle für den Aufbau.
@@ -32,7 +32,7 @@ Caption liefert Kontext, Spannung oder den Gedanken dahinter.
 - **Keyword des Posts in die erste Zeile** (Social SEO): Instagram ist Suchmaschine geworden, Keywords
   gehören in die Caption, nicht in die Hashtags.
 
-## Build — drei Subtypen (genau einer pro Caption)
+## Build - drei Subtypen (genau einer pro Caption)
 
 - **Story:** Situation → Spannung → Wendepunkt → Ergebnis, knapp. Echtes Material, nichts erfinden.
   Macht das Problem sichtbar, löst es nicht vollständig.

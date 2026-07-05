@@ -1,4 +1,4 @@
-# Caption-Anatomie — 4-Bausteine-Formel auf LinkedIn-Post angewandt
+# Caption-Anatomie - 4-Bausteine-Formel auf LinkedIn-Post angewandt
 
 Self-contained Methodik für einen einzelnen LinkedIn-Post-Text zu einem bestehenden Asset.
 Diese Datei ist die kanonische Quelle für den Aufbau.
@@ -30,7 +30,7 @@ liefert Kontext, Spannung oder den Gedanken dahinter.
 - Kein Gruß, kein "Ich freue mich, zu teilen...". Die erste Zeile **ist** der Einstieg.
 - Eine Aussage/Spannung pro Zeile, dann Umbruch. Kein Schachtelsatz.
 
-## Build — drei Subtypen (genau einer pro Post)
+## Build - drei Subtypen (genau einer pro Post)
 
 - **Story:** Situation → Spannung → Wendepunkt → Ergebnis. Echtes Material, nichts erfinden.
   Macht das Problem sichtbar, löst es nicht vollständig.

@@ -1,16 +1,17 @@
 ---
 name: newsletter-email
-version: 1.0.2
+version: 2.0.0
 description: >
   Schreibt eine versandfertige Newsletter-E-Mail nach der 4-Bausteine-Formel
   (Hook -> Build -> Payoff -> Invitation). Diagnose-Ton statt Lehr-Ton,
   Mid-Funnel-Asset, genau ein CTA. Geführter Workflow: Interview (Payoff ->
-  Build -> Invitation -> Hook, eine Frage nach der anderen) -> optional
-  Story-Context -> Draft -> 3 Betreffzeilen + Qualitäts-/ICP-Check -> Approval
+  Build -> Invitation -> Hook, eine Frage nach der anderen) ->
+  Draft -> 3 Betreffzeilen + Qualitäts-/ICP-Check -> Approval
   -> Speichern + Log. Liest das Voice-/ICP-/Positionierungs-Profil des Projekts,
   falls vorhanden. Triggern bei: "schreib mir einen Newsletter",
   "Newsletter schreiben", "neue Newsletter-Ausgabe", "E-Mail für meine Liste",
-  "schreib eine Mail an meine Liste", "Newsletter-Entwurf", "Newsletter optimieren".
+  "schreib eine Mail an meine Liste", "Newsletter-Entwurf", "Newsletter optimieren",
+  "/newsletter-email".
 ---
 
 # Newsletter-E-Mail
@@ -23,7 +24,7 @@ Lehr-Ton), Mid-Funnel-Asset, genau ein CTA. Methodik: 4-Bausteine-Formel, angewa
 ## Methodik
 
 **Kanonische Methodik (Pflicht lesen vor Phase 1):**
-- [`references/email-anatomy.md`](references/email-anatomy.md) — Hook/Build/Payoff/Invitation auf
+- [`references/email-anatomy.md`](references/email-anatomy.md): Hook/Build/Payoff/Invitation auf
   E-Mail, Build-Subtypen, Betreffzeilen-Muster, Qualitäts-Checkliste, No-Gos, Länge.
 
 Existiert im Projekt eine eigene 4-Bausteine-Quelle (z.B. eine IP-Note `4-bausteine-formel.md`),
@@ -41,9 +42,9 @@ der Selbstbeschreibung des Projekts ab, genau dafür ist das Markdown-Brain da.
    liegen, auch wenn die Ordner abweichend benannt sind. Fehlt sie: ersatzweise die Struktur-Quelle
    des Projekts öffnen (`OS.md`, sonst `README.md` oder das Root-`_index.md`) und über die
    `_index.md`-Navigation verstehen, wie das Projekt organisiert ist.
-2. **Kontext-Quellen finden** (alle optional, fürs Briefing) aus `{context}/brands/{brand}/`
-   (Fallback projektweit): ICP (`icp.md`), Positionierung (`positionierung.md`),
-   Voice-Profile (`voice-profile.md`). Was nicht existiert, wird übersprungen.
+2. **Kontext-Quellen finden** (alle optional, fürs Briefing): Zielgruppe/ICP (`{context}/zielgruppe.md`),
+   Positionierung (`{context}/positionierung.md`),
+   Voice-Profile (`{context}/brand/voice-profile.md`). Was nicht existiert, wird übersprungen.
 3. **Ziel-Ordner für die Mail bestimmen.** Den Ort wählen, an dem E-Mail-Kampagnen liegen oder
    thematisch hingehören. Im Marketing-/Content-Bereich (`{marketing}`, z.B. `{marketing}/content/email/kampagnen/`). Liegen
    schon frühere Kampagnen dort, dorthin. Gibt es noch keinen klaren Ort, den nach der
@@ -53,18 +54,18 @@ der Selbstbeschreibung des Projekts ab, genau dafür ist das Markdown-Brain da.
 ### Kontext laden (vor Phase 1)
 
 Die in der Ablage gefundenen Kontext-Quellen lesen, falls vorhanden:
-- **ICP / Zielgruppe** — wer liest, was packt ihn. Daraus kommen Spannungen, Sprache, Kernproblem.
-- **Positionierung / Brand-Substanz** — wofür steht die Marke. Daraus kommt der **Positionierungs-Anker**
+- **ICP / Zielgruppe:** wer liest, was packt ihn. Daraus kommen Spannungen, Sprache, Kernproblem.
+- **Positionierung / Brand-Substanz:** wofür steht die Marke. Daraus kommt der **Positionierungs-Anker**
   jeder Mail (z.B. der Primär-Archetype, der Diagnose-Winkel, die Test-Reaktion). Diese Anker werden
-  **aus dem Profil abgeleitet, nicht hier hartkodiert** — so klingt jede Mail nach der jeweiligen Marke.
-- **Voice-Profile** — Stimme, Rhythmus, Stilmerkmale. Auf alle Texte anwenden.
+  **aus dem Profil abgeleitet, nicht hier hartkodiert**, so klingt jede Mail nach der jeweiligen Marke.
+- **Voice-Profile:** Stimme, Rhythmus, Stilmerkmale. Auf alle Texte anwenden.
 
 **Kernprinzip (markenneutral):** Diagnostizieren, nicht lehren. Die gewünschte Reaktion auf jede
 Mail ist *"Das ist genau meine Situation."* statt *"Guter Tipp."* Lehren = low authority,
 Diagnose = high authority. Wie diese Diagnose konkret klingt, kommt aus dem ICP-/Positionierungs-Profil.
 
 Fehlen ICP und Voice-Profile beide: Mail trotzdem schreibbar, aber am Ende empfehlen, ICP- und
-Voice-Profil anzulegen (`/icp`, `/brand-voice`) — Positionierung und Ton leben davon.
+Voice-Profil anzulegen (`/icp`, `/brand-voice`): Positionierung und Ton leben davon.
 
 ---
 
@@ -75,37 +76,35 @@ Alles andere läuft automatisch.
 
 ### Phase 1: Interview (Pflicht, Stop-Punkt frageweise)
 
-Bevor irgendetwas geschrieben wird, interviewen. Fragen **nacheinander als normalen Chat-Text** —
+Bevor irgendetwas geschrieben wird, interviewen. Fragen **nacheinander als normalen Chat-Text**:
 KEINE Multiple-Choice, KEIN AskUserQuestion-Tool. Freitext-Antworten. Eine Frage, warten, dann die nächste.
 
 Reihenfolge folgt der **Denk-Reihenfolge**, der Hook kommt zuletzt.
 
-**Frage 1 — Payoff:** *"Was soll der Leser nach dem Lesen anders machen oder anders denken? Was ist der Shift?"*
+**Frage 1 - Payoff:** *"Was soll der Leser nach dem Lesen anders machen oder anders denken? Was ist der Shift?"*
 → ableiten: **Do** (handelt anders) oder **Insight** (denkt anders).
 
-**Frage 2 — Build:** *"Wie willst du dahin kommen? Hast du eine Story, einzelne Punkte, oder einen Schritt-für-Schritt-Prozess? Gib mir den Input."*
+**Frage 2 - Build:** *"Wie willst du dahin kommen? Hast du eine Story, einzelne Punkte, oder einen Schritt-für-Schritt-Prozess? Gib mir den Input."*
 → ableiten: **Story**, **List** oder **Steps**.
 
-**Frage 3 — Invitation:** *"Was ist der nächste Schritt für den Leser? Wohin soll der CTA führen?"*
+**Frage 3 - Invitation:** *"Was ist der nächste Schritt für den Leser? Wohin soll der CTA führen?"*
 → z.B. Lead-Magnet, Workshop, Antwort-CTA, Erstgespräch, Blogartikel.
 
-**Frage 4 — Hook:** *"Gibt es ein Wort, ein Bild oder eine Situation, die das Thema auf den Punkt bringt?"*
-→ Kein Hook-Input? OK — der Hook wird in Phase 3 aus fertigem Build + Payoff abgeleitet.
+**Frage 4 - Hook:** *"Gibt es ein Wort, ein Bild oder eine Situation, die das Thema auf den Punkt bringt?"*
+→ Kein Hook-Input? OK, der Hook wird in Phase 3 aus fertigem Build + Payoff abgeleitet.
 
 → Phase 2.
 
-### Phase 2: Story-Context (automatisch, nur bei Build-Subtyp Story)
+### Phase 2: Story-Material (nur bei Build-Subtyp Story)
 
-Bei Build-Subtyp **Story**: echtes Story-Material aus dem Projekt ziehen statt erfinden.
-- Existiert ein `/story-context`-Skill (oder eine vergleichbare Story-/Call-Quelle im Projekt),
-  mit dem Thema als Query aufrufen und 5-10 passende Stories, Kunden-O-Töne und Erkenntnisse holen.
-- Existiert keine solche Quelle: nach echtem Story-Input beim User fragen. **Nichts erfinden.**
+Bei Build-Subtyp **Story**: echtes Story-Material verwenden statt erfinden. Nach echtem
+Story-Input beim User fragen. **Nichts erfinden.**
 
 Bei **List** oder **Steps**: Phase 2 überspringen → Phase 3.
 
 ### Phase 3: Draft schreiben (automatisch)
 
-1. **Voice laden** — `/brand-voice` (oder das gefundene Voice-Profile) anwenden.
+1. **Voice laden:** `/brand-voice` (oder das gefundene Voice-Profile) anwenden.
 2. **Body in LESE-Reihenfolge:** Hook → Build → Payoff → Invitation. Struktur und Regeln je Baustein
    stehen in [`references/email-anatomy.md`](references/email-anatomy.md).
 3. **Signatur** aus dem Voice-/Brand-Profil verwenden (Abbinder + Name). Existiert keine festgelegte
@@ -115,7 +114,7 @@ Bei **List** oder **Steps**: Phase 2 überspringen → Phase 3.
 
 1. **3 Betreffzeilen-Varianten** nach den Mustern in `references/email-anatomy.md` (40-60 Zeichen,
    klar vor clever, spezifisch) + je ein **Vorschautext**.
-2. **Variante wählen** — die klarste + spezifischste, Begründung in 1-2 Sätzen.
+2. **Variante wählen:** die klarste + spezifischste, Begründung in 1-2 Sätzen.
 3. **Qualitäts-Checkliste** aus `references/email-anatomy.md` durchgehen.
 4. **ICP-Check** mit `/icp` Modus *Bewerten* auf Hook + Payoff + CTA (falls ICP-Profil vorhanden).
    Fail → einmal automatisch nachschärfen (max 1 Iteration).
@@ -137,7 +136,7 @@ geänderten Bereich neu schreiben, Rest unverändert lassen. **"Go" → Phase 6.
    Frontmatter: Status, Versand-Datum, Thema, Payoff-Typ, Build-Typ, CTA. Darunter die 3
    Betreff-Varianten + Begründung und die vollständige Mail.
 2. **Ausgabe an den User:** Link/Pfad zur Datei, plus genutzte Story-Quellen (falls Phase 2).
-3. **Log** — falls das Projekt ein Tages-/Aktivitäts-Log führt (`{logs}/{YYYY-MM-DD}.md`),
+3. **Log:** falls das Projekt ein Tages-/Aktivitäts-Log führt (`{logs}/{YYYY-MM-DD}.md`),
    einen kurzen Eintrag ergänzen: Thema, Payoff-Typ, Build-Typ, CTA, Betreff-Wahl, Output-Pfad.
 
 ---
@@ -155,18 +154,17 @@ Tages-Log.
 
 **Erlaubte Skills im Workflow:**
 
-- `/brand-voice` — Stimme auf alle Texte anwenden
-- `/icp` Modus *Bewerten* — Hook/Payoff/CTA gegen das ICP testen
-- `/story-context` (falls im Projekt vorhanden) — echte Stories + O-Töne (Phase 2)
+- `/brand-voice`: Stimme auf alle Texte anwenden
+- `/icp` Modus *Bewerten*: Hook/Payoff/CTA gegen das ICP testen
 
 KEINE anderen spezifischen Content-Skills (z.B. `/linkedin-caption`, `/carousel`). Gemeinsame
 Frameworks gehören als Projekt-Note, nicht als Skill-zu-Skill-Aufruf.
 
 **Abgrenzung:**
 
-- Kein Versand — die fertige Mail versendet der User manuell über sein ESP.
+- Kein Versand: die fertige Mail versendet der User manuell über sein ESP.
 - Kein Cold-Email (anderer Use-Case, kalte Outreach).
-- Keine mehrteilige Sequenz/Drip — eine einzelne Newsletter-Mail pro Aufruf.
+- Keine mehrteilige Sequenz/Drip, eine einzelne Newsletter-Mail pro Aufruf.
 - Keine LinkedIn-/Social-Variante (das ist `/linkedin-caption` bzw. `/carousel`).
 
 ## Hard-Stops

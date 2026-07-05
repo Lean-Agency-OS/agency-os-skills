@@ -1,4 +1,4 @@
-# Reel-Anatomie — 4-Bausteine-Formel auf Reel/Short angewandt
+# Reel-Anatomie - 4-Bausteine-Formel auf Reel/Short angewandt
 
 Self-contained Methodik für ein einzelnes Reel/Short. Diese Datei ist die
 kanonische Quelle für den Aufbau.
@@ -30,7 +30,7 @@ Reel steht der Hook in den ersten 3 Sekunden.
 - Visual stoppt den Daumen (Bewegung, Gesicht, unerwartetes Bild, Text-Cut).
 - Gibt noch keinen Kontext, das Auflösen kommt im Build.
 
-## Build — drei Subtypen (genau einer pro Reel)
+## Build - drei Subtypen (genau einer pro Reel)
 
 - **Story:** Situation (1-2 Sätze) → Spannung (1-2) → Wendepunkt (1-2) → Ergebnis (1).
   Echtes Story-Material bevorzugen, nichts erfinden. Die Story macht das Problem *sichtbar*,

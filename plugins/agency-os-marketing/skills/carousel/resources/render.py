@@ -2,14 +2,14 @@
 """
 Carousel-Builder Render Script
 
-Wandelt eine Carousel-HTML-Datei in eine mobile-first preview.html und — mit
---final — in einzelne PNG-Slides (1080x1350) plus ein gesamthaftes PDF.
+Wandelt eine Carousel-HTML-Datei in eine mobile-first preview.html und (mit
+--final) in einzelne PNG-Slides (1080x1350) plus ein gesamthaftes PDF.
 
 Usage (immer aus dem Projekt-Root aufrufen):
   python3 skills/carousel/resources/render.py <input.html> <output_dir> [--final]
                                               [--handle "@yourhandle"]
                                               [--brand "BRAND"]
-                                              [--assets-dir "<context>/brands/<brand>/brand-assets"]
+                                              [--assets-dir "<context>/brand/brand-assets"]
 
   --handle / --brand / --assets-dir kommen aus der Brand-CI (ci.md-Frontmatter); der Skill
   liest sie dort und reicht sie hier durch. Ohne Angabe gelten neutrale Platzhalter-Defaults.

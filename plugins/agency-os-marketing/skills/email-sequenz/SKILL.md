@@ -1,6 +1,6 @@
 ---
 name: email-sequenz
-version: 1.0.2
+version: 2.0.0
 description: >
   Plant und schreibt eine mehrteilige, automatisierte E-Mail-Strecke (Welcome, Nurture, Re-Engagement,
   Launch, Post-Purchase): Anzahl, Ziel je Mail, Timing und Bogen - jede Mail nach der 4-Bausteine-Formel,
@@ -25,10 +25,10 @@ Jede Mail folgt der 4-Bausteine-Formel (Hook → Build → Payoff → CTA), die 
 
 Keine hartkodierten Pfade. Ordner über `.agency-os/architecture.md` auflösen (Rollen `marketing`, `context`, `logs`), sonst per Muster.
 
-**Fundament lesen** (aus `{context}/brands/{brand}/`, Fallback projektweit):
-- `positionierung.md` - Angebot + Differenzierung (wohin die Strecke führt).
-- `icp.md` - Spannungen, Sprache, Kernproblem.
-- `voice-profile.md` - Ton auf alle Mails.
+**Fundament lesen:**
+- `{context}/positionierung.md` - Angebot + Differenzierung (wohin die Strecke führt).
+- `{context}/zielgruppe.md` - Spannungen, Sprache, Kernproblem.
+- `{context}/brand/voice-profile.md` - Ton auf alle Mails.
 
 ## Workflow
 

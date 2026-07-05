@@ -1,6 +1,6 @@
 ---
 name: content-kalender
-version: 1.1.0
+version: 2.0.0
 description: >
   Pflegt den laufenden Redaktionsplan: was wann auf welchem Kanal veröffentlicht wird. Zieht Ideen aus
   dem weekly-content-mining-Dump und den Messaging-Pillars, plant konkrete Slots (Datum, Kanal, Format,
@@ -23,7 +23,8 @@ sonst per Muster. `{marketing}`/`{context}`/`{logs}` unten sind die aufgelösten
 
 **Quellen lesen:**
 - **Ideen:** der neueste `weekly-content-mining`-Dump (Top Plays + Wildcard) und offene Content-Ideen im Marketing-Ordner.
-- **Roter Faden:** `positionierung.md` (Messaging-Pillars) - der Kalender rotiert über die Pillars, damit jeder durchkommt.
+- **Roter Faden:** `{context}/positionierung.md` (Messaging-Pillars) - der Kalender rotiert über die Pillars, damit jeder durchkommt.
+- **Zielgruppe:** `{context}/zielgruppe.md` - für wen der Content geplant wird (Spannungen, Sprache, Kernproblem).
 - **Aktive Kampagnen:** `{marketing}/kampagnen/*/plan.md` mit Status `aktiv`/`geplant` - deren Assets terminiert einplanen.
 - **Bestehender Kalender:** `{marketing}/content/kalender.md` (falls vorhanden) - fortschreiben, nicht überschreiben.
 
