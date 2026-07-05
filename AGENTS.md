@@ -46,6 +46,7 @@ Ein Plugin-Bump kommt also **nie allein**: mindestens eine Skill-Version wird mi
 - **Kundengeneric.** Skills laufen in fremden Brains. Nichts auf Markus' konkrete Struktur festnageln.
 - **Use Cases, keine Funktionen.** Ein Skill = ein abgeschlossener Job, nicht eine technische Funktion.
 - **Senior-Rolle + Ziel** als Anker direkt unter der H1 (Marketing-/Video-Skills): *"Du … als **[Senior-Rolle]**: [Haltung]. **Dein Ziel:** [Ergebnis]."*
+- **Geteilte Struktur der 4 Text-Skills:** `instagram-caption`, `linkedin-caption`, `newsletter-email` und `reel-skript` teilen bewusst denselben Aufbau (Pfade & Fundament, Interview-Phasen 1-6, anatomy-Referenzen), da Skills self-contained sind und nichts plugin-weit teilen können. **Änderungen an diesem gemeinsamen Kern immer in allen 4 Skills nachziehen.**
 
 ## Sprache & Code-Kommentare
 
