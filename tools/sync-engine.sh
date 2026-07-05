@@ -71,6 +71,11 @@ sync_skill video-shortform \
   "cut-standards.md hard-rules.md transcription.md motion-style.md safe-zone.md" \
   yes no
 
+sync_skill video-longform \
+  "$COMMON_HELPERS render.py grade.py make_srt.py timeline_view.py" \
+  "cut-standards.md hard-rules.md transcription.md" \
+  no no
+
 sync_skill video-roughcut \
   "$COMMON_HELPERS export_nle.py timeline_view.py" \
   "cut-standards.md hard-rules.md transcription.md" \

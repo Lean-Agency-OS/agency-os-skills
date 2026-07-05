@@ -145,4 +145,4 @@ Im selben Ordner wie das Roh-Video:
 
 ### Abgrenzung
 
-- Liefert einen **Rohschnitt fürs NLE**, kein fertiges Video. Postfertig ohne NLE → `/video-shortform`. Nur Untertitel auf ein fertiges Video → `/video-captions`. Footage sichten → `/video-footage-mining`.
+- Liefert einen **Rohschnitt fürs NLE**, kein fertiges Video. Postfertig ohne NLE → `/video-shortform` (Shorts, 9:16) bzw. `/video-longform` (YouTube/Testimonial/Kurs, 16:9). Nur Untertitel auf ein fertiges Video → `/video-captions`. Footage sichten → `/video-footage-mining`.

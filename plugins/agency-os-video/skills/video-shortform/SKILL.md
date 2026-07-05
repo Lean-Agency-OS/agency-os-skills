@@ -183,5 +183,5 @@ Landet IMMER im selben Ordner wie das Roh-Video (kein neuer datierter Ordner):
 
 ### Abgrenzung
 
-- Baut das **postfertige** Reel/Short. Den Untertitel-Schritt **delegiert** shortform an `/video-captions` (beatgenau auf dem fertigen Cut). Wer im NLE finishen will → `/video-roughcut` (Rohschnitt + DaVinci/Premiere-Export). Nur Untertitel auf ein fertiges Video → `/video-captions` direkt. Footage sichten/Highlights finden → `/video-footage-mining`.
+- Baut das **postfertige** Reel/Short. Den Untertitel-Schritt **delegiert** shortform an `/video-captions` (beatgenau auf dem fertigen Cut). Wer im NLE finishen will → `/video-roughcut` (Rohschnitt + DaVinci/Premiere-Export). Sendefertiges Longform (YouTube, Testimonial, Kurs, 16:9) → `/video-longform`. Nur Untertitel auf ein fertiges Video → `/video-captions` direkt. Footage sichten/Highlights finden → `/video-footage-mining`.
 - CI anlegen → `/brand-ci`, Voice-Profil → `/brand-voice`, ICP → `/icp`, statische Karussells → `/carousel`.
