@@ -4,16 +4,15 @@ Takes a JSON spec, builds a static overlay PNG (background layer + text block)
 with PIL, and composites it with ffmpeg onto a trimmed, (by default) muted
 footage clip.
 
-Defaults (font, colors, scrim/box/vignette) come from a brand config
-`<brand>/broll.json`. Every value can be overridden per clip in the spec.
+Defaults (font, colors, scrim/box/vignette) come from the brand config
+`{context}/brand/broll.json` (single-brand layout). Every value can be
+overridden per clip in the spec.
 
 Paths are resolved explicitly, not guessed from the script location:
   --root         base for resolving relative paths in the spec (source,
                  output, font). Default: current working directory.
-  --brand-config direct path to the brand's broll.json. If omitted it is
-                 derived as <brands-dir>/<brand>/broll.json.
-  --brands-dir   base directory that holds <brand>/broll.json. Default:
-                 <root>/01-context/brands.
+  --brand-config direct path to the brand's broll.json. Default:
+                 <root>/01-context/brand/broll.json.
 
 Usage:
     uv run python helpers/broll.py path/to/broll.json
@@ -25,7 +24,6 @@ Spec fields (see broll.example.json):
     start       seconds, in-point in the footage             (default 0)
     duration    seconds, b-roll length                        (default 7)
     mute        true -> no audio                              (default true)
-    brand       brand folder name under --brands-dir          (default "default")
     output      target MP4 (default: <spec-dir>/preview.mp4)
     resolution  [w, h]                                        (default [1080,1920])
     fps                                                       (default 24)
@@ -356,11 +354,7 @@ def main():
     )
     ap.add_argument(
         "--brand-config", type=Path, default=None,
-        help="Direct path to the brand's broll.json (overrides --brands-dir derivation)",
-    )
-    ap.add_argument(
-        "--brands-dir", type=Path, default=None,
-        help="Base dir holding <brand>/broll.json (default: <root>/01-context/brands)",
+        help="Direct path to the brand's broll.json (default: <root>/01-context/brand/broll.json)",
     )
     args = ap.parse_args()
 
@@ -372,12 +366,11 @@ def main():
         sys.exit(f"ERROR: spec not found: {spec_path}")
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
 
-    brand_name = spec.get("brand", "default")
     if args.brand_config:
         brand_config = args.brand_config.resolve()
     else:
-        brands_dir = (args.brands_dir or (root / "01-context" / "brands")).resolve()
-        brand_config = brands_dir / brand_name / "broll.json"
+        # Single-brand layout: {context}/brand/broll.json
+        brand_config = (root / "01-context" / "brand" / "broll.json").resolve()
     brand = load_brand(brand_config)
 
     out_mp4 = Path(args.out).resolve() if args.out else (

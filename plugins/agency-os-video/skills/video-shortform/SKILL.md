@@ -1,7 +1,7 @@
 ---
 name: video-shortform
-version: 1.1.1
-description: Schneidet Roh-Video(s) zu postfertigen Reels/Shorts - Transkript, scroll-stopping Text-Hook drueber, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Einzeln oder ein ganzer Ordner auf einmal. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "schneid alle Videos in dem Ordner", "postfertiges Reel", "/video-shortform". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
+version: 2.0.0
+description: Schneidet Roh-Video(s) zu postfertigen Reels/Shorts - Transkript, scroll-stopping Text-Hook drueber, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Einzeln oder ein ganzer Ordner auf einmal. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "schneid alle Videos in dem Ordner", "postfertiges Reel", "/video-shortform". Brand-aware ueber {context}/brand/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 
 # Skill: video-shortform
@@ -10,9 +10,7 @@ Du schneidest als **Senior Short-Form-Editor**: du denkst in Hook, Pacing und Da
 
 **Zweck:** Aus einem Roh-Video ein **sendefertiges** Reel/Short bauen, fertig zum Posten (kein weiterer Schnittprogramm-Schritt nötig). Für die Variante "ich finishe selbst im NLE" gibt es `/video-roughcut`.
 
-**Brand:** die im Brain konfigurierte Brand (Ordner unter `{context}/brands/`). Gibt es nur einen, den nehmen; bei mehreren die mit `brand-config.md` `status: active`. Kein fester Default-Name.
-
-**Brand-Pfade & CI:** `{context}/brands/{brand}/` ist ein Default - existiert `.agency-os/architecture.md` im Projekt-Root (Rolle→Pfad-Map vom `agency-os-start`-Skill), den `context`-Pfad daraus nehmen. Die Brand-CI liegt als **`ci.md` mit YAML-Frontmatter** (`colors`, `fonts`, `handle`, `name`, `assets_dir`, `logo`) im Brand-Ordner - dieselbe Datei und dasselbe Schema nutzt `/carousel`. Werte aus dem Frontmatter lesen und an die Helfer (ffmpeg/PIL) durchreichen.
+**Brand-Pfade & CI:** die Brand-Daten liegen unter `{context}/brand/` - existiert `.agency-os/architecture.md` im Projekt-Root (Rolle-zu-Pfad-Map vom `agency-os-start`-Skill), den `context`-Pfad daraus nehmen. Die Brand-CI liegt als **`ci.md` mit YAML-Frontmatter** (`colors`, `fonts`, `handle`, `name`, `assets_dir`, `logo`) in `{context}/brand/` - dieselbe Datei und dasselbe Schema nutzt `/carousel`. Werte aus dem Frontmatter lesen und an die Helfer (ffmpeg/PIL) durchreichen.
 
 **Kern:** Text-Hook + Schnitt + Untertitel laufen mit reinem ffmpeg. Motion Graphics (optional) via hyperframes braucht Chromium. Funktioniert für **ein einzelnes Video** oder **einen ganzen Ordner auf einmal**.
 
@@ -56,7 +54,7 @@ Nur wenn Doctor sauber -> weiter.
 
 **1b. Format:** kein Input. Default **9:16** (vertikal); leitet sich aus dem Quell-Video ab (Seitenverhältnis per ffprobe). 16:9 / 1:1 nur, wenn das Material es klar vorgibt oder der User es ausdrücklich sagt.
 
-**1c. Inputs:** nur diese zwei: **Untertitel** ja/nein, **Motion Graphics** ja/nein. Brand = aktive Brand aus `{context}/brands/`. Keine weiteren Fragen, kein Plan zum Bestätigen.
+**1c. Inputs:** nur diese zwei: **Untertitel** ja/nein, **Motion Graphics** ja/nein. Keine weiteren Fragen, kein Plan zum Bestätigen.
 
 **1d. Skript prüfen:** Liegt ein Skript vor (z.B. ein `/reel-skript`-Output im Marketing-Ordner oder eine Skript-Datei beim Footage)? Wenn ja, dient es als Vorlage für Hook + Schnitt. Bei **mehreren** Videos die Skript-Struktur über die Clips abbilden (jeder Clip füllt seinen Beat).
 
@@ -88,7 +86,7 @@ Transkript ist gecached (kein Re-Transkribieren, ausser Source aenderte sich). D
 
 Der **Text-Hook** ist der scroll-stopping On-Screen-Text, der übers Video gelegt wird. Er entscheidet in den ersten Sekunden über Weiterwischen oder Bleiben - **kein optionales Extra, sondern Pflicht** bei jedem Short.
 
-1. Aus dem Transkript (worum geht's, was ist der Payoff) + `icp.md` (was stoppt genau diese Zielgruppe) **3 Hook-Varianten** generieren. Liegt ein Skript vor (Phase 1d), den Hook daran ausrichten.
+1. Aus dem Transkript (worum geht's, was ist der Payoff) + `{context}/zielgruppe.md` (was stoppt genau diese Zielgruppe) **3 Hook-Varianten** generieren. Liegt ein Skript vor (Phase 1d), den Hook daran ausrichten.
 2. Die 3 Varianten zeigen und **bestätigen lassen** (User wählt eine oder gibt eine Richtung vor). Das ist der **einzige** Bestätigungspunkt im Ablauf.
 3. **Batch:** für **jedes** Video eigene 3 Hooks generieren und **einzeln** bestätigen lassen.
 
@@ -157,7 +155,7 @@ Genau das ist der Job von `/video-captions`. shortform liefert nur den fertigen 
 
 ```markdown
 # {Titel}
-- Brand: {brand}  | Format: {9:16}
+- Format: {9:16}
 - Text-Hook: {gewählter Hook}
 - Status: Postfertig
 - Render: {slug}.mp4
@@ -179,9 +177,9 @@ Landet IMMER im selben Ordner wie das Roh-Video (kein neuer datierter Ordner):
 
 ### Kontext-Bridge (Pflicht, Projekt-Skills haben Vorrang)
 
-- **brand-voice** fuer Untertitel-/Text-Ton (`{context}/brands/{brand}/voice-profile.md`, Fallback `voice.md`).
-- **icp** fuer Hook/CTA-Bewertung (`{context}/brands/{brand}/icp.md`).
-- **CI** aus `{context}/brands/{brand}/ci.md` (YAML-Frontmatter: `colors`, `fonts`, `logo`, `handle`, `name`, `assets_dir`). Angelegt/gepflegt von `/brand-ci` (dort Schema + Beispiel); gleiche `ci.md` nutzt auch `/carousel`.
+- **brand-voice** fuer Untertitel-/Text-Ton (`{context}/brand/voice-profile.md`, Fallback `voice.md`).
+- **icp** fuer Hook/CTA-Bewertung (`{context}/zielgruppe.md`).
+- **CI** aus `{context}/brand/ci.md` (YAML-Frontmatter: `colors`, `fonts`, `logo`, `handle`, `name`, `assets_dir`). Angelegt/gepflegt von `/brand-ci` (dort Schema + Beispiel); gleiche `ci.md` nutzt auch `/carousel`.
 
 ### Abgrenzung
 

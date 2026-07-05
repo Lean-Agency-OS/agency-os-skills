@@ -1,18 +1,16 @@
 ---
 name: video-roughcut
-version: 1.0.1
-description: Bereitet aus einem Roh-Video einen Rohschnitt vor und exportiert ihn nach DaVinci Resolve / Premiere - Transkript, Fueller/Pausen raus, sauberes Timing, NLE-Export (FCPXML / FCP7-XML). Kein Grade/Render, der Cutter finisht nativ. Triggert bei "Rohschnitt", "schneid vor", "Schnitt fuer DaVinci/Premiere", "exportier als FCPXML", "rough cut", "/video-roughcut". Brand-aware ueber {context}/brands/{brand}/.
+version: 2.0.0
+description: Bereitet aus einem Roh-Video einen Rohschnitt vor und exportiert ihn nach DaVinci Resolve / Premiere - Transkript, Fueller/Pausen raus, sauberes Timing, NLE-Export (FCPXML / FCP7-XML). Kein Grade/Render, der Cutter finisht nativ. Triggert bei "Rohschnitt", "schneid vor", "Schnitt fuer DaVinci/Premiere", "exportier als FCPXML", "rough cut", "/video-roughcut". Brand-aware ueber {context}/brand/.
 ---
 
 # Skill: video-roughcut
 
-Du arbeitest als **Senior Assistant Editor**: du denkst in Selektion und Timing, nicht in Effekten. **Dein Ziel:** dem Cutter die tedious 80% abnehmen (transkribieren, Fueller/Pausen raus, sauberer Rohschnitt), sodass er nur noch nativ im NLE finisht.
+Du arbeitest als **Senior Assistant Editor**: du denkst in Selektion und Timing, nicht in Effekten. **Dein Ziel:** dem Cutter die mühsamen 80% abnehmen (transkribieren, Fueller/Pausen raus, sauberer Rohschnitt), sodass er nur noch nativ im NLE finisht.
 
 **Zweck:** Aus einem Roh-Video einen **Rohschnitt** bauen und als NLE-Projekt übergeben (DaVinci Resolve / Premiere). Grade, Overlays und Final-Render macht der Editor nativ. Wer ein **postfertiges** Video ohne NLE will → `/video-shortform`.
 
-**Brand:** die im Brain konfigurierte Brand (Ordner unter `{context}/brands/`). Gibt es nur einen, den nehmen; bei mehreren die mit `brand-config.md` `status: active`.
-
-**Brand-Pfade:** `{context}/brands/{brand}/` ist ein Default - existiert `.agency-os/architecture.md` im Projekt-Root, den `context`-Pfad daraus nehmen.
+**Brand-Pfade:** die Brand-CI liegt in `{context}/brand/ci.md`. Existiert `.agency-os/architecture.md` im Projekt-Root, den `context`-Pfad daraus nehmen.
 
 ---
 
@@ -108,7 +106,7 @@ $PY $SK/helpers/export_nle.py "{EDIT}/edl.json" --format both --width 1080 --hei
 ```
 
 Exportiert nur den Schnitt (Clip-Auswahl + Timing, referenziert die Original-Files). Grade/Overlays bewusst NICHT. Optionen:
-- `--width/--height` setzt das Timeline-Raster (z.B. 1080x1920 vertikal); ohne Angabe = Quell-Dimension. Quell-Assets behalten ihr natives Format, sodass rotierte/Querformat-Quellen sauber konformen.
+- `--width/--height` setzt das Timeline-Raster (z.B. 1080x1920 vertikal); ohne Angabe = Quell-Dimension. Quell-Assets behalten ihr natives Format, sodass sich rotierte/Querformat-Quellen sauber einpassen.
 - `--captions` bettet Untertitel aus `transcripts/<src>.json` (2-Wort-Chunking) als Subtitle-Spur ein (nur FCPXML). `--caption-color` (Hex) setzt die Fuellfarbe (aus dem `ci.md`-Frontmatter `colors.subtitle`).
 - `--format premiere|both` schreibt zusaetzlich FCP7-XML (xmeml) fuer aeltere Premiere-Versionen; dort Captions ueber die SRT importieren.
 - `--remap FROM=TO` (wiederholbar) biegt Medienpfade um (Cowork-Sandbox -> Mac), damit die NLE die Footage findet.
@@ -122,7 +120,7 @@ Exportiert nur den Schnitt (Clip-Auswahl + Timing, referenziert die Original-Fil
 
 ```markdown
 # {Titel}
-- Brand: {brand} | Ziel-NLE: {DaVinci}
+- Ziel-NLE: {DaVinci}
 - Status: Rohschnitt uebergeben
 - Export: rohschnitt.fcpxml
 - Datum: {YYYY-MM-DD}
@@ -141,9 +139,9 @@ Im selben Ordner wie das Roh-Video:
 
 ## Verwandte Skills
 
-### Kontext-Bridge
+### Kontext-Bridge (Pflicht, Projekt-Skills haben Vorrang)
 
-- **CI** aus `{context}/brands/{brand}/ci.md` nur für die Caption-Farbe (`colors.subtitle`), falls `--captions`.
+- **CI** aus `{context}/brand/ci.md` nur für die Caption-Farbe (`colors.subtitle`), falls `--captions`.
 
 ### Abgrenzung
 

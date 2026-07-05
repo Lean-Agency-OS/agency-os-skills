@@ -1,7 +1,7 @@
 ---
 name: video-captions
-version: 1.0.1
-description: Brennt markenkonforme Untertitel auf ein bereits fertig geschnittenes Video - transkribiert, baut Caption-Chunks, Burn-in mit CI-Farbe/Font. Kein Schnitt. Triggert bei "Untertitel aufs Video", "Captions einbrennen", "Subtitles fuer das Video", "burn captions", "/video-captions". Brand-aware ueber {context}/brands/{brand}/, nutzt brand-voice + CI.
+version: 2.0.0
+description: Brennt markenkonforme Untertitel auf ein bereits fertig geschnittenes Video - transkribiert, baut Caption-Chunks, Burn-in mit CI-Farbe/Font. Kein Schnitt. Triggert bei "Untertitel aufs Video", "Captions einbrennen", "Subtitles fuer das Video", "burn captions", "/video-captions". Brand-aware ueber {context}/brand/, nutzt brand-voice + CI.
 ---
 
 # Skill: video-captions
@@ -10,9 +10,7 @@ Du arbeitest als **Senior Captions-Editor**: du denkst in Lesbarkeit und Timing,
 
 **Zweck:** Auf ein **schon fertig geschnittenes** Video markenkonforme Untertitel einbrennen. Kein Schnitt, kein Grade. Wer aus Rohmaterial schneiden will → `/video-shortform` (postfertig) oder `/video-roughcut` (NLE).
 
-**Brand:** die im Brain konfigurierte Brand (Ordner unter `{context}/brands/`). Gibt es nur einen, den nehmen; bei mehreren die mit `brand-config.md` `status: active`.
-
-**Brand-Pfade & CI:** `{context}/brands/{brand}/` ist ein Default - existiert `.agency-os/architecture.md` im Projekt-Root, den `context`-Pfad daraus nehmen. Subtitle-Farbe/Font aus dem `ci.md`-Frontmatter (`colors.subtitle`, `fonts.subtitle` / `fonts.subtitle_path`).
+**Brand-Pfade & CI:** die Brand-CI liegt in `{context}/brand/ci.md`. Existiert `.agency-os/architecture.md` im Projekt-Root, den `context`-Pfad daraus nehmen. Subtitle-Farbe/Font aus dem `ci.md`-Frontmatter (`colors.subtitle`, `fonts.subtitle` / `fonts.subtitle_path`).
 
 ---
 
@@ -44,11 +42,11 @@ Nur wenn Doctor sauber -> weiter.
 
 ### Phase 1: Brief (Stop-Punkt, Deutsch)
 
-**1a. Inputs:** Pfad zum **fertig geschnittenen** Video; Brand (für CI-Farbe/Font); Sprache, falls nicht offensichtlich.
+**1a. Inputs:** Pfad zum **fertig geschnittenen** Video; Sprache, falls nicht offensichtlich. CI-Farbe/Font kommen aus `{context}/brand/ci.md`.
 
 **1b. Ordner:** Output landet IMMER im **selben Ordner wie das Video**. Transkript/Cache in `<ordner>/_work/edit/` (gitignored), `{quell-stem}-captioned.mp4` direkt daneben.
 
-**1c. Bestaetigen** (Pflicht): *"Ich transkribiere das Video und brenne die Untertitel in {brand}-CI ein. Kein Schnitt. Passt das?"* Erst nach OK -> Phase 2.
+**1c. Bestaetigen** (Pflicht): *"Ich transkribiere das Video und brenne die Untertitel in der Brand-CI ein. Kein Schnitt. Passt das?"* Erst nach OK -> Phase 2.
 
 ---
 
@@ -80,7 +78,7 @@ PY="$DATA/.venv/bin/python"
 RAWDIR="$(dirname "{video}")"
 EDIT="$RAWDIR/_work/edit"
 # CI caption colour/font, format-agnostic (frontmatter OR table); empty -> render default
-CI="{context}/brands/{brand}/ci.md"
+CI="{context}/brand/ci.md"
 CCOLOR="$($PY $SK/helpers/ci_read.py "$CI" --get caption-color-ass 2>/dev/null)"
 CFONT="$($PY $SK/helpers/ci_read.py "$CI" --get caption-font 2>/dev/null)"
 # write {EDIT}/edl.json: one full-length segment, no grade, then:
@@ -105,7 +103,6 @@ $PY $SK/helpers/render.py "{EDIT}/edl.json" \
 
 ```markdown
 # {Titel} (Untertitel)
-- Brand: {brand}
 - Status: Untertitel eingebrannt
 - Render: {quell-stem}-captioned.mp4
 - Datum: {YYYY-MM-DD}
@@ -126,8 +123,8 @@ Im selben Ordner wie das Video:
 
 ### Kontext-Bridge (Pflicht, Projekt-Skills haben Vorrang)
 
-- **brand-voice** fuer den Untertitel-Ton (`{context}/brands/{brand}/voice-profile.md`, Fallback `voice.md`).
-- **CI** aus `{context}/brands/{brand}/ci.md` (`colors.subtitle`, `fonts.subtitle`). Angelegt/gepflegt von `/brand-ci`.
+- **brand-voice** fuer den Untertitel-Ton (`{context}/brand/voice-profile.md`, Fallback `voice.md`).
+- **CI** aus `{context}/brand/ci.md` (`colors.subtitle`, `fonts.subtitle`). Angelegt/gepflegt von `/brand-ci`.
 
 ### Abgrenzung
 

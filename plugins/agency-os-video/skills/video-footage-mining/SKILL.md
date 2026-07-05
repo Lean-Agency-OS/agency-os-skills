@@ -1,7 +1,7 @@
 ---
 name: video-footage-mining
-version: 1.0.1
-description: Sichtet ganze Roh-Footage-Ordner lokal und schnell (ohne API) - transkribiert alle Clips per lokalem Whisper, findet die postwuerdigen O-Toene/Highlights mit Timecodes und schreibt einen Highlight-Index. Triggert bei "Footage sichten", "was steckt in dem Material", "Highlights finden", "O-Toene raussuchen", "Video-Triage", "/video-footage-mining". Liest ICP/Positionierung fuers Highlight-Gespuer.
+version: 2.0.0
+description: Sichtet ganze Roh-Footage-Ordner lokal und schnell (ohne API) - transkribiert alle Clips per lokalem Whisper, findet die postwuerdigen O-Toene/Highlights mit Timecodes und schreibt einen Highlight-Index. Triggert bei "Footage sichten", "was steckt in dem Material", "Highlights finden", "O-Toene raussuchen", "Video-Triage", "/video-footage-mining". Liest Zielgruppe/Positionierung aus {context}/ fuers Highlight-Gespuer.
 ---
 
 # Skill: video-footage-mining
@@ -12,7 +12,7 @@ Du arbeitest als **Senior Footage-Logger**: du denkst in Gold-Momenten, nicht in
 
 **Lokal, kein Key noetig:** Die Sichtung laeuft per lokalem Whisper (Text-only Gist), braucht **keinen** ElevenLabs-Key und kein Netz. Erst wenn ein gewaehlter Highlight final geschnitten wird (in `/video-shortform`), kommt der Scribe-Key ins Spiel.
 
-**Brand:** existiert `.agency-os/architecture.md`, den `context`-Pfad daraus nehmen; ICP/Positionierung aus `{context}/brands/{brand}/` schaerfen das Highlight-Gespuer (was trifft die Zielgruppe).
+**Kontext:** existiert `.agency-os/architecture.md`, den `context`-Pfad daraus nehmen; `{context}/zielgruppe.md` (ICP) und `{context}/positionierung.md` schaerfen das Highlight-Gespuer (was trifft die Zielgruppe).
 
 ---
 
@@ -95,9 +95,9 @@ Im Footage-Ordner:
 
 ## Verwandte Skills
 
-### Kontext-Bridge
+### Kontext-Bridge (Pflicht, Projekt-Skills haben Vorrang)
 
-- **icp** / **positionierung** aus `{context}/brands/{brand}/` schaerfen, welche Stellen die Zielgruppe wirklich treffen.
+- **icp** (`{context}/zielgruppe.md`) / **positionierung** (`{context}/positionierung.md`) schaerfen, welche Stellen die Zielgruppe wirklich treffen.
 
 ### Abgrenzung
 
