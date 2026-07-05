@@ -1,10 +1,10 @@
 ---
 name: agency-os-lint
-version: 1.1.0
+version: 1.1.1
 description: Brain-Hygiene-Check. Verwende wenn der User "lint", "räum auf", "check brain", "wie geht's dem Wiki", "wiki-check" oder ähnliches sagt. Findet broken Links, Orphan-Pages, veraltete/widersprüchliche Claims und stale Projekt-Hubs. Liefert nur einen Befund-Report mit Empfehlungen, macht NICHTS autonom destruktives.
 ---
 
-# Lint (Brain-Hygiene)
+# Agency OS - Lint (Brain-Hygiene)
 
 **Output:** Ein Befund-Report im Chat (keine eigene Datei). Der User entscheidet pro Punkt, was angepackt wird.
 
@@ -16,11 +16,11 @@ Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
 - **Lesen** (Dateien, Verzeichnis-Listen, Suche) mit den Tools `Read`, `Glob`, `Grep` statt `cat`/`ls`/`grep` in Bash.
 - **Keine Command-Substitution** `$(...)` und keine Backticks in Bash. Zähl-/Filter-Ausgaben direkt per Pipe ausgeben (z.B. `… | wc -l` als eigene Zeile), nicht in einen `echo`-String verschachteln.
 - **Keine Interpreter** (`python3`/`node`/`perl`/`awk`) für Ad-hoc-Logik; JSON mit `jq` lesen. Die mitgelieferten Lint-Skripte (`resources/*.py`) sind ausgenommen und werden bewusst per `python3` aufgerufen.
-- Mutierende Bash-Befehle (`mv`, `rm`) bleiben bestätigungspflichtig — keine autonomen Umbenennungen/Löschungen. Dieser Skill sichert nichts auf Git (das macht `/agency-os-github`).
+- Mutierende Bash-Befehle (`mv`, `rm`) bleiben bestätigungspflichtig, keine autonomen Umbenennungen/Löschungen. Dieser Skill sichert nichts auf Git (das macht `/agency-os-github`).
 
 ## Pfade & Fundament
 
-> **Brain-Pfade:** Keine festen Ordnernamen. Die Skripte tragen keine Pfad-Logik mehr — **du** löst die Ordner in Schritt 1 auf (LLM) und reichst sie als Config `.agency-os/lint-config.json` rein. Fehlt die Config, greifen die Standard-Namen. `.git`/`node_modules` werden immer übersprungen. Die Skripte scannen das Arbeitsverzeichnis (Brain-Root) als Wurzel und lesen die Config von dort automatisch.
+> **Brain-Pfade:** Keine festen Ordnernamen. Die Skripte tragen keine Pfad-Logik mehr: **du** löst die Ordner in Schritt 1 auf (LLM) und reichst sie als Config `.agency-os/lint-config.json` rein. Fehlt die Config, greifen die Standard-Namen. `.git`/`node_modules` werden immer übersprungen. Die Skripte scannen das Arbeitsverzeichnis (Brain-Root) als Wurzel und lesen die Config von dort automatisch.
 
 **Aufruf der Skripte:** vom Brain-Root aus. Abkürzung unten: `LINT="${CLAUDE_PLUGIN_ROOT:-.}/skills/agency-os-lint"`. Die Skripte nehmen das aktuelle Verzeichnis als Brain-Root und `.agency-os/lint-config.json` als Config; beides lässt sich optional via Argument bzw. `--config` überschreiben.
 
@@ -43,7 +43,7 @@ Die Skripte sind bewusst „dumm" und kennen keine Ordnernamen. Du löst die Str
    ```
 
    - `skip` = Ordner, die nie durchsucht werden (inbox + archive).
-   - `content` = alle Inhalts-Ordner außer inbox/logs/archive, in denen Orphans zählen. **Wichtig:** Hat der Kunde seinen Context-Layer erweitert und eigene Ordner angelegt (über die Standard-Rollen hinaus), nimm sie hier mit auf — sonst werden Orphans dort übersehen.
+   - `content` = alle Inhalts-Ordner außer inbox/logs/archive, in denen Orphans zählen. **Wichtig:** Hat der Kunde seinen Context-Layer erweitert und eigene Ordner angelegt (über die Standard-Rollen hinaus), nimm sie hier mit auf, sonst werden Orphans dort übersehen.
    - `projects` / `archive` = die jeweiligen Rollen-Ordner (für den Stale-Check).
 
    Die Skripte lesen diese Datei selbst aus dem Brain-Root. Fehlt sie, greifen die Standard-Defaults.

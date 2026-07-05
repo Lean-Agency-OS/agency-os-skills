@@ -1,6 +1,6 @@
 ---
 name: agency-os-capture
-version: 2.0.0
+version: 2.0.1
 description: Schnelle Ersterfassung von Gedanken, Tasks, Ideen, Open Loops oder Entscheidungen ins Brain. Verwende wenn der User "capture", "notiere", "merken", "halt fest", "schreib das auf", "festhalten", "muss ich mir merken", "neue Idee", "Quick Note" oder ähnliche Erfassungs-Signale nutzt.
 ---
 
@@ -38,7 +38,7 @@ Kategorisiere automatisch nach `references/capture-routing.md`:
 
 ### 3. Eintrag schreiben
 
-Schreibe in die passende Zieldatei (Mapping in `references/capture-routing.md`). Regeln:
+Schreibe in die passende Zieldatei (Mapping in `references/capture-routing.md`): TASK → `{strategy}/current-priorities.md`, LOOP/ENTSCHEIDUNG → `{open-loops}`, IDEE/QUICK NOTE → `{inbox}/capture.md`. Regeln:
 
 - Append-only, niemals ueberschreiben
 - Datum immer mitschiessen: `[YYYY-MM-DD]`
@@ -63,7 +63,7 @@ Noch was?
 
 ## Output
 
-Eintrag in der passenden Zieldatei (Mapping in `references/capture-routing.md`, z.B. `{open-loops}` oder `{inbox}/capture.md`), append-only mit Datum `[YYYY-MM-DD]`. Plus kurzer Routing-Hinweis im Chat, wohin das Item beim nächsten Ingest weiterwandert.
+Eintrag in der passenden Zieldatei (Mapping in `references/capture-routing.md`: Tasks in `{strategy}/current-priorities.md`, Loops/Entscheidungen in `{open-loops}`, Ideen/Quick Notes in `{inbox}/capture.md`), append-only mit Datum `[YYYY-MM-DD]`. Plus kurzer Routing-Hinweis im Chat, wohin das Item beim nächsten Ingest weiterwandert.
 
 ---
 

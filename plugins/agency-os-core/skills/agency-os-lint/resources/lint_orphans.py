@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Orphan-Pages-Check fuer Brain-Lint.
+"""Orphan pages check for brain lint.
 
-Findet Notes ohne eingehende Links. Atomare Notes leben durch Verknuepfung,
-ein Orphan ist ein Lint-Signal.
+Finds notes without incoming links. Atomic notes live through linking,
+an orphan is a lint signal.
 
-Pfade kommen aus einer vom Lint-Skill (LLM) gebauten Config
-`<root>/.agency-os/lint-config.json` (oder via --config):
-  skip    - Ordner, die nie durchsucht werden (inbox, archive)
-  content - Inhalts-Ordner, in denen Orphans zaehlen (inkl. Custom-Ordner)
-Fehlt die Config, greifen die Standard-Defaults. `.git`/`node_modules` immer skip.
-Outgoing-Links werden ueber das ganze Brain gesammelt (auch das Log, damit
-Erwaehnungen aus Tageslogs als incoming zaehlen).
+Paths come from a config built by the lint skill (LLM) at
+`<root>/.agency-os/lint-config.json` (or via --config):
+  skip    - folders that are never scanned (inbox, archive)
+  content - content folders where orphans count (incl. custom folders)
+If the config is missing, the standard defaults apply. `.git`/`node_modules`
+are always skipped. Outgoing links are collected across the whole brain
+(including the log, so mentions in daily logs count as incoming).
 
-Aufruf aus Brain-Root: python3 <skill>/resources/lint_orphans.py
-Optional: python3 lint_orphans.py /pfad/zum/brain-root --config pfad/config.json
+Run from brain root: python3 <skill>/resources/lint_orphans.py
+Optional: python3 lint_orphans.py /path/to/brain-root --config path/config.json
 """
 from __future__ import annotations
 import argparse
@@ -72,7 +72,7 @@ def main():
     def is_recent(md: Path) -> bool:
         return (time.time() - md.stat().st_mtime) < NEW_FILE_THRESHOLD_DAYS * 86400
 
-    # Outgoing-Links ueber das ganze Brain zu absoluten Paths aufloesen.
+    # Resolve outgoing links across the whole brain to absolute paths.
     incoming: set[Path] = set()
     for f in iter_md(root, skip):
         try:

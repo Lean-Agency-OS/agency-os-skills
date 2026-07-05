@@ -1,6 +1,6 @@
 ---
 name: agency-os-plan
-version: 1.0.1
+version: 1.0.2
 description: Implementierungsplan für ein Projekt oder eine Kampagne erstellen. Verwende wenn der User "plan", "plane Projekt X", "implementierungsplan", "plan erstellen", "kampagne planen", "wie gehen wir vor" oder ähnliche Planungs-Phrasen nutzt.
 ---
 
@@ -24,7 +24,7 @@ Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
 
 1. Frage: "Welches Projekt? Was ist das Ziel?"
 2. Falls Projekt in `{projects}/` existiert (als File `{projekt}.md` oder Ordner `{projekt}/`): die entsprechende Datei / `_index.md` lesen für Kontext
-3. Falls neues Projekt ohne bestehende Infrastruktur: Ordner anlegen mit `_index.md` aus Template `references/templates/project-briefing.md` (liegt in diesem Skill). **Index-Pflege:** Markdown-Link auf das neue Projekt in `{projects}/_index.md` ergänzen (je nach Typ in Sektion `## Aktive Kunden-Projekte` oder `## Aktive Interne Projekte`). Hinweis: Projekt-Infrastruktur (eigenes Git-Repo, CLAUDE.md, settings.json) wird via `/spoke-new` angelegt — dieser Skill macht nur das Planungs-Dokument, kein Duplikat.
+3. Falls neues Projekt ohne bestehende Infrastruktur: Ordner anlegen mit `_index.md` aus Template `references/templates/project-briefing.md` (liegt in diesem Skill). **Index-Pflege:** Markdown-Link auf das neue Projekt in `{projects}/_index.md` ergänzen (je nach Typ in Sektion `## Aktive Kunden-Projekte` oder `## Aktive Interne Projekte`). Hinweis: Projekt-Infrastruktur (eigenes Git-Repo, CLAUDE.md, settings.json) wird via `/spoke-new` angelegt, dieser Skill macht nur das Planungs-Dokument, kein Duplikat.
 4. Plan schreiben in `{projects}/{projekt-kebab}/plan-{{DATUM}}.md`. Falls das Projekt noch ein Single-File ist (`{projects}/{projekt}.md`): Plan als eigenständige Datei daneben ablegen (`{projects}/{projekt}-plan-{{DATUM}}.md`) und im Projekt-File unter einem `## Verweise`-Abschnitt verlinken. **Index-Pflege:** Im `_index.md` des Projekts (falls Ordner vorhanden) unter "Verweise" einen Markdown-Link auf das neue Plan-File ergänzen.
 
 ```markdown

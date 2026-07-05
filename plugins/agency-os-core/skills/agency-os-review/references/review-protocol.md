@@ -1,6 +1,6 @@
-# Review-Protokoll — Agency OS
+# Review-Protokoll - Agency OS
 
-Am besten Sonntag abend oder Montag morgen. Jeden Schritt einzeln mit dem User durchgehen — nicht alles auf einmal.
+Am besten Sonntag abend oder Montag morgen. Jeden Schritt einzeln mit dem User durchgehen, nicht alles auf einmal.
 
 > **Brain-Pfade:** Alle Pfade hier sind Defaults. Auflösung pro Pfad: `.agency-os/architecture.md` (falls vorhanden) → sonst per Rolle/Muster suchen (Default-Name zuerst) → sonst Schritt überspringen. Default-Tabelle: `agency-os-start/references/architecture.md`.
 
@@ -10,9 +10,9 @@ Am besten Sonntag abend oder Montag morgen. Jeden Schritt einzeln mit dem User d
 
 Bevor du eine Frage stellst oder etwas präsentierst:
 
-- `{working-memory}` — Current Focus, Active Threads, Key Numbers
-- `{open-loops}` — alle offenen Loops, Aging-Check (Einträge mit Datum > 2 Wochen)
-- `{logs}/` — letzte 3-7 Tages-Files, neueste zuerst
+- `{working-memory}`: Current Focus, Active Threads, Key Numbers
+- `{open-loops}`: alle offenen Loops, Aging-Check (Einträge mit Datum > 2 Wochen)
+- `{logs}/`: letzte 3-7 Tages-Files, neueste zuerst
 - Falls eine Rollen-/Org-Struktur mit Wetten existiert (z.B. `{roles}/<rolle>/_wetten.md`): aktive Wetten, ob sich was bewegt hat. Sonst überspringen.
 
 **Startup-Hygiene mitprüfen:** Beim Durchlesen der Logs jede `| startup`-Sektion daraufhin ansehen, ob sie eine `Updates:`-Zeile trägt (Nachweis, dass der Plugin-Update-Check lief: `geprüft, aktuell` / `Rückstand …` / `nicht geprüft, {Grund}`). Fehlt die Zeile in einer startup-Sektion, ist der Check still übersprungen worden - im Weekly Log (Schritt 5) unter „Was hakte" benennen, damit es nicht wieder unsichtbar durchrutscht.
@@ -45,7 +45,7 @@ Erst lesen. Dann denken. Dann anfangen.
    - Eskalation nötig: `#entscheidung` Tag hinzufügen und in der aktuellen Session ansprechen
 4. Neue Loops aus dem Review direkt hier eintragen, nicht in einem separaten To-Do-System.
 
-**Loop-Aging-Regel:** Ein Loop der 4 Wochen alt ist ohne Bewegung, ist entweder eine versteckte Entscheidung oder ein stiller Verzicht. Beides ist valide — aber beides muss bewusst sein.
+**Loop-Aging-Regel:** Ein Loop der 4 Wochen alt ist ohne Bewegung, ist entweder eine versteckte Entscheidung oder ein stiller Verzicht. Beides ist valide, aber beides muss bewusst sein.
 
 ---
 
@@ -59,20 +59,20 @@ Erst lesen. Dann denken. Dann anfangen.
 
 ---
 
-## Schritt 4: Muster spiegeln — der eigentliche Review
+## Schritt 4: Muster spiegeln - der eigentliche Review
 
 Das ist der Schritt, der den Review vom Abhaken unterscheidet.
 
 **Drei Kategorien, die du aktiv prüfst:**
 
-**a) Faktische Spiegelung** — Was ist tatsächlich passiert vs. was war geplant?
+**a) Faktische Spiegelung:** Was ist tatsächlich passiert vs. was war geplant?
 Beispiel: *"Laut Log warst du 4 von 5 Tagen im Operativen, kein einziger Marketing-Block."*
 
-**b) Muster-Spiegelung** — Was passiert wiederholt, ohne dass es bewusst entschieden wurde?
+**b) Muster-Spiegelung:** Was passiert wiederholt, ohne dass es bewusst entschieden wurde?
 Beispiel: *"Das ist die dritte Woche in Folge, wo Klienten-Arbeit die eigene Content-Pipeline verdrängt."*
 Wenn ein Muster da ist: aussprechen. Auch wenn unangenehm. Besonders dann.
 
-**c) Wetten-Check** (nur falls eine Wetten-Struktur existiert, z.B. `{roles}/<rolle>/_wetten.md`) — Haben sich aktive Wetten bewegt? Gibt es neue Evidenz, die eine Wette stützt oder widerlegt?
+**c) Wetten-Check** (nur falls eine Wetten-Struktur existiert, z.B. `{roles}/<rolle>/_wetten.md`): Haben sich aktive Wetten bewegt? Gibt es neue Evidenz, die eine Wette stützt oder widerlegt?
 
 **Dann: eine Frage stellen, die trifft.**
 
@@ -121,7 +121,7 @@ Kein generischer Management-Sprech. Kein künstliches Auffüllen wenn die Woche 
    - **P0** (muss diese Woche): max. 3 Items
    - **P1** (sollte diese Woche): weitere wichtige Items
    - **P2** (nice to have / falls Zeit bleibt)
-3. In `{open-loops}` als neue Einträge oder Update bestehender Einträge — oder in `{working-memory}` als Current Focus wenn es wirklich das Wichtigste ist.
+3. In `{open-loops}` als neue Einträge oder Update bestehender Einträge, oder in `{working-memory}` als Current Focus wenn es wirklich das Wichtigste ist.
 4. Abschluss: *"Review fertig."* Kein Motivations-Outro.
 
 ---
@@ -141,7 +141,7 @@ Frag: *"Soll ich das als Note ablegen?"* Nicht autonom schreiben.
 
 ## Regeln
 
-- Geduldig — Review braucht Zeit, kein Hetzen
+- Geduldig: Review braucht Zeit, kein Hetzen
 - Jeden Schritt einzeln durchgehen
 - Keine destruktiven Änderungen: alte Logs/Reviews bleiben, auch revidierte
 - Markdown-Links in alle neuen Einträge
@@ -154,7 +154,7 @@ Frag: *"Soll ich das als Note ablegen?"* Nicht autonom schreiben.
 ## Edge Cases
 
 - **Inbox leer und Logs fehlen:** Review trotzdem machen mit dem was da ist, Datenlücken benennen.
-- **Loops aus der Vorwoche bereits in `{working-memory}` eingetragen:** Kein Doppel-Eintrag — nur prüfen ob der Stand noch stimmt.
+- **Loops aus der Vorwoche bereits in `{working-memory}` eingetragen:** Kein Doppel-Eintrag, nur prüfen ob der Stand noch stimmt.
 - **Mehrere Projekte mit unklarem Status:** Eskalieren als `#entscheidung` Loop, nicht stellvertretend entscheiden.
-- **User ist im Stress-Modus:** Schritt 4 (Muster-Spiegelung) trotzdem nicht überspringen. Gerade dann ist er relevant — aber Spiegelung kommt vor Frage, erst Resonanz dann Schärfe.
+- **User ist im Stress-Modus:** Schritt 4 (Muster-Spiegelung) trotzdem nicht überspringen. Gerade dann ist er relevant, aber Spiegelung kommt vor Frage, erst Resonanz dann Schärfe.
 - **Review-Modus zieht sich über mehrere Turns:** Aktiv bleiben, nicht resetten. Wenn der User eine konkrete Aufgabe stellt (*"schreib mir X"*), Modus verlassen und liefern, dann zurück.

@@ -1,11 +1,11 @@
 ---
 name: agency-os-start
-version: 1.1.1
+version: 1.1.2
 description: "Morgen-/Start-Briefing für den User. Verwende diesen Skill IMMER wenn der User 'guten morgen', 'morgen', 'start', 'gm', 'los gehts', 'was steht an', 'starten wir', 'lass uns starten', 'good morning' oder ähnliche Begrüßungen/Start-Signale sagt."
 allowed-tools: Bash(git rev-parse *)
 ---
 
-# Start-Briefing
+# Agency OS - Start-Briefing
 
 **Trigger:** Der User sagt *"guten morgen"*, *"morgen"*, *"start"*, *"gm"*, *"los gehts"*, *"was steht an"*, *"starten wir"*, *"good morning"* oder ruft `/start` auf.
 

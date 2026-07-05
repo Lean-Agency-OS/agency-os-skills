@@ -1,10 +1,10 @@
 ---
 name: agency-os-ingest
-version: 1.0.0
+version: 1.0.1
 description: Rohquelle aus dem Inbox-Ordner ins Brain einarbeiten. Verwende wenn der User "arbeite das ein", "ingeste das", "neues Transkript", "hier ist was Neues", "einarbeiten" oder ähnliches sagt, oder auf eine bestimmte Datei im Inbox-Ordner zeigt. Aktualisiert die betroffenen Brain-Files (Klienten, Projekte, IP, etc.), schreibt einen Log-Eintrag und zieht offene Loops nach. Rohquelle wird nach vollständiger Verarbeitung gelöscht.
 ---
 
-# Ingest
+# Agency OS - Ingest
 
 Arbeitet eine Rohquelle aus dem Inbox-Ordner tief ins Brain ein. Substanz, nicht Volumen.
 

@@ -1,10 +1,10 @@
 ---
 name: agency-os-review
-version: 2.1.0
+version: 2.1.1
 description: Wöchentliches Review für die schlanke Agentur des Users. Triggert wenn der User "review", "wochenrückblick", "weekly review", "sonntags-review", "review machen", "wochen-check", "lass uns reviewen" oder ähnliche Review-Phrasen nutzt. Kombiniert strukturiertes 6-Schritt-Protokoll mit ehrlicher Muster-Spiegelung und Anti-Pattern-Disziplin.
 ---
 
-# Agency OS — Review
+# Agency OS - Review
 
 Wöchentliches Review. Am besten Sonntag abend oder Montag morgen.
 
@@ -18,7 +18,7 @@ Damit dieser Skill ohne Permission-Rückfragen läuft, beim Bauen von Befehlen:
 
 ## Methodik
 
-Lies `references/review-protocol.md` für den vollständigen Ablauf. Dieser Skill ist der Trigger — das Protokoll ist die kanonische Quelle.
+Lies `references/review-protocol.md` für den vollständigen Ablauf. Dieser Skill ist der Trigger, das Protokoll ist die kanonische Quelle.
 
 ## Pfade & Fundament
 
@@ -30,7 +30,7 @@ Lies `references/review-protocol.md` für den vollständigen Ablauf. Dieser Skil
 2. Inbox leeren (`{inbox}/`)
 3. Loops prüfen + altern (`{open-loops}`)
 4. Projekte updaten (`{projects}/`)
-5. Muster spiegeln — ehrlich, kein Schmeicheln
+5. Muster spiegeln: ehrlich, kein Schmeicheln
 6. Nächste Woche planen + Log schreiben (`{logs}/`)
 
 Jeden Schritt einzeln durchgehen. Kein Hetzen, kein Überspringen.

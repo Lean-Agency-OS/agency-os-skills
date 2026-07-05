@@ -1,11 +1,11 @@
 ---
 name: agency-os-update
-version: 1.0.0
+version: 1.0.1
 description: Prüft, ob die installierten Agency-OS-Plugins aktuell sind (installiert vs. neuester Stand im Marketplace) und nennt die genauen Update-Schritte je nach Umgebung (Claude Code oder Cowork). Verwende wenn der User "sind meine Plugins aktuell", "gibt es Updates", "check for updates", "neuste Version", "bin ich auf dem neuesten Stand", "Plugin-Update", "update verfügbar", "welche Version habe ich" sagt oder ähnlich nach Aktualität/Updates der Skills/Plugins fragt.
 allowed-tools: Bash(claude plugin list) Bash(claude plugin marketplace update *) Bash(bash scripts/update-check.sh) Bash(curl *)
 ---
 
-# Agency-OS-Update-Check
+# Agency OS - Update-Check
 
 Beantwortet **"Sind meine Plugins aktuell?"** und sagt konkret, was zu tun ist. Wichtig vor allem in **Cowork**: dort gibt es keine Update-Benachrichtigungen, aktualisiert wird manuell.
 

@@ -1,28 +1,28 @@
 #!/usr/bin/env python3
-"""Stale-Projekte-Check fuer Brain-Lint.
+"""Stale projects check for brain lint.
 
-Prueft Projekt-Hub-Files im projects-Ordner auf drei Klassen Probleme:
+Checks project hub files in the projects folder for three classes of problems:
 
-1. CLOSED-IN-PROJEKTE: Hub-File hat Status der Abschluss signalisiert (closed,
-   done, archived, oder closed-YYYY-MM-DD-Pattern), liegt aber noch im projects-
-   Ordner statt im archive-Ordner (.../projekte/). Soll verschoben werden.
+1. CLOSED-IN-PROJEKTE: hub file has a status signaling completion (closed,
+   done, archived, or a closed-YYYY-MM-DD pattern) but still sits in the
+   projects folder instead of the archive folder (.../projekte/). Should move.
 
-2. STALE-ACTIVE: Hub-File hat status: active (oder andere lebendige Status),
-   aber kein git-commit in 30+ Tagen. Verdacht: vergessen oder abgeschlossen
-   ohne Status-Update.
+2. STALE-ACTIVE: hub file has status: active (or another live status),
+   but no git commit in 30+ days. Suspicion: forgotten or finished
+   without a status update.
 
-3. NO-STATUS: Hub-File ohne status-Frontmatter ueberhaupt. Konsistenz-Defekt.
+3. NO-STATUS: hub file without any status frontmatter. Consistency defect.
 
-projects- und archive-Pfad kommen aus der vom Lint-Skill (LLM) gebauten Config
-`<root>/.agency-os/lint-config.json` (oder via --config). Fehlt sie, greifen die
-Standard-Defaults.
+projects and archive paths come from the config built by the lint skill (LLM)
+at `<root>/.agency-os/lint-config.json` (or via --config). If missing, the
+standard defaults apply.
 
-Hub-File-Definition: {projects}/{name}.md (flat) ODER
-{projects}/{slug}/{slug}.md (Folder-Hub-Pattern). Sub-Notes innerhalb
-Folder-Projekten werden ignoriert.
+Hub file definition: {projects}/{name}.md (flat) OR
+{projects}/{slug}/{slug}.md (folder hub pattern). Sub-notes inside
+folder projects are ignored.
 
-Aufruf aus Brain-Root: python3 <skill>/resources/lint_stale_projekte.py
-Optional: python3 lint_stale_projekte.py /pfad/zum/brain-root --config pfad/config.json
+Run from brain root: python3 <skill>/resources/lint_stale_projekte.py
+Optional: python3 lint_stale_projekte.py /path/to/brain-root --config path/config.json
 """
 from __future__ import annotations
 import argparse
@@ -53,7 +53,7 @@ def load_config(root: Path, cfg_path: Path | None) -> dict:
 
 
 def find_hub_files(projekte_dir: Path) -> list[Path]:
-    """Sammle alle Projekt-Hub-Files."""
+    """Collect all project hub files."""
     hubs: list[Path] = []
     if not projekte_dir.is_dir():
         return hubs
@@ -84,7 +84,7 @@ def parse_status(md: Path) -> str | None:
 
 
 def last_git_commit_date(md: Path, root: Path) -> float | None:
-    """Unix-timestamp des letzten Commits, oder None wenn nicht trackable."""
+    """Unix timestamp of the last commit, or None if not trackable."""
     try:
         result = subprocess.run(
             ["git", "log", "-1", "--format=%ct", "--", str(md.relative_to(root))],
@@ -130,7 +130,7 @@ def main():
         if is_closed_status(status):
             closed_in_projekte.append((hub, status))
             continue
-        # Status ist nicht "closed", aber lebendig - check git-Activity
+        # Status is not "closed" but live - check git activity
         last_ts = last_git_commit_date(hub, root)
         if last_ts is None:
             continue

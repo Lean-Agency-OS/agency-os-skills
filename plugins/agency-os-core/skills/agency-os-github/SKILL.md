@@ -1,8 +1,8 @@
 ---
 name: agency-os-github
-version: 1.1.0
+version: 1.2.0
 description: Offene Änderungen sauber auf GitHub sichern (committen + pullen mit Rebase + pushen) und Konflikte auflösen, damit alles für alle verfügbar und auf dem neuesten Stand ist. Verwende wenn der User "sichere die offenen Änderungen", "offene Änderungen sichern", "committen", "commit", "sichern", "verfügbar machen", "speichern für alle", "sauber machen", "aktualisieren", "neuesten Stand holen", "pull", "mergen", "Konflikt auflösen" oder den Copy-Paste-Prompt aus dem Session-Start-Hinweis nutzt.
-allowed-tools: Bash(git add *) Bash(git commit *) Bash(git push) Bash(git push *) Bash(git pull *) Bash(git rebase *)
+allowed-tools: Bash(git add *) Bash(git commit *) Bash(git push) Bash(git push *) Bash(git pull *) Bash(git rebase *) Bash(bash scripts/resolve-git-auth.sh *)
 ---
 
 # Agency OS - Github
@@ -46,7 +46,7 @@ Bei vorhandenem SSH-Schlüssel (`ssh`) bleiben alle Git-Befehle unverändert und
 4. **Vorschlag machen:** Eine sinnvolle Commit-Aufteilung vorschlagen (meist 1 Commit, bei klar getrennten Themen mehrere) inkl. kurzer Commit-Message auf Deutsch. Den User bestätigen lassen.
 5. **Sichern:** Nach Bestätigung `git add` der besprochenen Files + `git commit`. Nie `git add -A` blind über alles, wenn der User nur einen Teil sichern wollte.
 6. **Aktualisieren (Pull mit Rebase):** Vor dem Hochladen den neuesten Stand vom Remote holen und die eigenen Commits sauber obendrauf setzen: `git pull --rebase`. So bleibt die History linear, keine unnötigen Merge-Commits. Gibt es dabei Konflikte → Abschnitt "Bei Konflikten". Nach erfolgreichem Pull das **Pull-Datum** ins lokale State-File schreiben (siehe Abschnitt "Lokaler State").
-7. **Verfügbar machen:** Nach erfolgreichem Rebase `git push`. Wenn der Rebase die History umgeschrieben hat und der Push abgelehnt wird, NICHT blind `--force` nutzen — erst prüfen, ob jemand anderes auf der Branch arbeitet. Bei eigener Feature-Branch ist `git push --force-with-lease` okay, auf `main` vorher kurz Rücksprache. Nach erfolgreichem Push das **Push-Datum** ins State-File schreiben.
+7. **Verfügbar machen:** Nach erfolgreichem Rebase `git push`. Wenn der Rebase die History umgeschrieben hat und der Push abgelehnt wird, NICHT blind `--force` nutzen, erst prüfen, ob jemand anderes auf der Branch arbeitet. Bei eigener Feature-Branch ist `git push --force-with-lease` okay, auf `main` vorher kurz Rücksprache. Nach erfolgreichem Push das **Push-Datum** ins State-File schreiben.
 
 Auch wenn lokal nichts zu committen ist (Schritt 2), darf der User trotzdem „aktualisieren" wollen → dann nur Schritt 6 (`git pull --rebase`) ausführen, um den neuesten Stand zu holen.
 
@@ -56,7 +56,7 @@ Commit + Pull (Rebase) + Push der besprochenen Änderungen, Pull-/Push-Datum in 
 
 ## Lokaler State (`.agency-os/state.md`)
 
-Hält fest, wann zuletzt aktualisiert (Pull) und gesichert (Push) wurde. **Lokal pro Arbeitskopie, steht in `.gitignore`, wird nie committet** — sonst gäbe es bei jedem Pull Konflikte und falsche Daten auf anderen Klonen.
+Hält fest, wann zuletzt aktualisiert (Pull) und gesichert (Push) wurde. **Lokal pro Arbeitskopie, steht in `.gitignore`, wird nie committet**, sonst gäbe es bei jedem Pull Konflikte und falsche Daten auf anderen Klonen.
 
 - Datum/Uhrzeit immer per `date '+%Y-%m-%d %H:%M'` holen, nicht raten.
 - Ordner ggf. anlegen, Datei überschreiben (immer nur der aktuellste Stand):

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Broken-Links-Check fuer Brain-Lint.
+"""Broken links check for brain lint.
 
-Findet Markdown-Links die auf nicht-existente Files zeigen.
+Finds markdown links pointing to non-existent files.
 
-Pfade kommen aus einer vom Lint-Skill (LLM) gebauten Config
-`<root>/.agency-os/lint-config.json` (oder via --config). Fehlt sie, greifen
-die Standard-Defaults. `.git` und `node_modules` werden immer uebersprungen,
-das Log bewusst NICHT (auch dort rotten Links).
+Paths come from a config built by the lint skill (LLM) at
+`<root>/.agency-os/lint-config.json` (or via --config). If missing, the
+standard defaults apply. `.git` and `node_modules` are always skipped,
+the log deliberately is NOT (links rot there too).
 
-Aufruf aus Brain-Root: python3 <skill>/resources/lint_broken_links.py
-Optional: python3 lint_broken_links.py /pfad/zum/brain-root --config pfad/config.json
+Run from brain root: python3 <skill>/resources/lint_broken_links.py
+Optional: python3 lint_broken_links.py /path/to/brain-root --config path/config.json
 """
 from __future__ import annotations
 import argparse
