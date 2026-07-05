@@ -1,6 +1,6 @@
 # Modus 2: Persona generieren
 
-Erzeugt konkrete, fiktive ICP-Instanzen, die sich real anfühlen. Jede Persona wird aus dem Profil (`{context}/brands/{brand}/icp.md`) abgeleitet und kann danach als Gesprächspartner genutzt werden (Pitch durchspielen, Angebot testen, Sales-Gespräch üben).
+Erzeugt konkrete, fiktive ICP-Instanzen, die sich real anfühlen. Jede Persona wird aus dem Profil (`{context}/zielgruppe.md`) abgeleitet und kann danach als Gesprächspartner genutzt werden (Pitch durchspielen, Angebot testen, Sales-Gespräch üben).
 
 ---
 
@@ -37,7 +37,7 @@ Erzeugt konkrete, fiktive ICP-Instanzen, die sich real anfühlen. Jede Persona w
 
 ## Varianz
 
-Bei mehreren Personas nacheinander: Variiere Stadt, Firmen-Typ, Ausprägung der Spannungen und Phase im Kaufprozess — aber bleib immer innerhalb der harten Kriterien des Profils. Keine Persona darf die Anti-Persona streifen.
+Bei mehreren Personas nacheinander: Variiere Stadt, Firmen-Typ, Ausprägung der Spannungen und Phase im Kaufprozess, aber bleib immer innerhalb der harten Kriterien des Profils. Keine Persona darf die Anti-Persona streifen.
 
 ## Nutzung als Gesprächspartner
 

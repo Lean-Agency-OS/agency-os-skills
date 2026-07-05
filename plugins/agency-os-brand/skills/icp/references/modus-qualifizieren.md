@@ -2,7 +2,7 @@
 
 Schneller Check, ob eine reale Person ins ICP fällt. Input kann sein: LinkedIn-Profil-URL, Name + Firma, Screenshot, Copy-Paste aus einem Profil, oder eine kurze Beschreibung.
 
-Grundlage: die Tabelle **"Wer (harte Kriterien)"** und die **weichen Signale** aus `{context}/brands/{brand}/icp.md`.
+Grundlage: die Tabelle **"Wer (harte Kriterien)"** und die **weichen Signale** aus `{context}/zielgruppe.md`.
 
 ---
 
@@ -32,13 +32,13 @@ Auch wenn alles passt: gleicht die Person der dokumentierten Anti-Persona? Dann 
 
 - Harte Kriterien: [je Kriterium ✓/✗ in einer Zeile]
 - Weiche Signale: [die 2-3 ausschlaggebenden]
-- [Bei Grenzfall: was fehlt zur Klärung — konkrete nächste Info]
+- [Bei Grenzfall: was fehlt zur Klärung, konkrete nächste Info]
 ```
 
 Bei "Passt": einen Satz dazu, welcher Aufhänger (Kernproblem/Spannung aus dem Profil) für die Ansprache am vielversprechendsten ist.
 
 ## Regeln
 
-- Nur verifizierbare Information nutzen. Aus einem Titel nicht die Teamgröße erfinden — als offen markieren.
+- Nur verifizierbare Information nutzen. Aus einem Titel nicht die Teamgröße erfinden, sondern als offen markieren.
 - Bei Screenshot/Copy-Paste: nichts dazuinterpretieren, was nicht dasteht.
-- Grenzfälle sind ein legitimes Ergebnis — besser als falsche Sicherheit.
+- Grenzfälle sind ein legitimes Ergebnis: besser als falsche Sicherheit.

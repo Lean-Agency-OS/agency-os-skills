@@ -1,6 +1,6 @@
 ---
 name: brand-ci
-version: 1.0.0
+version: 2.0.0
 description: >
   Legt die Brand-CI an oder aktualisiert sie: schreibt `ci.md` (YAML-Frontmatter) mit Farben, Fonts,
   Logo, Handle, Brand-Name und Asset-Ordner in den Brand-Kontext. Die `ci.md` ist die gemeinsame
@@ -11,7 +11,7 @@ description: >
 
 # Brand-CI
 
-Schreibt die **Brand-CI** als `ci.md` (YAML-Frontmatter) in den Brand-Ordner. Die Datei ist die
+Schreibt die **Brand-CI** als `ci.md` (YAML-Frontmatter) nach `{context}/brand/`. Die Datei ist die
 **eine Quelle** für Farben, Fonts, Logo, Handle, Brand-Name und Asset-Ordner und wird von `/carousel`
 (Layout-CI) und `/video-shortform` (Untertitel, Overlays, Logo) gelesen. Ton/Stimme gehören NICHT hierher,
 die liegen in `voice-profile.md` (`/brand-voice`).
@@ -19,9 +19,8 @@ die liegen in `voice-profile.md` (`/brand-voice`).
 ## Pfade & Fundament
 
 Keine hartkodierten Pfade. Den `context`-Ordner über `.agency-os/architecture.md` auflösen
-(`agency-os-start` pflegt die Map), sonst per Muster `*context*`. Ziel: `{context}/brands/{brand}/ci.md`.
+(`agency-os-start` pflegt die Map), sonst per Muster `*context*`. Ziel: `{context}/brand/ci.md`.
 
-- **Brand bestimmen:** Gibt es schon Ordner unter `{context}/brands/`? Dann den passenden nehmen bzw. fragen, welche Brand. Neue Brand → Slug (kebab-case) + Name erfragen, Ordner `{context}/brands/{brand}/` anlegen.
 - **Existiert die `ci.md` schon:** laden, aktuellen Stand zeigen, im **Update-Modus** nur das Genannte ändern (Rest unverändert). Sonst **Anlege-Modus**.
 
 ### Schema (`ci.md`)
@@ -29,7 +28,7 @@ Keine hartkodierten Pfade. Den `context`-Ordner über `.agency-os/architecture.m
 Vollständiges Schema + ausgefülltes Beispiel: [`references/ci.example.md`](references/ci.example.md) (kanonische
 Vorlage, nach diesem Schema schreiben). Frontmatter-Felder in Kürze:
 
-- `brand` (Slug, = Ordnername), `name` (Anzeigename), `handle` (`@…`), `status` (`active`)
+- `brand` (Slug), `name` (Anzeigename), `handle` (`@…`), `status` (`active`)
 - `colors`: `accent`, `bg_light`, `bg_cinema`, `subtitle` (Hex)
 - `fonts`: `display` (+ `display_weight`), `mono`, `subtitle` (+ optional `subtitle_path`)
 - `assets_dir` (relativ ab Projekt-Root), `logo` (Dateiname im `assets_dir`)
@@ -39,10 +38,10 @@ Vorlage, nach diesem Schema schreiben). Frontmatter-Felder in Kürze:
 
 ### 1. Kontext scannen (vor dem Interview)
 
-Erst schauen, was schon da ist, statt blind zu fragen. Den Brand-Ordner + Umgebung scannen und Werte ableiten:
+Erst schauen, was schon da ist, statt blind zu fragen. Den `{context}/brand/`-Ordner + Umgebung scannen und Werte ableiten:
 
 - **Bestehende `ci.md`** → Update-Modus, alle Felder vorbelegen.
-- **Brand-Assets-Ordner** (z.B. `{context}/brands/{brand}/brand-assets/` o.ä.): vorhanden? → `assets_dir` vorschlagen; Logo-/Bilddatei finden → `logo` vorschlagen.
+- **Brand-Assets-Ordner** (z.B. `{context}/brand/brand-assets/` o.ä.): vorhanden? → `assets_dir` vorschlagen; Logo-/Bilddatei finden → `logo` vorschlagen.
 - **Bestehende Layout-Templates** (`{marketing}/content/carousels/00-templates/*.html`): `:root`-Werte (Akzent/Hintergründe) + Fonts auslesen → `colors`/`fonts` vorschlagen.
 - **`voice-profile.md`, Positionierungs-/Brand-Notizen** im Kontext: Hinweise auf Name, Handle, Farben, Fonts.
 - **Account/Projekt:** Brand-Name + Handle ableitbar (z.B. aus vorhandenen Profilen)?
@@ -69,7 +68,7 @@ Die fertige `ci.md` (Frontmatter + optionale Notizen) im Chat zeigen. Abschlussf
 
 ### 4. Schreiben
 
-Nach "go" `{context}/brands/{brand}/ci.md` schreiben (Anlege-Modus) bzw. die geänderten Frontmatter-Felder
+Nach "go" `{context}/brand/ci.md` schreiben (Anlege-Modus) bzw. die geänderten Frontmatter-Felder
 aktualisieren (Update-Modus, übrige Felder + Prosa unverändert lassen). Ordner ggf. anlegen.
 
 ### 5. Abschluss
@@ -79,14 +78,13 @@ ein `assets_dir` gesetzt wurde, das aber noch nicht existiert: kurz erwähnen, d
 
 ## Output
 
-Schreibt (nach "go") `{context}/brands/{brand}/ci.md` (YAML-Frontmatter + optionale Prosa-Notizen). Im Update-Modus nur die geänderten Felder, Rest unverändert. `/carousel` und `/video-shortform` lesen die Datei ab dann automatisch.
+Schreibt (nach "go") `{context}/brand/ci.md` (YAML-Frontmatter + optionale Prosa-Notizen). Im Update-Modus nur die geänderten Felder, Rest unverändert. `/carousel` und `/video-shortform` lesen die Datei ab dann automatisch.
 
 ## Verwandte Skills
 
-- Schreibt nur die `ci.md` (Optik/Identität). Stimme/Ton → `/brand-voice` (`voice-profile.md`), Zielgruppe → `/icp` (`icp.md`).
+- Schreibt nur die `ci.md` (Optik/Identität). Stimme/Ton → `/brand-voice` (`voice-profile.md`), Zielgruppe → `/icp` (`zielgruppe.md`).
 - Erstellt keine Layout-Templates und keine Assets - nur die CI-Daten.
 
 ## Hard-Stops
 
 - Kein explizites "go" → nicht schreiben.
-- Brand unklar (mehrere Ordner, keine Wahl getroffen) → erst klären, nicht raten.

@@ -1,13 +1,13 @@
 ---
-# Brand-CI — eine Quelle für carousel + video-shortform.
-# Liegt im Brain unter {context}/brands/{brand}/ci.md (z.B. 01-context/brands/your-brand/ci.md).
+# Brand-CI: eine Quelle für carousel + video-shortform.
+# Liegt im Brain unter {context}/brand/ci.md (z.B. 01-context/brand/ci.md).
 # Werte im Frontmatter sind maschinenlesbar (Modell liest sie, gibt sie an render.py/ffmpeg weiter).
 # Ton/Stimme NICHT hier, sondern in voice-profile.md (gleicher Brand-Ordner).
 # Platzhalter unten durch die eigenen Brand-Werte ersetzen.
 brand: your-brand
 name: BRAND
 handle: "@yourhandle"
-status: active            # nur aktive Brands werden genutzt
+status: active
 colors:
   accent: "#E85F33"       # Akzentfarbe (carousel --coral, video Overlays)
   bg_light: "#F2EBDD"     # Light-Edition Hintergrund (carousel --cream)
@@ -19,7 +19,7 @@ fonts:
   mono: "JetBrains Mono"  # Mono/Topbar (carousel --font-mono)
   subtitle: "Helvetica"   # Untertitel-Font (video-shortform)
   subtitle_path: "/System/Library/Fonts/Helvetica.ttc"   # optional, für ffmpeg/PIL
-assets_dir: "01-context/brands/your-brand/brand-assets"  # relativ ab Projekt-Root; carousel --assets-dir
+assets_dir: "01-context/brand/brand-assets"  # relativ ab Projekt-Root; carousel --assets-dir
 logo: "logo.png"          # Dateiname im assets_dir
 ---
 

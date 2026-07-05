@@ -1,11 +1,11 @@
 ---
 name: icp
-version: 1.0.0
+version: 2.0.0
 description: >
   Zentrale ICP-Referenz der Agentur. 3 Modi:
-  (1) BEWERTEN — Content, Ads, Namen, Copy gegen das ICP prüfen inkl. simulierter ICP-Reaktion.
-  (2) PERSONA — Konkrete fiktive ICP-Instanzen mit Psychogramm und Tagesablauf generieren.
-  (3) QUALIFIZIEREN — Leads/Profile schnell gegen das ICP checken.
+  (1) BEWERTEN: Content, Ads, Namen, Copy gegen das ICP prüfen inkl. simulierter ICP-Reaktion.
+  (2) PERSONA: Konkrete fiktive ICP-Instanzen mit Psychogramm und Tagesablauf generieren.
+  (3) QUALIFIZIEREN: Leads/Profile schnell gegen das ICP checken.
   Triggern bei: "passt das zu meinem ICP", "bewerte das", "ICP-Check", "würde mein ICP das kaufen",
   "wie reagiert mein ICP", "trifft das den Nerv", "generier mir eine Persona", "konkreter ICP",
   "passt dieser Lead", "ist das ein guter Lead", "check den Kontakt", "simuliere die Reaktion",
@@ -13,20 +13,20 @@ description: >
   Andere Skills sollen diesen Skill als zentrale ICP-Referenz nutzen.
 ---
 
-# ICP — Dein idealer Kunde als System
+# ICP: Dein idealer Kunde als System
 
 Dieser Skill ist die Single Source of Truth für das ICP deiner Agentur. Die Daten leben in **deinem** Agency OS, der Skill liefert die Methodik.
 
 ## Pfade & Fundament
 
-**Datenquelle:** `{context}/brands/{brand}/icp.md`
+**Datenquelle:** `{context}/zielgruppe.md`
 
-Den `context`-Ordner über `.agency-os/architecture.md` auflösen (`agency-os-start` pflegt die Map), sonst per Muster `*context*`. Brand = aktive Brand unter `{context}/brands/` (nur eine → die; mehrere → die mit `brand-config.md` `status: active`; kein fester Default-Name).
+Den `context`-Ordner über `.agency-os/architecture.md` auflösen (`agency-os-start` pflegt die Map), sonst per Muster `*context*`.
 
 ### Pre-flight Check
 
-1. Lies `{context}/brands/{brand}/icp.md`.
-2. **Existiert nicht oder enthält kein vollständiges Profil** (fehlende Abschnitte: Kernproblem, emotionale Spannungen, Sprache, Qualifizierungs-Kriterien): Setup anbieten — *"Dein ICP-Profil ist noch nicht vollständig. 10 Minuten Interview, dann steht es. Jetzt machen?"* → bei Ja dem ICP-Setup des Onboardings folgen (`agency-os-onboarding/references/icp-setup.md`), das `{context}/brands/{brand}/icp.md` schreibt. Dieser Skill macht kein eigenes Setup.
+1. Lies `{context}/zielgruppe.md`.
+2. **Existiert nicht oder enthält kein vollständiges Profil** (fehlende Abschnitte: Kernproblem, emotionale Spannungen, Sprache, Qualifizierungs-Kriterien): Setup anbieten: *"Dein ICP-Profil ist noch nicht vollständig. 10 Minuten Interview, dann steht es. Jetzt machen?"* → bei Ja dem ICP-Setup des Onboardings folgen (`agency-os-onboarding/references/icp-setup.md`), das `{context}/zielgruppe.md` schreibt. Dieser Skill macht kein eigenes Setup.
 3. **Existiert vollständig:** direkt in den passenden Modus.
 
 ---
@@ -65,14 +65,14 @@ Schneller Check ob eine reale Person ins ICP fällt. Input: LinkedIn-Profil, Nam
 
 ## Output
 
-Kein File-Write: der Liefergegenstand ist ein Chat-Output je nach Modus - eine ICP-Bewertung (5 Dimensionen + simulierte Reaktion + Verbesserungsvorschlag), eine generierte Persona oder ein Qualifizierungs-Urteil (Passt / Passt nicht / Grenzfall). Profil-Lücken werden in `{context}/brands/{brand}/icp.md` ergänzt.
+Kein File-Write: der Liefergegenstand ist ein Chat-Output je nach Modus - eine ICP-Bewertung (5 Dimensionen + simulierte Reaktion + Verbesserungsvorschlag), eine generierte Persona oder ein Qualifizierungs-Urteil (Passt / Passt nicht / Grenzfall). Profil-Lücken werden in `{context}/zielgruppe.md` ergänzt.
 
 ## Verwandte Skills
 
-Dieser Skill ist die zentrale ICP-Referenz. Andere Skills (z.B. weekly-goldmine, carousel, brand-voice-Anwendungen) verweisen auf `{context}/brands/{brand}/icp.md` statt eigene ICP-Daten zu pflegen. Modus 1 kann von jedem Skill genutzt werden, um Outputs zu prüfen. Setup läuft über das Onboarding (`agency-os-onboarding/references/icp-setup.md`), nicht hier.
+Dieser Skill ist die zentrale ICP-Referenz. Andere Skills (z.B. weekly-content-mining, carousel, brand-voice-Anwendungen) verweisen auf `{context}/zielgruppe.md` statt eigene ICP-Daten zu pflegen. Modus 1 kann von jedem Skill genutzt werden, um Outputs zu prüfen. Setup läuft über das Onboarding (`agency-os-onboarding/references/icp-setup.md`), nicht hier.
 
 ## Hard-Stops (No-Gos)
 
 - Generische Business-Weisheiten ohne Bezug zum dokumentierten ICP
-- Bewertungen aus dem Bauch, wenn das Profil etwas anderes sagt — das Profil ist die Quelle
-- Profil-Lücken stillschweigend mit Annahmen füllen — Lücke benennen, nachfragen, Profil ergänzen
+- Bewertungen aus dem Bauch, wenn das Profil etwas anderes sagt: das Profil ist die Quelle
+- Profil-Lücken stillschweigend mit Annahmen füllen. Stattdessen: Lücke benennen, nachfragen, Profil ergänzen

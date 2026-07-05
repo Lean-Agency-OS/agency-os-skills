@@ -1,6 +1,6 @@
 ---
 name: positionierung
-version: 1.0.0
+version: 2.0.0
 description: >
   Legt die Positionierung an oder aktualisiert sie: schreibt `positionierung.md` (Kategorie,
   Differenzierung, Beweise, Positioning-Statement, Messaging-Pillars, Angebot) in den Brand-Kontext.
@@ -12,7 +12,7 @@ description: >
 
 # Positionierung
 
-Schreibt die **Positionierung** als `positionierung.md` in den Brand-Ordner: wofür die Marke steht, wogegen
+Schreibt die **Positionierung** als `positionierung.md` in den Kontext-Ordner: wofür die Marke steht, wogegen
 sie antritt, was sie einzigartig macht und was sie konkret anbietet. Das ist das **strategische Fundament** -
 `icp` (wer), `brand-voice` (wie klingen), `brand-ci` (wie aussehen) und alle Marketing-Skills (carousel,
 newsletter, captions, später kampagnen-plan) lesen es als **Positionierungs-Anker**.
@@ -20,21 +20,20 @@ newsletter, captions, später kampagnen-plan) lesen es als **Positionierungs-Ank
 ## Pfade & Fundament
 
 Keine hartkodierten Pfade. Den `context`-Ordner über `.agency-os/architecture.md` auflösen
-(`agency-os-start` pflegt die Map), sonst per Muster `*context*`. Ziel: `{context}/brands/{brand}/positionierung.md`.
+(`agency-os-start` pflegt die Map), sonst per Muster `*context*`. Ziel: `{context}/positionierung.md`.
 
-- **Brand bestimmen:** Ordner unter `{context}/brands/`. Nur einer → der; mehrere → die mit `brand-config.md` `status: active`; neue Brand → Slug + Name erfragen, Ordner anlegen.
 - **Existiert `positionierung.md` schon:** laden, aktuellen Stand zeigen, im **Update-Modus** nur das Genannte ändern. Sonst **Anlege-Modus**.
 
 ### Was das Dokument enthält
 
-1. **Zielkunde** - für wen ist es (Verweis auf `icp.md`, nicht duplizieren).
+1. **Zielkunde** - für wen ist es (Verweis auf `zielgruppe.md`, nicht duplizieren).
 2. **Kategorie / Alternative** - in welcher Kategorie konkurriert die Marke; was tut der Kunde sonst (Status quo, Wettbewerber, "nichts tun").
 3. **Differenzierung** - was die Marke einzigartig kann, das die Alternativen nicht bieten (1-3 Punkte).
 4. **Beweise** - warum das glaubwürdig ist (Ergebnisse, Methode, Erfahrung, Zahlen).
 5. **Positioning-Statement** - 1-2 Sätze: *Für [Zielkunde], die [Problem], ist [Marke] das [Kategorie], das [Differenzierung] - anders als [Alternative], weil [Beweis].*
 6. **Messaging-Pillars** - 3-4 Kernbotschaften, die in jedem Asset wiederkehren.
 7. **Angebot (Offer)** - das konkrete Angebot: Job-to-be-Done, versprochene Transformation (von → zu), Format/Lieferung, optional Preis-Anker.
-8. **Sprache** - die scharfen, eigenen Begriffe + die zu vermeidenden weichen Begriffe (an `icp.md` gekoppelt).
+8. **Sprache** - die scharfen, eigenen Begriffe + die zu vermeidenden weichen Begriffe (an `zielgruppe.md` gekoppelt).
 
 ## Workflow
 
@@ -42,8 +41,8 @@ Keine hartkodierten Pfade. Den `context`-Ordner über `.agency-os/architecture.m
 
 Erst schauen, was schon da ist, statt blind zu fragen:
 - **Bestehende `positionierung.md`** → Update-Modus, alle Abschnitte vorbelegen.
-- **`icp.md`** → Zielkunde, Spannungen, Problem, scharfe Sprache (Pflicht-Lektüre, wird verlinkt nicht kopiert).
-- **`voice-profile.md`** → Ton, damit das Statement nach der Marke klingt.
+- **`zielgruppe.md`** → Zielkunde, Spannungen, Problem, scharfe Sprache (Pflicht-Lektüre, wird verlinkt nicht kopiert).
+- **`brand/voice-profile.md`** → Ton, damit das Statement nach der Marke klingt.
 - **Angebots-/Sales-/Offer-Notizen, About-/Über-uns-Texte, frühere Decks** im Kontext → Differenzierung, Beweise, Angebot ableiten.
 
 Gefundene Werte als **Vorschläge** ins Interview übernehmen. Was nicht gefunden wird, normal erfragen.
@@ -58,7 +57,7 @@ Eine Gruppe nach der anderen (der User darf auch mehr auf einmal liefern):
 3. **Beweise:** *"Warum glaubt man dir das? Ergebnisse, Methode, Zahlen, Erfahrung."*
 4. **Angebot:** *"Was genau bietest du an? Welche Transformation (von → zu), in welchem Format?"*
 
-Aus den Antworten **Positioning-Statement + 3-4 Messaging-Pillars ableiten** (nicht erfragen - synthetisieren und vorschlagen). Zielkunde + Sprache aus `icp.md` ziehen.
+Aus den Antworten **Positioning-Statement + 3-4 Messaging-Pillars ableiten** (nicht erfragen - synthetisieren und vorschlagen). Zielkunde + Sprache aus `zielgruppe.md` ziehen.
 
 **Schärfe-Prinzip:** Differenzierung muss konkret und überprüfbar sein, keine Allerwelts-Claims (*"beste Qualität", "kundenorientiert"*). Falls vorhanden, mit `/icp` Modus *Bewerten* gegen das ICP testen: trifft die Positionierung den Nerv?
 
@@ -69,8 +68,8 @@ Abschlussfrage: *"Passt das? 'go' zum Speichern, sonst sag, was anders soll."* O
 
 ### 4. Schreiben
 
-Nach "go" `{context}/brands/{brand}/positionierung.md` schreiben (Anlege-Modus) bzw. die geänderten
-Abschnitte aktualisieren (Update-Modus, Rest unverändert). Auf `icp.md` und `voice-profile.md` verlinken.
+Nach "go" `{context}/positionierung.md` schreiben (Anlege-Modus) bzw. die geänderten
+Abschnitte aktualisieren (Update-Modus, Rest unverändert). Auf `zielgruppe.md` und `brand/voice-profile.md` verlinken.
 Ordner ggf. anlegen.
 
 ### 5. Abschluss
@@ -81,7 +80,7 @@ eine Angebots-Schärfung hinweisen.
 
 ## Output
 
-Schreibt (nach "go") `{context}/brands/{brand}/positionierung.md` mit allen Abschnitten (Zielkunde, Kategorie/Alternative, Differenzierung, Beweise, Positioning-Statement, Messaging-Pillars, Angebot, Sprache), verlinkt auf `icp.md` und `voice-profile.md`. Im Update-Modus nur die geänderten Abschnitte, Rest unverändert.
+Schreibt (nach "go") `{context}/positionierung.md` mit allen Abschnitten (Zielkunde, Kategorie/Alternative, Differenzierung, Beweise, Positioning-Statement, Messaging-Pillars, Angebot, Sprache), verlinkt auf `zielgruppe.md` und `brand/voice-profile.md`. Im Update-Modus nur die geänderten Abschnitte, Rest unverändert.
 
 ## Verwandte Skills
 
@@ -93,4 +92,3 @@ Schreibt (nach "go") `{context}/brands/{brand}/positionierung.md` mit allen Absc
 
 - Kein explizites "go" → nicht schreiben.
 - Differenzierung bleibt generisch/austauschbar → nachschärfen, nicht speichern (eine unscharfe Positionierung schadet mehr als keine).
-- Brand unklar (mehrere Ordner, keine Wahl) → erst klären, nicht raten.

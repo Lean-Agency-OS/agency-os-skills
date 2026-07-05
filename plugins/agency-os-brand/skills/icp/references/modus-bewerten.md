@@ -1,6 +1,6 @@
 # Modus 1: Bewerten
 
-Jede Bewertung besteht aus drei Teilen: analytische Bewertung, simulierte ICP-Reaktion, konkreter Verbesserungsvorschlag. Grundlage ist immer das Profil in `{context}/brands/{brand}/icp.md` — nicht dein Bauchgefühl.
+Jede Bewertung besteht aus drei Teilen: analytische Bewertung, simulierte ICP-Reaktion, konkreter Verbesserungsvorschlag. Grundlage ist immer das Profil in `{context}/zielgruppe.md`, nicht dein Bauchgefühl.
 
 ---
 
@@ -9,7 +9,7 @@ Jede Bewertung besteht aus drei Teilen: analytische Bewertung, simulierte ICP-Re
 Prüfe jede Dimension. Nicht jede ist für jeden Input gleich relevant, aber alle werden geprüft.
 
 **1. Relevanz: Trifft es ein echtes Problem des ICP?**
-Das Kernproblem steht im Profil. Wenn der Input es nicht berührt, ist er irrelevant — egal wie gut formuliert.
+Das Kernproblem steht im Profil. Wenn der Input es nicht berührt, ist er irrelevant, egal wie gut formuliert.
 
 Prüffrage: Würde der ICP beim Lesen denken "Das ist genau mein Problem" oder "Interessant, aber betrifft mich nicht"?
 
@@ -26,7 +26,7 @@ Prüffrage: Bewegt es den ICP Richtung Wunschidentität oder bestätigt es den I
 **4. Sprache: Verwendet es die richtige Tonalität?**
 Im Profil stehen die Wörter, die funktionieren, und die, die abprallen. Fachjargon aus dem Alltag des ICP schafft Zugehörigkeit; generische Business-Sprache schafft Distanz.
 
-Prüffrage: Klingt es so, wie dieser Mensch spricht und denkt — oder wie ein generischer Berater?
+Prüffrage: Klingt es so, wie dieser Mensch spricht und denkt, oder wie ein generischer Berater?
 
 **5. Differenzierung: Hebt es sich ab vom Markt-Rauschen?**
 Der ICP wird täglich mit Content und Angeboten bombardiert. Generische Aussagen sind unsichtbar; spezifische Diagnostik fällt auf.
@@ -37,16 +37,16 @@ Prüffrage: Würde er scrollen oder stoppen?
 
 Gib für jede Dimension ein kurzes Urteil (1-2 Sätze) und einen Score:
 
-- **Stark** — Trifft den ICP direkt, keine Änderung nötig
-- **Ok** — Grundrichtung stimmt, aber Potenzial zur Schärfung
-- **Schwach** — Verfehlt den ICP oder ist zu generisch
-- **Kontraproduktiv** — Arbeitet aktiv gegen die Positionierung
+- **Stark**: Trifft den ICP direkt, keine Änderung nötig
+- **Ok**: Grundrichtung stimmt, aber Potenzial zur Schärfung
+- **Schwach**: Verfehlt den ICP oder ist zu generisch
+- **Kontraproduktiv**: Arbeitet aktiv gegen die Positionierung
 
 ---
 
 ## Teil B: Simulierte ICP-Reaktion
 
-Nach der analytischen Bewertung wird der ICP lebendig. Generiere eine kurze Persona-Instanz aus dem Profil (Name, Firmen-Typ, Stadt, Situation — siehe `modus-persona.md`) und lass sie auf den Input reagieren.
+Nach der analytischen Bewertung wird der ICP lebendig. Generiere eine kurze Persona-Instanz aus dem Profil (Name, Firmen-Typ, Stadt, Situation, siehe `modus-persona.md`) und lass sie auf den Input reagieren.
 
 Die Reaktion ist ein innerer Monolog. Nicht analytisch, sondern menschlich. Was denkt er beim Lesen? Wo nickt er? Wo scrollt er weiter? Wo wird er skeptisch? Wo fühlt er sich ertappt?
 
@@ -56,13 +56,13 @@ Die Reaktion ist ein innerer Monolog. Nicht analytisch, sondern menschlich. Was 
 >
 > *"[Innerer Monolog als Reaktion auf den Input]"*
 
-Die Simulation soll aufdecken, wo die Copy funktioniert und wo sie hängt. Nicht cheerleaden. Ehrlich reagieren — wie ein skeptischer, beschäftigter Entscheider, der schon hundert Anbieter gesehen hat.
+Die Simulation soll aufdecken, wo die Copy funktioniert und wo sie hängt. Nicht cheerleaden. Ehrlich reagieren: wie ein skeptischer, beschäftigter Entscheider, der schon hundert Anbieter gesehen hat.
 
 ---
 
 ## Teil C: Konkreter Verbesserungsvorschlag
 
-Ein Gesamturteil und wenn nötig ein konkreter, ausformulierter Verbesserungsvorschlag. Nicht vage ("mach es spezifischer"), sondern ausgeschrieben — mit Begründung aus dem Profil.
+Ein Gesamturteil und wenn nötig ein konkreter, ausformulierter Verbesserungsvorschlag. Nicht vage ("mach es spezifischer"), sondern ausgeschrieben, mit Begründung aus dem Profil.
 
 Bei Namen, Headlines, Hooks oder kurzen Texten: 2-3 Alternativen, die stärker auf den ICP zugeschnitten sind, jeweils mit kurzer Begründung.
 
