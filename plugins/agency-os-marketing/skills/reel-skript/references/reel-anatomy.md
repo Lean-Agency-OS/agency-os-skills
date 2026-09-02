@@ -12,22 +12,32 @@ kanonische Quelle für den Aufbau.
 | **Hook** | Sekunde 0-3 (gesprochen + On-Screen + Visual) | stoppt den Daumen, öffnet die Schleife |
 | **Build** | Hauptteil | liefert die Substanz (Story / List / Steps) |
 | **Payoff** | gegen Ende | der Shift: geht einen Schritt weiter als Zusammenfassung |
-| **CTA** | Schluss + Caption | genau ein nächster Schritt |
+| **CTA** | Schluss | genau ein nächster Schritt |
 
 **Denk-Reihenfolge ≠ Seh-Reihenfolge.** Beim Planen zuerst Payoff klären, dann Build, dann CTA,
 der Hook zuletzt (er fasst das Ganze zusammen und wird nur gut, wenn der Rest steht). Im fertigen
 Reel steht der Hook in den ersten 3 Sekunden.
 
-**Drei Spuren pro Beat.** Jeder Beat hat: **Gesprochen/VO** (Ton), **On-Screen-Text** (Overlay),
-**Shot/Visual** (Bild). Reels werden oft ohne Ton geschaut, der On-Screen-Text muss allein tragen.
+**Bullet-Skript, kein Wort-für-Wort.** Geplant wird pro Bereich in Bullet Points: Sprech-Anker,
+ein Gedanke pro Bullet. Ausformuliert wird beim Dreh. Die visuelle Ebene (Shots, B-Roll, Schnitt)
+kommt erst im optionalen Regie-Schritt dazu, nicht ins Bullet-Skript.
 
 ---
 
 ## Hook (Sekunde 0-3)
 
+Der Hook wirkt auf **drei Ebenen gleichzeitig**:
+
+1. **Gesprochener Hook:** die erste gesprochene Zeile (Pflicht).
+2. **On-Screen-Hook:** 3-5 Wörter, die die ersten Sekunden im Bild stehen bleiben und die
+   Aufmerksamkeit zusätzlich ziehen (Pflicht). Nicht verwechseln mit Captions: Captions sind
+   nur das mitlaufende Transkript des Gesprochenen, der On-Screen-Hook ist ein eigenes Element.
+3. **Visueller Hook:** was im Bild passiert (optional; bei Talking-Head gibt es ihn oft nicht).
+
+Regeln:
 - Keine Begrüßung, kein "Hey, in diesem Video...". Der Hook **ist** der Einstieg.
-- Erste gesprochene Zeile + On-Screen-Text greifen ineinander, nicht doppelt dasselbe.
-- Visual stoppt den Daumen (Bewegung, Gesicht, unerwartetes Bild, Text-Cut).
+- Gesprochener Hook + On-Screen-Hook greifen ineinander, nicht doppelt dasselbe.
+- Wenn es einen visuellen Hook gibt: er stoppt den Daumen (Bewegung, Gesicht, unerwartetes Bild, Text-Cut).
 - Gibt noch keinen Kontext, das Auflösen kommt im Build.
 
 ## Build - drei Subtypen (genau einer pro Reel)
@@ -44,10 +54,10 @@ Geht über eine Zusammenfassung hinaus. Zwei Ausprägungen:
 - **Insight:** Reframe / Glaubenssatz umdrehen. *"Das Problem ist nicht X. Das Problem ist Y."*
 - **Do:** konkreter nächster Schritt. *"Nimm dir morgen 30 Minuten. Schreib X auf."*
 
-## CTA (Schluss + Caption)
+## CTA (Schluss)
 
 1 Überleitungs-Satz + ein spezifischer CTA. **Genau ein CTA pro Reel.** Im Video gesprochen ODER
-als End-Frame-Text, plus identischer CTA in der Caption. Kommentar-Trigger ("schreib *X* in die
+als End-Frame-Text. Kommentar-Trigger ("schreib *X* in die
 Kommentare") und Profil-/Link-Verweis funktionieren stark. *"Folg mir für mehr"* ist schwach,
 *"Schreib MEHR in die Kommentare, dann schick ich dir die Vorlage"* ist stark.
 
@@ -84,18 +94,20 @@ Pattern-Interrupt: Bewegung, harter Cut, Text-Knall, Mimik, ungewohnte Perspekti
 | **Watch-Time** | Story | *"Vor 3 Monaten [Zustand], heute [Zustand]."* · *"Mein größter Fehler mit [Thema]"* |
 | **Kommentare** | Kontrovers | *"Unpopuläre Meinung: [steile These]"* · *"[Gängiger Rat] ist falsch. Hier ist warum:"* |
 
-Wahl: stärkste Daumen-Stopp-Wirkung passend zum Ziel, Begründung in 1-2 Sätzen notieren.
+Es werden immer **3 Vorschläge für den gesprochenen Hook** und **3 Vorschläge für den
+On-Screen-Hook** geliefert (je unterschiedliche Muster, passend zum Ziel). Die Wahl trifft
+der User beim Dreh, es wird keine Variante vorab festgelegt.
 
 ---
 
 ## Qualitäts-Checkliste (intern, vor dem Approval)
 
-- [ ] Hook: stoppt in Sekunde 0-3? Zeigarnik? Bild + Text + Ton greifen ineinander? Nicht generisch?
+- [ ] Hook: stoppt in Sekunde 0-3? Zeigarnik? Gesprochen + On-Screen greifen ineinander? Nicht generisch?
+- [ ] On-Screen-Hooks: je 3-5 Wörter, tragen auch stumm (ohne Ton verständlich)?
 - [ ] Kein Intro/Begrüßung vor dem Hook?
-- [ ] Build: klarer Subtyp? Schnelle Beats, kein Durchhänger?
-- [ ] On-Screen-Text trägt auch stumm (ohne Ton verständlich)?
+- [ ] Build: klarer Subtyp? Ein Gedanke pro Bullet, kein Durchhänger?
 - [ ] Payoff: mehr als Zusammenfassung? Echten neuen Wert?
-- [ ] CTA: logische Konsequenz? Spezifisch? Genau einer? In-Video UND Caption identisch?
+- [ ] CTA: logische Konsequenz? Spezifisch? Genau einer?
 - [ ] Diagnostiziert, statt zu lehren? (Lehren = low authority, Diagnose = high authority)
 - [ ] Positionierung trifft das Profil der Marke? (aus ICP-/Positionierungs-Quelle, falls vorhanden)
 - [ ] Mindestens eine konkrete Zahl oder ein messbares Ergebnis?
@@ -109,8 +121,7 @@ Wahl: stärkste Daumen-Stopp-Wirkung passend zum Ziel, Begründung in 1-2 Sätze
 - **Gesamtlänge:** 15-60 Sekunden. Ideal 20-40s. Entspricht ca. 40-150 gesprochenen Wörtern.
 - **Format:** Vertical 9:16. Plattform-Varianten: Instagram Reel, TikTok, YouTube Short.
 - **Beats:** kurz, ein Gedanke pro Cut. Tempo hoch, keine langen Einstellungen.
-- **On-Screen-Text:** kurz, lesbar in 1-2 Sekunden, nie ganze Sätze als Wand.
-- **Caption:** Hook-Zeile zuerst (bricht im Feed nach ~1 Zeile um), dann 1-3 Sätze, dann CTA.
+- **On-Screen-Hook:** kurz, lesbar in 1-2 Sekunden, nie ganze Sätze als Wand.
 
 ---
 
