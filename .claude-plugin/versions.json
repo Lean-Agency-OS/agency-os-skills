@@ -3,7 +3,7 @@
   "plugins": {
     "agency-os-core": { "version": "3.10.0", "skills": { "agency-os-capture": "2.0.1", "agency-os-github": "1.2.0", "agency-os-ingest": "1.0.1", "agency-os-lint": "1.1.1", "agency-os-plan": "1.0.2", "agency-os-review": "2.1.1", "agency-os-shutdown": "1.0.1", "agency-os-start": "1.1.2", "agency-os-update": "1.0.1" } },
     "agency-os-brand": { "version": "2.0.0", "skills": { "brand-ci": "2.0.0", "brand-voice": "3.0.0", "icp": "2.0.0", "positionierung": "2.0.0" } },
-    "agency-os-marketing": { "version": "3.0.0", "skills": { "carousel": "4.0.0", "content-kalender": "2.0.0", "email-sequenz": "2.0.0", "instagram-caption": "2.0.0", "kampagnen-plan": "2.0.0", "landingpage": "2.0.0", "lead-magnet": "2.0.0", "linkedin-caption": "2.0.0", "newsletter-email": "2.0.0", "reel-skript": "2.1.0", "weekly-content-mining": "2.0.0" } },
+    "agency-os-marketing": { "version": "3.0.0", "skills": { "carousel": "4.0.0", "content-kalender": "2.0.0", "email-sequenz": "2.0.0", "instagram-caption": "2.0.0", "instagram-story": "1.0.0", "kampagnen-plan": "2.0.0", "landingpage": "2.0.0", "lead-magnet": "2.0.0", "linkedin-caption": "2.0.0", "newsletter-email": "2.0.0", "reel-skript": "2.1.0", "weekly-content-mining": "2.0.0" } },
     "agency-os-video": { "version": "3.0.0", "skills": { "video-captions": "2.0.0", "video-footage-mining": "2.0.0", "video-longform": "1.0.0", "video-roughcut": "2.0.0", "video-shortform": "2.0.0" } }
   }
 }
