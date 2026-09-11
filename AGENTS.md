@@ -25,6 +25,8 @@ Ausgeliefert wird **nur** `plugins/<plugin>/`. Alles am Repo-Root (`packages/`, 
 1. die `version` in `plugin.json` (steuert die Auslieferung), **und**
 2. die `version:` im Frontmatter **jedes geänderten Skills**.
 
+Zusätzlich bei jedem Plugin-Bump: die **Versions-Übersicht ganz oben im README** (Tabelle "Plugin / Aktuelle Version") im selben Commit aktualisieren.
+
 Ein Plugin-Bump kommt also **nie allein**: mindestens eine Skill-Version wird mitgebumpt (ein Plugin ändert sich nur, weil sich ein Skill ändert). Mehrere Plugins geändert → jedes Plugin **plus** jeweils seine geänderten Skills.
 
 - **SemVer (für Skill und Plugin gleich):**

@@ -6,7 +6,14 @@
 
 Ein Plugin-Marketplace für [Claude Code](https://claude.com/claude-code) und Cowork, gebaut für Marketing-Agenturen im DACH-Raum. Strategie, Content und Video laufen als Skills, die wie Senior-Mitarbeiter denken und aus deinem Brain lesen.
 
-`4 Plugins` · `27 Skills` · von [Markus Vieghofer](https://markusvieghofer.com)
+`4 Plugins` · `30 Skills` · von [Markus Vieghofer](https://markusvieghofer.com)
+
+| Plugin | Aktuelle Version |
+|---|---|
+| `agency-os-core` | 3.10.0 |
+| `agency-os-brand` | 2.0.0 |
+| `agency-os-marketing` | 3.0.0 |
+| `agency-os-video` | 3.0.0 |
 
 </div>
 
