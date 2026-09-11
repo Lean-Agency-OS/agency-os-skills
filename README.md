@@ -8,12 +8,12 @@ Ein Plugin-Marketplace für [Claude Code](https://claude.com/claude-code) und Co
 
 `4 Plugins` · `30 Skills` · von [Markus Vieghofer](https://markusvieghofer.com)
 
-| Plugin | Aktuelle Version | Letzter Bump |
-|---|---|---|
-| `agency-os-core` | 3.10.0 | 2026-07-05 |
-| `agency-os-brand` | 2.0.0 | 2026-07-05 |
-| `agency-os-marketing` | 3.0.0 | 2026-09-11 |
-| `agency-os-video` | 3.0.0 | 2026-07-05 |
+| Plugin | Aktuelle Version |
+|---|---|
+| `agency-os-core` | 3.10.0 |
+| `agency-os-brand` | 2.0.0 |
+| `agency-os-marketing` | 3.0.0 |
+| `agency-os-video` | 3.0.0 |
 
 </div>
 
