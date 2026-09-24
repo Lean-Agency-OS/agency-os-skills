@@ -1,6 +1,6 @@
 ---
 name: video-footage-mining
-version: 2.1.0
+version: 2.1.1
 description: Sichtet ganze Roh-Footage-Ordner lokal und schnell (ohne API) - transkribiert alle Clips per lokalem Whisper, findet die postwuerdigen O-Toene/Highlights mit Timecodes und schreibt einen Highlight-Index. Triggert bei "Footage sichten", "was steckt in dem Material", "Highlights finden", "O-Toene raussuchen", "Video-Triage", "/video-footage-mining". Liest Zielgruppe/Positionierung aus {context}/ fuers Highlight-Gespuer.
 ---
 

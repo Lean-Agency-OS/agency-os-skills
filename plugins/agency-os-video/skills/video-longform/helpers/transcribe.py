@@ -159,8 +159,17 @@ def call_whisper(
         )
 
     model = WhisperModel(model_size, device="cpu", compute_type="int8")
+    # Take material repeats the same sentence many times. Feeding the previous
+    # text back in as a prompt makes whisper loop on it, repeating one line while
+    # the actually spoken content is dropped, so keep every window independent.
+    # VAD only in gist mode: it removes silence and shifts segment edges, which
+    # would disturb the word timings the cut skills build their EDLs from.
     segments, info = model.transcribe(
-        str(audio_path), word_timestamps=word_timestamps, language=language,
+        str(audio_path),
+        word_timestamps=word_timestamps,
+        language=language,
+        condition_on_previous_text=False,
+        vad_filter=not word_timestamps,
     )
 
     words: list[dict] = []
