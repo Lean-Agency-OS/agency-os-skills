@@ -1,6 +1,6 @@
 ---
 name: agency-os-start
-version: 1.1.2
+version: 1.1.3
 description: "Morgen-/Start-Briefing für den User. Verwende diesen Skill IMMER wenn der User 'guten morgen', 'morgen', 'start', 'gm', 'los gehts', 'was steht an', 'starten wir', 'lass uns starten', 'good morning' oder ähnliche Begrüßungen/Start-Signale sagt."
 allowed-tools: Bash(git rev-parse *)
 ---
@@ -30,6 +30,7 @@ Die `{...}`-Platzhalter unten (`{strategy}/`, `{logs}/`, `{knowledge}/` …) sin
 **Map automatisch pflegen (einmal pro Start, vor den Schritten):** Top-Level-Struktur des Brains scannen und gegen `.agency-os/architecture.md` abgleichen:
 - Map fehlt → aus der erkannten Struktur neu schreiben.
 - Map zeigt auf Ordner, die es nicht mehr gibt, oder ein neuer rollen-relevanter Ordner ist dazugekommen (Drift) → betroffene Zeilen aktualisieren.
+- **Unterpfad-Rollen nie entfernen:** Rollen, die auf einen Unterordner oder eine Datei zeigen (`working-memory`, `open-loops`, `sops` …), kommen im Top-Level-Scan nicht vor. Sie bleiben unangetastet, solange ihr übergeordneter Ordner existiert; wurde der umbenannt, nur das Präfix nachziehen.
 - Map stimmt → nichts tun.
 
 Das Schreiben ist Infrastruktur (wie `.agency-os/state.md` beim github-Skill), kein Brain-Content: ohne Rückfrage schreiben, nur in einer Zeile melden was sich geändert hat (oder still lassen, wenn nichts).

@@ -10,10 +10,10 @@ Ein Plugin-Marketplace für [Claude Code](https://claude.com/claude-code) und Co
 
 | Plugin | Aktuelle Version |
 |---|---|
-| `agency-os-core` | 3.10.0 |
+| `agency-os-core` | 3.10.1 |
 | `agency-os-brand` | 2.0.0 |
 | `agency-os-marketing` | 3.0.0 |
-| `agency-os-video` | 3.0.0 |
+| `agency-os-video` | 3.1.0 |
 
 </div>
 

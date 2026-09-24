@@ -7,7 +7,7 @@ Die Brain-Ordner heißen nicht in jedem Brain gleich (mal `08-wiki/`, mal `08-kn
 Pro benötigter Rolle in dieser Reihenfolge:
 
 1. **Architektur-Datei zuerst:** Existiert `.agency-os/architecture.md` im Brain-Root und nennt die Rolle, nutze den dort hinterlegten Pfad.
-2. **Sonst Rolle/Glob:** Such den Ordner über sein Muster, der kanonische Default-Name ist die erste Wahl (z.B. Logs = `*logs*`, Wissen = `08-*` bzw. `*wiki*`/`*knowledge*`, Strategie = `*strategy*`).
+2. **Sonst Rolle/Glob:** Such den Ordner über sein Muster, der kanonische Default-Name ist die erste Wahl (z.B. Logs = `*logs*`, Wissen = `08-*` bzw. `*wiki*`/`*knowledge*`, Strategie = `*strategy*`, SOPs = `*sops*` **innerhalb** des knowledge-Ordners).
 3. **Sonst überspringen:** Wird nichts gefunden, den jeweiligen Schritt auslassen, nicht blockieren.
 
 ## Rollen → Default-Pfad
@@ -25,6 +25,7 @@ Pro benötigter Rolle in dieser Reihenfolge:
 | `projects` | `06-projects/` | Projekte |
 | `roles` | `07-org/` | Rollen/Personas (optional, siehe Start-Skill Step 8) |
 | `knowledge` | `08-wiki/` | Wiki/Knowledge/SOPs/Systeme |
+| `sops` | `08-wiki/sops/` | Projekt-SOPs, die einzelne Skills verbindlich steuern (Frontmatter `skill:`) |
 | `ip` | `09-ip/` | Patterns, Frameworks, OS-Kandidaten |
 | `logs` | `10-logs/` | Tages-Logs (`YYYY-MM-DD.md`) |
 | `archive` | `11-archive/` | Archiv |
@@ -33,7 +34,9 @@ Pro benötigter Rolle in dieser Reihenfolge:
 
 Der **start-Skill pflegt diese Datei automatisch**: Bei jedem Start wird die Top-Level-Struktur gescannt und mit der Datei abgeglichen - fehlt sie, wird sie aus der erkannten Struktur geschrieben; ändert sich die Struktur später (Ordner umbenannt/entfernt/neu), werden die betroffenen Zeilen aktualisiert (Drift-Check). Die Datei wird committet und gilt damit für alle Klone; ein Brain kann sie auch von Hand vorgeben.
 
-Format: eine Zeile pro Rolle, fehlende Zeilen fallen auf Default/Glob zurück.
+Format: eine Zeile pro Rolle, fehlende Zeilen fallen auf Default/Glob zurück. Eine Markdown-Tabelle (`| Rolle | Pfad | … |`) ist gleichwertig und wird genauso gelesen.
+
+**Rollen unterhalb eines Ordners** (`working-memory`, `open-loops`, `sops` …) zeigen auf einen Unterordner oder eine Datei. Sie tauchen im Top-Level-Scan nicht auf und bleiben beim Drift-Check erhalten, solange ihr übergeordneter Ordner existiert.
 
 ```markdown
 # Agency OS - Architektur
@@ -44,4 +47,5 @@ Format: eine Zeile pro Rolle, fehlende Zeilen fallen auf Default/Glob zurück.
 - open-loops: 02-strategy/open-loops.md
 - logs: 10-logs/
 - knowledge: 08-knowledge/
+- sops: 08-knowledge/sops/
 ```
