@@ -635,6 +635,7 @@ def build_final_composite(
     out_path: Path,
     edit_dir: Path,
     force_style: str = SUB_FORCE_STYLE,
+    fonts_dir: Path | None = None,
 ) -> None:
     """Final pass: base → overlays (PTS-shifted) → subtitles LAST → out.
 
@@ -679,7 +680,12 @@ def build_final_composite(
         for ch in ("\\", ":", "'", "[", "]", ","):
             subs_abs = subs_abs.replace(ch, "\\" + ch)
         filter_parts.append(
-            f"{current}subtitles='{subs_abs}':force_style='{force_style}'[outv]"
+            # An .ass carries its own styles (and \pos overrides); force_style would
+            # overwrite font size, margins and alignment, so only style plain SRT.
+            f"{current}subtitles='{subs_abs}'"
+            + (f":force_style='{force_style}'" if subtitles_path.suffix.lower() not in (".ass", ".ssa") else "")
+            + (f":fontsdir='{fonts_dir.resolve()}'" if fonts_dir else "")
+            + "[outv]"
         )
         out_label = "[outv]"
     else:
@@ -727,6 +733,11 @@ def main() -> None:
         help="Draft mode: 720p, ultrafast, CRF 28 — cut-point verification only.",
     )
     ap.add_argument(
+        "--fonts-dir",
+        type=Path,
+        help="Directory holding the caption font file (for .ass with a brand font)",
+    )
+    p.add_argument(
         "--build-subtitles",
         action="store_true",
         help="Build master.srt from transcripts + EDL offsets before compositing",
@@ -805,15 +816,20 @@ def main() -> None:
     # 4. Composite (overlays + subtitles LAST) → intermediate (pre-loudnorm) path
     overlays = edl.get("overlays") or []
     sub_style = build_sub_style(args.caption_color, args.caption_font)  # CI colour/font -> libass
+    # libass resolves fonts by family name through fontconfig. A brand font that is
+    # only a file in the brain (not installed system-wide) is found via fontsdir.
+    fonts_dir = args.fonts_dir if args.fonts_dir and args.fonts_dir.is_dir() else None
     # Write the final output atomically: build it under .part.mp4, rename last — an
     # interrupted composite/loudnorm never leaves a corrupt {slug}.mp4 behind.
     final_tmp = out_path.with_suffix(".part.mp4")
     if args.no_loudnorm:
-        build_final_composite(base_path, overlays, subs_path, final_tmp, edit_dir, force_style=sub_style)
+        build_final_composite(base_path, overlays, subs_path, final_tmp, edit_dir,
+                              force_style=sub_style, fonts_dir=fonts_dir)
     else:
         # Composite to a temp file, then run loudnorm → final (atomic) output
         tmp_composite = out_path.with_suffix(".prenorm.mp4")
-        build_final_composite(base_path, overlays, subs_path, tmp_composite, edit_dir, force_style=sub_style)
+        build_final_composite(base_path, overlays, subs_path, tmp_composite, edit_dir,
+                              force_style=sub_style, fonts_dir=fonts_dir)
         print("loudness normalization → social-ready (-14 LUFS / -1 dBTP / LRA 11)")
         apply_loudnorm_two_pass(tmp_composite, final_tmp, preview=args.draft)
         try:

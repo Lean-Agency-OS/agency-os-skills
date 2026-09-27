@@ -1,6 +1,6 @@
 ---
 name: video-shortform
-version: 2.0.1
+version: 2.0.2
 description: Schneidet Roh-Video(s) zu postfertigen Reels/Shorts - Transkript, scroll-stopping Text-Hook drueber, Schnitt, Untertitel, optional Color-Grade + Motion-Graphics, Final-Render. Einzeln oder ein ganzer Ordner auf einmal. Triggert bei "mach ein Reel draus", "bau ein Short aus diesem Video", "schneid mir das Video fertig", "schneid alle Videos in dem Ordner", "postfertiges Reel", "/video-shortform". Brand-aware ueber {context}/brand/, nutzt brand-voice + icp. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 
@@ -144,7 +144,7 @@ Genau das ist der Job von `/video-captions`. shortform liefert nur den fertigen 
 - **Eingabe:** `$EDIT/cut.mp4` (fertig geschnitten, inkl. Hook/Overlays).
 - **Ziel:** `{slug}.mp4` neben dem Roh-Video (nicht der captions-Default-Name).
 
-`/video-captions` transkribiert den Cut neu, baut die SRT 1:1 aus diesem Transkript (kein Offset), wendet Safe-Zone + feste Caption-Oberkante (kein Springen) + CI-Farbe/Font an und brennt ein. So lebt die Caption-Logik an **einer** Stelle. (Soll der Short keine Untertitel haben: Phase 7 überspringen, `cut.mp4` direkt als `{slug}.mp4` ablegen.)
+`/video-captions` transkribiert den Cut neu, baut die Untertitel 1:1 aus diesem Transkript (kein Offset), wendet Safe-Zone, CI-Farbe, Schrift, Position und Schatten aus der `ci.md` an und brennt ein. So lebt die Caption-Logik an **einer** Stelle. (Soll der Short keine Untertitel haben: Phase 7 überspringen, `cut.mp4` direkt als `{slug}.mp4` ablegen.)
 
 ---
 

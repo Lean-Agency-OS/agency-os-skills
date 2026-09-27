@@ -1,6 +1,6 @@
 ---
 name: video-longform
-version: 1.0.1
+version: 1.1.0
 description: Schneidet Roh-Video(s) zu sendefertigen Longform-Videos (16:9) - YouTube-Videos, Testimonials, Kurs-Lektionen. Jumpcut-Schnitt (Fueller, Haenger, Versprecher raus), Kapitel-Timestamps, Untertitel wahlweise als SRT-Datei, eingebrannt oder keine, Final-Render. Einzeln oder ein ganzer Ordner (Kurs-Modus). Triggert bei "schneid das YouTube-Video", "mach ein Longform draus", "Testimonial-Video schneiden", "Kurs-Videos schneiden", "Lektionen schneiden", "/video-longform". Brand-aware ueber {context}/brand/. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 
@@ -21,7 +21,6 @@ Du schneidest als **Senior Longform-Editor**: du denkst in Retention, Kapiteln u
 ### Struktur (self-contained Skill)
 
 - `helpers/` - Schnitt-Engine (Python, ElevenLabs Scribe, ffmpeg). Interpreter: `.venv/bin/python` (Setup baut das venv im Skill-Root).
-- `helpers/make_srt.py` - baut die Sidecar-SRT programmatisch aus dem Word-Level-Transkript (bei 30-60 Minuten nicht von Hand machbar).
 - `references/cut-standards.md` - **die** Quelle fuer Padding, Silence-Checks, Last-Word-Two-Step, EDL-Format.
 - `references/hard-rules.md` - die Hard Rules der Schnitt-Engine (Referenz, kein eigener Trigger).
 - `references/transcription.md` - Transkriptions-Policy: Scribe als Pfad, Word-Level-Pflicht. Dieser Skill ist Scribe-only (kein lokaler Whisper-Fallback).
@@ -63,7 +62,7 @@ Keine weiteren Fragen, kein Plan zum Bestaetigen.
 
 **1e. Ordner + Dateiname:** Output landet IMMER im **selben Ordner wie das Roh-Video** (kein neuer datierter Ordner):
 - **Sprechender Name**, nicht `final.mp4`: `{slug}.mp4` aus einem kurzen Thema-Slug (z.B. `funnel-grundlagen.mp4`), im Kurs-Modus pro Lektion (z.B. `lektion-03-zielgruppe.mp4`). Dazu `{slug}_index.md` daneben.
-- Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `<ordner>/_work/edit/` (gitignored).
+- Schnitt-Cache (Transkript, EDL, takes_packed) in `<ordner>/_work/edit/` (gitignored).
 
 Den Edit-Cache nie neu transkribieren, wenn das Raw-File unveraendert ist.
 
@@ -119,15 +118,10 @@ $PY $SK/helpers/render.py "$EDIT/edl.json" \
 
 ### Phase 5: Untertitel (je nach Input aus Phase 1c)
 
-- **SRT beilegen (Empfehlung):** den **fertigen Cut** neu transkribieren (nicht aus dem Roh-Transkript hochrechnen, das driftet gegen die Cut-Timeline), dann die SRT programmatisch bauen:
+Untertitel baut dieser Skill **nie selbst**, beide Varianten laufen ueber `/video-captions`. Uebergeben wird immer der **fertige Cut** (`$EDIT/cut.mp4`), nicht das Roh-Video: nur dort sitzen die Wort-Zeiten auf der End-Timeline, ein Hochrechnen aus dem Roh-Transkript driftet.
 
-```bash
-$PY $SK/helpers/transcribe.py "$EDIT/cut.mp4" --edit-dir "$EDIT"
-$PY $SK/helpers/make_srt.py "$EDIT/transcripts/cut.json" -o "$RAWDIR/{slug}.srt"
-```
-
-  Danach Stichprobe: 3-4 Cues gegen das Video pruefen (Timing, Zeilenlaenge, kein Cue ueber Szenenwechsel hinweg falsch gruppiert).
-- **Einbrennen:** an `/video-captions` delegieren. Eingabe: `$EDIT/cut.mp4`, Ziel: `{slug}.mp4` neben dem Roh-Video. Bei 16:9 gilt die Safe-Zone-Logik von captions fuer Landscape.
+- **SRT beilegen (Empfehlung):** an `/video-captions` im Modus *SRT-Datei* delegieren. Eingabe: `$EDIT/cut.mp4`, Ziel: `{slug}.srt` neben dem Roh-Video. Danach Stichprobe: 3-4 Cues gegen das Video pruefen (Timing, Zeilenlaenge, kein Cue ueber Szenenwechsel hinweg falsch gruppiert).
+- **Einbrennen:** an `/video-captions` im Modus *eingebrannt* delegieren. Eingabe: `$EDIT/cut.mp4`, Ziel: `{slug}.mp4` neben dem Roh-Video. Bei 16:9 gilt die Safe-Zone-Logik von captions fuer Landscape.
 - **Keine:** Phase ueberspringen.
 
 Wenn nicht eingebrannt wird: `cut.mp4` als `{slug}.mp4` neben das Roh-Video legen.
@@ -169,7 +163,7 @@ Wenn nicht eingebrannt wird: `cut.mp4` als `{slug}.mp4` neben das Roh-Video lege
 Landet IMMER im selben Ordner wie das Roh-Video (kein neuer datierter Ordner):
 - `{slug}.mp4` (sendefertiges Longform-Video, sprechender Name) + getracktes `_index.md` direkt neben dem Raw-File, optional `{slug}.srt`.
 - Kapitel-Timestamps als Copy-Paste-Block in der `_index.md`.
-- Schnitt-Cache (Transkript, EDL, SRT, takes_packed) in `_work/edit/` (gitignored).
+- Schnitt-Cache (Transkript, EDL, takes_packed) in `_work/edit/` (gitignored).
 - Daily-Log-Notiz in `{logs}/{YYYY-MM-DD}.md`.
 
 ## Verwandte Skills

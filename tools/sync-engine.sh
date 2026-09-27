@@ -72,7 +72,7 @@ sync_skill video-shortform \
   yes no
 
 sync_skill video-longform \
-  "$COMMON_HELPERS render.py grade.py make_srt.py timeline_view.py" \
+  "$COMMON_HELPERS render.py grade.py timeline_view.py" \
   "cut-standards.md hard-rules.md transcription.md" \
   no no
 
@@ -82,7 +82,7 @@ sync_skill video-roughcut \
   no no
 
 sync_skill video-captions \
-  "$COMMON_HELPERS render.py ci_read.py" \
+  "$COMMON_HELPERS render.py ci_read.py make_ass.py make_srt.py" \
   "transcription.md safe-zone.md" \
   no no
 

@@ -112,6 +112,8 @@ def resolve(text: str) -> dict:
     caption_font = fonts.get("subtitle") or _from_table(tbl, ("subtitle-font", "untertitel-font", "untertitel"), want_hex=False)
     caption_font_path = fonts.get("subtitle_path")
 
+    captions = fm.get("captions") if isinstance(fm.get("captions"), dict) else {}
+
     out = {
         "caption_color_hex": (HEX_RE.search(caption_hex).group(0) if caption_hex and HEX_RE.search(caption_hex) else None),
         "caption_color_ass": hex_to_ass(caption_hex),
@@ -119,6 +121,9 @@ def resolve(text: str) -> dict:
         "caption_font_path": (caption_font_path or None),
         "name": fm.get("name"),
         "handle": fm.get("handle"),
+        # Caption geometry/spellings for make_ass.py. Frontmatter only: these are
+        # nested values, a flat CI table cannot express them.
+        "captions": captions,
     }
     return out
 
@@ -126,7 +131,7 @@ def resolve(text: str) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description="Read brand CI (frontmatter or table) -> normalized values")
     ap.add_argument("ci", type=Path, help="Path to ci.md")
-    ap.add_argument("--get", help="Print a single value: caption-color-ass | caption-color-hex | caption-font | caption-font-path | name | handle")
+    ap.add_argument("--get", help="Print a single value: caption-color-ass | caption-color-hex | caption-font | caption-font-path | name | handle | captions (JSON)")
     args = ap.parse_args()
 
     if not args.ci.exists():
@@ -136,7 +141,10 @@ def main() -> None:
     if args.get:
         key = args.get.replace("-", "_")
         v = values.get(key)
-        if v:
+        if isinstance(v, dict):
+            if v:
+                print(json.dumps(v, ensure_ascii=False))
+        elif v:
             print(v)
         # empty output + exit 0 when missing: caller applies its own default/fallback
         return
