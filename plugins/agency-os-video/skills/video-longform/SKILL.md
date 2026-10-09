@@ -1,6 +1,6 @@
 ---
 name: video-longform
-version: 1.1.0
+version: 1.1.1
 description: Schneidet Roh-Video(s) zu sendefertigen Longform-Videos (16:9) - YouTube-Videos, Testimonials, Kurs-Lektionen. Jumpcut-Schnitt (Fueller, Haenger, Versprecher raus), Kapitel-Timestamps, Untertitel wahlweise als SRT-Datei, eingebrannt oder keine, Final-Render. Einzeln oder ein ganzer Ordner (Kurs-Modus). Triggert bei "schneid das YouTube-Video", "mach ein Longform draus", "Testimonial-Video schneiden", "Kurs-Videos schneiden", "Lektionen schneiden", "/video-longform". Brand-aware ueber {context}/brand/. Output landet IMMER im selben Ordner wie das Roh-Video.
 ---
 

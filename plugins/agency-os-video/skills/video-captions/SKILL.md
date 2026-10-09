@@ -1,6 +1,6 @@
 ---
 name: video-captions
-version: 2.1.0
+version: 2.1.1
 description: Legt markenkonforme Untertitel zu einem bereits fertig geschnittenen Video an - transkribiert, baut Caption-Chunks, wahlweise eingebrannt (gestyltes ASS mit CI-Farbe, Schrift, Position und Schatten) oder als SRT-Datei daneben. Kein Schnitt. Untertitel entstehen immer hier; /video-shortform und /video-longform rufen diesen Skill auf, statt selbst welche zu bauen. Triggert bei "Untertitel aufs Video", "Captions einbrennen", "Subtitles fuer das Video", "burn captions", "/video-captions". Brand-aware ueber {context}/brand/, nutzt brand-voice + CI.
 ---
 
@@ -87,8 +87,9 @@ RAWDIR="$(dirname "{video}")"
 EDIT="$RAWDIR/_work/edit"
 CI="{context}/brand/ci.md"
 # 1. Zielaufloesung holen - Schriftgroesse und Position skalieren proportional mit
-W="$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "{video}")"
-H="$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "{video}")"
+# nk=1:nw=1, NICHT csv=p=0: ffprobe 8 haengt dort ein Komma an ("1080,")
+W="$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=nk=1:nw=1 "{video}")"
+H="$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=nk=1:nw=1 "{video}")"
 # 2. Gestylte Untertitel bauen: Farbe, Schrift, Groesse, Position, Schatten und
 #    Schreibweisen kommen alle aus der ci.md; ohne ci.md gelten die Referenzwerte.
 $PY $SK/helpers/make_ass.py "$EDIT/transcripts/{quell-stem}.json" "$EDIT/captions.ass" \

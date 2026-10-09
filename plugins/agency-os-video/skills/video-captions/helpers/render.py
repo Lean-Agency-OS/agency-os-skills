@@ -162,64 +162,102 @@ TONEMAP_CHAIN = (
 
 
 # Probes are cached per source path: extract_segment runs once per EDL range,
-# but HDR/orientation are properties of the source file, not the cut. Caching
-# avoids 2 redundant ffprobe calls per segment.
-_HDR_CACHE: dict[str, bool] = {}
-_PORTRAIT_CACHE: dict[str, bool] = {}
+# but HDR/orientation/frame rate are properties of the source file, not the cut.
+_STREAM_CACHE: dict[str, dict] = {}
+
+
+def probe_stream(video: Path) -> dict:
+    """Cached JSON probe of the first video stream.
+
+    JSON on purpose, never `-of csv=p=0`: ffprobe 8 appends a trailing separator
+    to CSV rows ("3840,2160,"), which made the old width/height parse raise and
+    silently fall back to landscape. Every portrait render came out scaled by
+    width (1920x3414 instead of 1080x1920).
+    """
+    key = str(video)
+    if key in _STREAM_CACHE:
+        return _STREAM_CACHE[key]
+    data: dict = {}
+    try:
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-print_format", "json", "-show_streams", str(video)],
+            capture_output=True, text=True, check=True,
+        )
+        streams = json.loads(out.stdout).get("streams") or []
+        data = streams[0] if streams else {}
+    except Exception as exc:
+        print(f"warning: ffprobe failed for {video.name}: {exc}")
+    _STREAM_CACHE[key] = data
+    return data
 
 
 def is_hdr_source(video: Path) -> bool:
     """Return True if the source uses a PQ or HLG transfer function."""
-    key = str(video)
-    if key in _HDR_CACHE:
-        return _HDR_CACHE[key]
+    return str(probe_stream(video).get("color_transfer") or "") in HDR_TRANSFERS
+
+
+def display_size(video: Path) -> tuple[int, int]:
+    """Frame size as it is DISPLAYED, i.e. after rotation. (0, 0) if unknown.
+
+    Phones store landscape pixels plus a rotation flag; ffmpeg autorotates on
+    decode, so the filter graph sees the swapped size and the scale filter has
+    to be chosen for that, not for the stored size.
+    """
+    stream = probe_stream(video)
     try:
-        out = subprocess.run(
-            ["ffprobe", "-v", "error", "-select_streams", "v:0",
-             "-show_entries", "stream=color_transfer",
-             "-of", "default=noprint_wrappers=1:nokey=1", str(video)],
-            capture_output=True, text=True, check=True,
-        )
-        result = out.stdout.strip() in HDR_TRANSFERS
-    except subprocess.CalledProcessError:
-        result = False
-    _HDR_CACHE[key] = result
-    return result
+        w, h = int(stream["width"]), int(stream["height"])
+    except (KeyError, TypeError, ValueError):
+        return 0, 0
+    rot = 0
+    for side in stream.get("side_data_list") or []:
+        if "rotation" in side:
+            try:
+                rot = int(float(side["rotation"]))
+            except (TypeError, ValueError):
+                rot = 0
+            break
+    else:
+        try:
+            rot = int(float((stream.get("tags") or {}).get("rotate") or 0))
+        except (TypeError, ValueError):
+            rot = 0
+    if rot % 180 != 0:
+        w, h = h, w
+    return w, h
 
 
 def is_portrait_source(video: Path) -> bool:
-    """Return True if the video's height > width (portrait / vertical)."""
-    key = str(video)
-    if key in _PORTRAIT_CACHE:
-        return _PORTRAIT_CACHE[key]
-    try:
-        out = subprocess.run(
-            ["ffprobe", "-v", "error", "-select_streams", "v:0",
-             "-show_entries", "stream=width,height",
-             "-of", "csv=p=0", str(video)],
-            capture_output=True, text=True, check=True,
-        )
-        w, h = map(int, out.stdout.strip().split(","))
-        # Phones store landscape pixels + a rotation flag; honor it so a
-        # display-portrait clip (e.g. iPhone selfie) is detected as portrait.
+    """Return True if the displayed frame is taller than wide."""
+    w, h = display_size(video)
+    if not w or not h:
+        # Loud on purpose: a silent landscape default is exactly what produced
+        # 1920x3414 renders from portrait phone clips.
+        print(f"warning: no frame size for {video.name}, treating it as landscape")
+        return False
+    return h > w
+
+
+def source_frame_rate(video: Path) -> str | None:
+    """Source frame rate as the exact ffmpeg rational ("30000/1001"), or None.
+
+    Returned verbatim so 29.97 stays 30000/1001 instead of being rounded.
+    r_frame_rate first (the nominal rate), avg_frame_rate only as a fallback: the
+    average is a measured value and yields unusable rationals like 128000/4267.
+    Both are sanity-checked, which also rejects the bogus high r_frame_rate some
+    variable-frame-rate screen recordings report.
+    """
+    stream = probe_stream(video)
+    for key in ("r_frame_rate", "avg_frame_rate"):
+        raw = str(stream.get(key) or "")
         try:
-            rot_out = subprocess.run(
-                ["ffprobe", "-v", "error", "-select_streams", "v:0",
-                 "-show_entries", "stream_side_data=rotation",
-                 "-of", "default=nk=1:nw=1", str(video)],
-                capture_output=True, text=True,
-            )
-            rot_line = (rot_out.stdout.strip().splitlines() or ["0"])[0]
-            rot_val = int(rot_line) if rot_line.lstrip("-").isdigit() else 0
-        except Exception:
-            rot_val = 0
-        if rot_val % 180 != 0:
-            w, h = h, w
-        result = h > w
-    except Exception:
-        result = False
-    _PORTRAIT_CACHE[key] = result
-    return result
+            num, den = raw.split("/")
+            fps = float(num) / float(den)
+        except (ValueError, ZeroDivisionError):
+            continue
+        if 1.0 < fps <= 120.0:
+            return raw
+    return None
 
 
 # -------- Per-segment extraction (Rule 2 + Rule 3) --------------------------
@@ -255,6 +293,7 @@ def extract_segment(
     out_path: Path,
     preview: bool = False,
     draft: bool = False,
+    fps: str = "24",
 ) -> None:
     """Extract a cut range as its own MP4 with grade + 30ms audio fades baked in.
 
@@ -304,7 +343,9 @@ def extract_segment(
         "-vf", vf,
         "-af", af,
         "-c:v", "libx264", "-preset", preset, "-crf", crf,
-        "-pix_fmt", "yuv420p", "-r", "24",
+        # Every segment is forced to ONE frame rate so the concat is seamless;
+        # the value comes from the source, not from a hardcoded 24.
+        "-pix_fmt", "yuv420p", "-r", fps,
         "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
         "-movflags", "+faststart",
         str(tmp_path),
@@ -319,6 +360,7 @@ def extract_all_segments(
     preview: bool,
     draft: bool = False,
     budget_deadline: float | None = None,
+    fps_override: str | None = None,
 ) -> tuple[list[Path], bool]:
     """Extract every EDL range into edit_dir/clips_graded/seg_NN.mp4.
     Returns (ordered segment paths, complete?).
@@ -341,6 +383,20 @@ def extract_all_segments(
 
     ranges = edl["ranges"]
     sources = edl["sources"]
+
+    # One frame rate for all segments (concat requirement). Prefer the explicit
+    # override, else the first source's rate, else the old 24 as last resort.
+    fps = fps_override
+    if not fps:
+        for name in (r["source"] for r in ranges):
+            fps = source_frame_rate(resolve_path(sources[name], edit_dir))
+            if fps:
+                break
+    if not fps:
+        fps = "24"
+        print("  (no source frame rate readable, falling back to 24 fps)")
+    else:
+        print(f"  (frame rate: {fps})")
 
     seg_paths: list[Path] = []
     print(f"extracting {len(ranges)} segment(s) → {clips_dir.name}/")
@@ -370,7 +426,8 @@ def extract_all_segments(
         print(f"  [{i:02d}] {src_name}  {start:7.2f}-{end:7.2f}  ({duration:5.2f}s)  {note}")
         if is_auto:
             print(f"        grade: {seg_filter or '(none)'}")
-        extract_segment(src_path, start, duration, seg_filter, out_path, preview=preview, draft=draft)
+        extract_segment(src_path, start, duration, seg_filter, out_path,
+                        preview=preview, draft=draft, fps=fps)
         seg_paths.append(out_path)
 
         if budget_deadline is not None and time.time() >= budget_deadline:
@@ -733,6 +790,10 @@ def main() -> None:
         help="Draft mode: 720p, ultrafast, CRF 28 — cut-point verification only.",
     )
     ap.add_argument(
+        "--fps",
+        help="Force an output frame rate (e.g. 25 or 30000/1001). Default: the source's rate",
+    )
+    p.add_argument(
         "--fonts-dir",
         type=Path,
         help="Directory holding the caption font file (for .ass with a brand font)",
@@ -784,7 +845,8 @@ def main() -> None:
     #    Idempotent + resumable; honours an optional time budget.
     budget_deadline = (time.time() + args.budget_seconds) if args.budget_seconds else None
     segment_paths, complete = extract_all_segments(
-        edl, edit_dir, preview=args.preview, draft=args.draft, budget_deadline=budget_deadline
+        edl, edit_dir, preview=args.preview, draft=args.draft,
+        budget_deadline=budget_deadline, fps_override=args.fps,
     )
     if not complete:
         print(f"\n[budget] {len(segment_paths)} Segment(e) fertig, weitere offen. "

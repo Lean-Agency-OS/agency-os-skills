@@ -13,7 +13,7 @@ Ein Plugin-Marketplace für [Claude Code](https://claude.com/claude-code) und Co
 | `agency-os-core` | 3.10.1 |
 | `agency-os-brand` | 2.0.0 |
 | `agency-os-marketing` | 3.0.0 |
-| `agency-os-video` | 3.2.0 |
+| `agency-os-video` | 3.2.1 |
 
 </div>
 
